@@ -1,7 +1,7 @@
 // /* Dropdowns */
 
 .dropdown {
-  .dropdown-toggle{
+  .dropdown-toggle {
     &.no-caret {
       &::after {
         display: none;
@@ -9,12 +9,12 @@
     }
   }
   .dropdown-menu {
-    margin-top: .75rem;
+    margin-top: 0.75rem;
     font-size: $default-font-size;
     box-shadow: $dropdown-menu-box-shadow;
     .dropdown-item {
       font-size: 1rem;
-      padding: .25rem 1.5rem;
+      padding: 0.25rem 1.5rem;
       &:active {
         background: initial;
       }
@@ -30,4 +30,16 @@
       }
     }
   }
+}
+
+// added this to make downward flash align correctly
+.dropdown-toggle::after {
+  display: inline-block;
+  margin-right: 0.295em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
 }

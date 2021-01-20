@@ -1,9 +1,10 @@
 import axios from "axios";
 
-export const getProducts = async () => {
+export const getAccountTypes = async () => {
   try {
     const authToken = JSON.parse(localStorage.getItem("userInfo")).accessToken;
-
+    console.log("1");
+    console.log(authToken);
     const config = {
       headers: {
         "content-type": "application/json; charset=utf-8",
@@ -13,7 +14,10 @@ export const getProducts = async () => {
 
     const {
       data: { data },
-    } = await axios.get("https://devking.ir/api/Product/getProducts", config);
+    } = await axios.get(
+      "https://devking.ir/api/AccTransaction/getAccountTypes",
+      config
+    );
     console.log(data);
     return data;
   } catch (error) {

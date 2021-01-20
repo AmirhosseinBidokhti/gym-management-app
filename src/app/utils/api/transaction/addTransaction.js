@@ -1,6 +1,8 @@
+// temporary. later will be added to redux. now i dont have much time.
+
 import axios from "axios";
 
-export const getProducts = async () => {
+export const addTranscation = async (transactionObj) => {
   try {
     const authToken = JSON.parse(localStorage.getItem("userInfo")).accessToken;
 
@@ -11,9 +13,14 @@ export const getProducts = async () => {
       },
     };
 
-    const {
-      data: { data },
-    } = await axios.get("https://devking.ir/api/Product/getProducts", config);
+    console.log(config);
+
+    const { data } = await axios.post(
+      "https://devking.ir/api/AccTransaction/addAccTransaction",
+      transactionObj,
+
+      config
+    );
     console.log(data);
     return data;
   } catch (error) {

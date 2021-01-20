@@ -4,12 +4,13 @@ import { Form } from "react-bootstrap";
 import { getMembershipJoinTypes } from "../utils/api/customer/getMembershipJoinTypes";
 import { getJobInfos } from "../utils/api/customer/getJobInfos";
 
-import { customerAdd } from "../utils/api/customer/customerAdd";
+import { updateCustomer } from "../utils/api/customer/updateCustomer";
+import { getCustomer } from "../utils/api/customer/getCustomer";
 import { fileUpload } from "../utils/api/fileUpload/fileUpload";
 
 import DatePicker from "react-modern-calendar-datepicker";
 
-export const CustomerAddPage = () => {
+export const CustomerEditPage = ({ match }) => {
   const [firstName, setFirstname] = useState("");
   const [lastName, setlastName] = useState("");
   const [gender, setGender] = useState(true);
@@ -33,50 +34,48 @@ export const CustomerAddPage = () => {
   const [file, setFile] = useState();
   const [fileName, setFileName] = useState();
 
+  const [customerBefore, setCustomerBefore] = useState({});
+
   const saveFile = (e) => {
     console.log(e.target.files[0]);
     setFile(e.target.files[0]);
     setFileName(e.target.files[0].name);
   };
 
-  // TODO: SEE WHAT PROPERTIES ARE REQUIRED FROM BACKEND!
+  const customerID = match.params.id;
 
   const submitHandler = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const newCustomerInfo = {
-      firstName: firstName,
-      lastName: lastName,
-      birthdate: new Date(selectedDay.year, selectedDay.month, selectedDay.day),
-      //birthdate: dateFormated,
-      gender: gender,
-      mobile: mobile,
-      tel: phone,
-
-      email: email,
-      telegram: telegram,
-      instagram: instagram,
-      address: address,
-
-      membershipJoinTypeId: membershipJoinType,
-      contractFilePath: fileName,
-      jobInfoId: job,
-    };
-
-    const { data, isSuccess } = await customerAdd(newCustomerInfo);
-    await fileUpload(file, fileName);
-    console.log(newCustomerInfo);
-    console.log(data);
-    if (isSuccess) {
-      setSuccess(isSuccess);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
-    } else {
-      console.log("try again something was wrong");
-    }
-
-    setLoading(false);
+    //   e.preventDefault();
+    //   setLoading(true);
+    //   const newCustomerInfo = {
+    //     firstName: firstName,
+    //     lastName: lastName,
+    //     birthdate: new Date(selectedDay.year, selectedDay.month, selectedDay.day),
+    //     //birthdate: dateFormated,
+    //     gender: gender,
+    //     mobile: mobile,
+    //     tel: phone,
+    //     email: email,
+    //     telegram: telegram,
+    //     instagram: instagram,
+    //     address: address,
+    //     membershipJoinTypeId: membershipJoinType,
+    //     contractFilePath: fileName,
+    //     jobInfoId: job,
+    //   };
+    //   const { data, isSuccess } = await customerAdd(newCustomerInfo);
+    //   await fileUpload(file, fileName);
+    //   console.log(newCustomerInfo);
+    //   console.log(data);
+    //   if (isSuccess) {
+    //     setSuccess(isSuccess);
+    //     setTimeout(() => {
+    //       window.location.reload();
+    //     }, 1500);
+    //   } else {
+    //     console.log("try again something was wrong");
+    //   }
+    //   setLoading(false);
   };
 
   useEffect(() => {
@@ -85,16 +84,18 @@ export const CustomerAddPage = () => {
       setMembershipJoinTypes(joinTypeData);
       const jobData = await getJobInfos();
       setJobInfo(jobData);
+      const customerBefore = await getCustomer(customerID);
+      setCustomerBefore(customerBefore);
     }
     getAddCustomerPreData();
-  }, []);
+  }, [customerID]);
 
   return (
     <>
       <div className="col-12 grid-margin">
         <div className="card">
           <div className="card-body">
-            <h4 className="card-title">فرم ثبت مشتری</h4>
+            <h4 className="card-title">فرم ویرایش مشتری</h4>
             {success && (
               <h2 style={{ color: "#4BB543" }}>
                 ورزشکار جدید با موفقیت اضافه شد
@@ -114,6 +115,7 @@ export const CustomerAddPage = () => {
                       <Form.Control
                         type="text"
                         onChange={(e) => setFirstname(e.target.value)}
+                        placeholder={customerBefore.firstName}
                       />
                     </div>
                   </Form.Group>
@@ -127,6 +129,7 @@ export const CustomerAddPage = () => {
                       <Form.Control
                         type="text"
                         onChange={(e) => setlastName(e.target.value)}
+                        placeholder={customerBefore.lastName}
                       />
                     </div>
                   </Form.Group>
@@ -145,7 +148,6 @@ export const CustomerAddPage = () => {
                             ? setGender(true)
                             : setGender(false);
                         }}
-                        value={gender}
                       >
                         <option selected disabled>
                           انتخاب کنید
@@ -163,7 +165,6 @@ export const CustomerAddPage = () => {
                     </label>
                     <div className="col-sm-9">
                       <DatePicker
-                        value={selectedDay}
                         onChange={setSelectedDay}
                         shouldHighlightWeekends
                         locale="fa"
@@ -181,6 +182,7 @@ export const CustomerAddPage = () => {
                       <Form.Control
                         type="text"
                         onChange={(e) => setAddress(e.target.value)}
+                        placeholder={customerBefore.address}
                       />
                     </div>
                   </Form.Group>
@@ -192,6 +194,7 @@ export const CustomerAddPage = () => {
                       <Form.Control
                         type="email"
                         onChange={(e) => setemail(e.target.value)}
+                        placeholder={customerBefore.email}
                       />
                     </div>
                   </Form.Group>
@@ -207,6 +210,8 @@ export const CustomerAddPage = () => {
                       <Form.Control
                         type="text"
                         onChange={(e) => setMobile(e.target.value)}
+                        placeholder={customerBefore.mobile}
+                        required
                       />
                     </div>
                   </Form.Group>
@@ -218,6 +223,7 @@ export const CustomerAddPage = () => {
                       <Form.Control
                         type="text"
                         onChange={(e) => setPhone(e.target.value)}
+                        placeholder={customerBefore.tel}
                         required
                       />
                     </div>
@@ -278,6 +284,7 @@ export const CustomerAddPage = () => {
                       <Form.Control
                         type="text"
                         onChange={(e) => setInstagram(e.target.value)}
+                        placeholder={customerBefore.instagram}
                       />
                     </div>
                   </Form.Group>
@@ -289,6 +296,7 @@ export const CustomerAddPage = () => {
                       <Form.Control
                         type="text"
                         onChange={(e) => setTelegram(e.target.value)}
+                        placeholder={customerBefore.telegram}
                       />
                     </div>
                   </Form.Group>
@@ -316,7 +324,7 @@ export const CustomerAddPage = () => {
                         }}
                         htmlFor="customFileLang"
                       >
-                        {fileName}
+                        {customerBefore.contractFilePath}
                       </label>
                     </div>
                   </Form.Group>

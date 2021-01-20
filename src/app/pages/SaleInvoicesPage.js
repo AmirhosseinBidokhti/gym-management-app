@@ -4,7 +4,7 @@ import { Dropdown, ButtonGroup } from "react-bootstrap";
 import { getProducts } from "../utils/api/products/getProducts";
 import Spinner from "../vendor/shared/Spinner";
 import { Link } from "react-router-dom";
-export const ProductsPage = () => {
+export const SaleInvoicesPage = () => {
   const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(true);
   //console.log(customerList);

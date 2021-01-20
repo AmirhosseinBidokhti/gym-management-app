@@ -4,7 +4,7 @@ import DatePicker from "react-modern-calendar-datepicker";
 
 import { addProduct } from "../utils/api/products/addProduct";
 
-export const ProductAddPage = () => {
+export const SaleInvoiceAddPage = () => {
   const [productName, setProductName] = useState("");
   const [sessionCount, setSessionCount] = useState(null);
   const [startDate, setStartDate] = useState(null);
@@ -49,17 +49,17 @@ export const ProductAddPage = () => {
       <div className="col-12 grid-margin">
         <div className="card">
           <div className="card-body">
-            <h4 className="card-title">فرم ایجاد محصول یا سرویس</h4>
+            <h4 className="card-title">فرم فاکتور فروش </h4>
             {success && (
               <h2 style={{ color: "#4BB543" }}>
-                محصول جدید با موفقیت اضافه شد
+                فاکتور فروش جدید با موفقیت ثبت شد
               </h2>
             )}
 
             <form className="form-sample" onSubmit={submitHandler}>
               <p className="card-description">
                 {" "}
-                برای ایجاد محصول، اطلاعات مربوطه را وارد کنید.{" "}
+                برای ایجاد فاکتور فروش، اطلاعات مربوطه را وارد کنید.{" "}
               </p>
               <div className="row">
                 <div className="col-md-6">

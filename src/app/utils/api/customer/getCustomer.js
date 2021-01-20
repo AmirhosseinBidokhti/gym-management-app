@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const getProducts = async () => {
+export const getCustomer = async (customerID) => {
   try {
     const authToken = JSON.parse(localStorage.getItem("userInfo")).accessToken;
 
@@ -13,7 +13,10 @@ export const getProducts = async () => {
 
     const {
       data: { data },
-    } = await axios.get("https://devking.ir/api/Product/getProducts", config);
+    } = await axios.get(
+      `https://devking.ir/api/Customer/getCustomer?ID=${customerID}`,
+      config
+    );
     console.log(data);
     return data;
   } catch (error) {

@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { ProgressBar } from "react-bootstrap";
 import { Dropdown, ButtonGroup } from "react-bootstrap";
-import { getProducts } from "../utils/api/products/getProducts";
+import { getTransactions } from "../utils/api/transaction/getTransactions";
+
 import Spinner from "../vendor/shared/Spinner";
 import { Link } from "react-router-dom";
-export const ProductsPage = () => {
-  const [productList, setProductList] = useState([]);
+export const TransactionsPage = () => {
+  const [transactionList, setTransactionList] = useState([]);
   const [loading, setLoading] = useState(true);
   //console.log(customerList);
 
   useEffect(() => {
     const getData = async () => {
-      const result = await getProducts();
+      const result = await getTransactions();
       console.log(result);
-      setProductList(result);
+      setTransactionList(result);
       setLoading(false);
     };
     getData();
@@ -39,43 +40,53 @@ export const ProductsPage = () => {
                 <table className="table">
                   <thead style={{ color: "white" }}>
                     <tr>
-                      <th> شناسه </th>
-                      <th>نام محصول</th>
-                      <th> قیمت </th>
-                      <th> تعداد جلسات </th>
-                      <th> تاریخ شروع </th>
-                      <th> تاریخ پایان </th>
+                      <th> شناسه تراکنش</th>
+                      <th> شناسه ثبت کننده</th>
+                      <th> نوع تراکنش </th>
+                      <th> نوع حساب</th>
+                      <th> حساب </th>
+                      <th> مبلغ </th>
+                      <th> تاریخ </th>
+                      <th> توضیحات </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {productList.map((product) => {
+                    {transactionList.map((transaction) => {
                       return (
-                        <tr key={product.id}>
+                        <tr key={transaction.id}>
                           <td>
                             <Dropdown>
                               <Dropdown.Toggle
                                 variant="btn btn-outline-primary"
                                 id="dropdownMenuOutlineButton5"
                               >
-                                {product.id}
+                                {transaction.id}
                               </Dropdown.Toggle>
                               <Dropdown.Menu>
                                 <Dropdown.Item
                                   as={Link}
-                                  to={`/customer/customer-checkup/${product.id}`}
+                                  // to={`/customer/customer-checkup/${customer.id}`}
                                 >
                                   مشاهده چک آپ
                                 </Dropdown.Item>
 
-                                <Dropdown.Item>ویرایش</Dropdown.Item>
+                                <Dropdown.Item
+                                  as={Link}
+                                  // to={`/customer/edit-customer/${.id}`}
+                                >
+                                  ویرایش
+                                </Dropdown.Item>
                               </Dropdown.Menu>
                             </Dropdown>
                           </td>
-                          <td>{`${product.productName}`}</td>
-                          <td>{product.salePrice}</td>
-                          <td>{product.sessionCount}</td>
-                          <td>{product.startDate}</td>
-                          <td>{product.endDate}</td>
+                          {/* <td>{`${customer.firstName} ${customer.lastName}`}</td> */}
+                          <td>{transaction.userID}</td>
+                          <td>{transaction.isVariz ? "واریز" : "برداشت"}</td>
+                          <td>{transaction.accountType.title}</td>
+                          <td>{transaction.account.lastName}</td>
+                          <td>{transaction.price}</td>
+                          <td>{transaction.createDate}</td>
+                          <td>{transaction.description}</td>
                         </tr>
                       );
                     })}

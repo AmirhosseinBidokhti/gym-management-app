@@ -66,7 +66,12 @@ const CustomersPage = () => {
                                   مشاهده چک آپ
                                 </Dropdown.Item>
 
-                                <Dropdown.Item>ویرایش</Dropdown.Item>
+                                <Dropdown.Item
+                                  as={Link}
+                                  to={`/customer/edit-customer/${customer.id}`}
+                                >
+                                  ویرایش
+                                </Dropdown.Item>
                               </Dropdown.Menu>
                             </Dropdown>
                           </td>

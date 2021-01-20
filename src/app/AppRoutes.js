@@ -5,8 +5,15 @@ import LoginPage from "./pages/LoginPage";
 import { CustomerAddPage } from "./pages/CustomerAddPage";
 //import { CustomersPage } from "./pages/CustomersPage";
 import { CustomerCheckupPage } from "./pages/CustomerCheckupPage";
+import { ProductAddPage } from "./pages/ProductAddPage";
+import { ProductsPage } from "./pages/ProductsPage";
+import { SaleInvoiceAddPage } from "./pages/SaleInvoiceAddPage";
+import { SaleInvoicesPage } from "./pages/SaleInvoicesPage";
 
 import Spinner from "./vendor/shared/Spinner";
+import { CustomerEditPage } from "./pages/CustomerEditPage";
+import { TransactionAddPage } from "./pages/TransactionAddPage";
+import { TransactionsPage } from "./pages/TransactionsPage";
 
 const CustomersPage = lazy(() => import("./pages/CustomersPage"));
 
@@ -33,7 +40,42 @@ class AppRoutes extends Component {
             path="/customer/customer-checkup/:id"
             component={CustomerCheckupPage}
           />
+          <PrivateRoute
+            exact={true}
+            path="/customer/edit-customer/:id"
+            component={CustomerEditPage}
+          />
+          <PrivateRoute
+            exact={true}
+            path="/product/add-new-product"
+            component={ProductAddPage}
+          />
+          <PrivateRoute
+            exact={true}
+            path="/product/product-list"
+            component={ProductsPage}
+          />
 
+          <PrivateRoute
+            exact={true}
+            path="/saleInvoice/add-new-saleInvoice"
+            component={SaleInvoiceAddPage}
+          />
+          <PrivateRoute
+            exact={true}
+            path="/saleInvoice/saleInvoice-list"
+            component={SaleInvoicesPage}
+          />
+          <PrivateRoute
+            exact={true}
+            path="/transaction/add-new-transaction"
+            component={TransactionAddPage}
+          />
+          <PrivateRoute
+            exact={true}
+            path="/transaction/transaction-list"
+            component={TransactionsPage}
+          />
           <Route exact={true} path="/" component={LoginPage} />
           <Route path="*" component={Error404} />
         </Switch>

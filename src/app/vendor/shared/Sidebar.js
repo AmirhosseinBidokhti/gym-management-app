@@ -44,6 +44,7 @@ class Sidebar extends Component {
       { path: "/customer", state: "customerMenuOpen" },
       { path: "/product", state: "productMenuOpen" },
       { path: "/saleInvoice", state: "saleInvoiceMenuOpen" },
+      { path: "/transaction", state: "transactionMenuOpen" },
     ];
 
     dropdownPaths.forEach((obj) => {
@@ -57,25 +58,50 @@ class Sidebar extends Component {
     return (
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <div className="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a className="sidebar-brand brand-logo" href="index.html">
-            <img src={require("../../assets/images/logo.svg")} alt="logo" />
-          </a>
-          <a className="sidebar-brand brand-logo-mini" href="index.html">
+          <a
+            className="sidebar-brand brand-logo"
+            href="/"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginRight: 0,
+              padding: 0,
+            }}
+          >
             <img
-              src={require("../../assets/images/logo-mini.svg")}
+              src={require("../../assets/added-ones/imotion-logo.png")}
               alt="logo"
+              style={{
+                width: "110px",
+                height: "auto",
+                marginTop: "8px",
+                margin: 0,
+              }}
             />
           </a>
+          {/* <a className="sidebar-brand brand-logo-mini" href="/">
+            <img
+              style={{ height: "30px", marginTop: "5px", margin: 0 }}
+              src={require("../../assets/added-ones/imotion-logo.png")}
+              alt="logo"
+            />
+          </a> */}
         </div>
         <ul className="nav">
-          <li className="nav-item profile">
+          <li
+            className="nav-item profile"
+            style={{ marginTop: "15px", marginBottom: "-28px" }}
+          >
             <div className="profile-desc">
               <div className="profile-pic">
                 <div className="count-indicator">
                   <img
                     className="img-xs rounded-circle "
-                    src={require("../../assets/images/faces/face15.jpg")}
+                    src={require("../../assets/added-ones/fitclub-logo.png")}
+                    className="img-xs rounded-circle"
+                    src={require("../../assets/added-ones/fitclub-logo.png")}
                     alt="profile"
+                    style={{ width: "50px", height: "auto" }}
                   />
                   <span className="count bg-success"></span>
                 </div>
@@ -365,47 +391,47 @@ class Sidebar extends Component {
           </li>
           <li
             className={
-              this.isPathActive("/product")
+              this.isPathActive("/transaction")
                 ? "nav-item menu-items active"
                 : "nav-item menu-items"
             }
           >
             <div
               className={
-                this.state.productMenuOpen
+                this.state.transactionMenuOpen
                   ? "nav-link menu-expanded"
                   : "nav-link"
               }
-              onClick={() => this.toggleMenuState("productMenuOpen")}
+              onClick={() => this.toggleMenuState("transactionMenuOpen")}
               data-toggle="collapse"
             >
               <span className="menu-icon">
-                <i className="mdi mdi-run"></i>
+                <i className="mdi mdi-cash-usd"></i>
               </span>
-              <span className="menu-title">محصولات</span>
+              <span className="menu-title">تراکنش ها</span>
               <i
                 className="mdi mdi-chevron-down"
                 style={{ marginRight: "auto" }}
               ></i>
             </div>
-            <Collapse in={this.state.productMenuOpen}>
+            <Collapse in={this.state.transactionMenuOpen}>
               <div>
                 <ul className="nav flex-column sub-menu">
                   <li className="nav-item">
                     {" "}
                     <Link
                       className={
-                        this.isPathActive("/product/add-new-product")
+                        this.isPathActive("/transaction/add-new-transaction")
                           ? "nav-link active"
                           : "nav-link"
                       }
-                      to="/product/add-new-product"
+                      to="/transaction/add-new-transaction"
                     >
                       <i
                         className="mdi mdi-new-box"
                         style={{ marginLeft: "5px", marginTop: "3px" }}
                       ></i>{" "}
-                      ایجاد محصول جدید
+                      ثبت تراکنش جدید
                     </Link>
                   </li>
 
@@ -413,17 +439,17 @@ class Sidebar extends Component {
                     {" "}
                     <Link
                       className={
-                        this.isPathActive("/product/product-list")
+                        this.isPathActive("/transaction/transaction-list")
                           ? "nav-link active"
                           : "nav-link"
                       }
-                      to="/product/product-list"
+                      to="/transaction/transaction-list"
                     >
                       <i
-                        className="mdi mdi-file-multiple"
+                        className="mdi mdi-cash-multiple"
                         style={{ marginLeft: "5px", marginTop: "3px" }}
                       ></i>{" "}
-                      لیست محصولات
+                      لیست تراکنش ها
                     </Link>
                   </li>
                 </ul>
