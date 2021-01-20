@@ -65,7 +65,7 @@ export const TransactionAddPage = () => {
       <div className="col-12 grid-margin">
         <div className="card">
           <div className="card-body">
-            <h4 className="card-title">فرم ثبت مشتری</h4>
+            <h4 className="card-title">فرم ثبت تراکنش</h4>
             {success && (
               <h2 style={{ color: "#4BB543" }}>تراکنش با موفقیت ثبت شد</h2>
             )}
@@ -73,7 +73,7 @@ export const TransactionAddPage = () => {
             <form className="form-sample" onSubmit={submitHandler}>
               <p className="card-description">
                 {" "}
-                برای ایجاد مشتری اطلاعات وی را وارد کنید.{" "}
+                برای ثبت تراکنش، اطلاعات مربوطه را وارد کنید.{" "}
               </p>
               <div className="row">
                 {/* <div className="col-md-6">
@@ -169,7 +169,7 @@ export const TransactionAddPage = () => {
                         value={accountID}
                       >
                         <option selected disabled>
-                          انتخاب کنید
+                          ابتدا نوع حساب را انتخاب کنید
                         </option>
                         {accounts.map((el) => (
                           <option key={el.id} value={el.id}>
