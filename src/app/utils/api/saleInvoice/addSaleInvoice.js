@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-export const updateCustomer = async (newCustomerObj) => {
+export const addSaleInvoice = async (saleInvoiceObj) => {
   try {
     const authToken = JSON.parse(localStorage.getItem("userInfo")).accessToken;
 
@@ -15,9 +15,9 @@ export const updateCustomer = async (newCustomerObj) => {
 
     console.log(config);
 
-    const { data } = await axios.put(
-      "https://devking.ir/api/Customer/updateCustomer",
-      newCustomerObj,
+    const { data } = await axios.post(
+      "https://devking.ir/api/SaleInvoice/addSaleInvoice",
+      saleInvoiceObj,
 
       config
     );

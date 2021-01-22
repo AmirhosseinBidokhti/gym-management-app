@@ -117,6 +117,21 @@ export const ProductAddPage = () => {
                   </Form.Group>
                 </div>
               </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <Form.Group className="row">
+                    <label className="col-sm-3 col-form-label">
+                      تعداد جلسات
+                    </label>
+                    <div className="col-sm-9">
+                      <Form.Control
+                        type="number"
+                        onChange={(e) => setSessionCount(e.target.value)}
+                      />
+                    </div>
+                  </Form.Group>
+                </div>
+              </div>
 
               <button
                 type="submit"

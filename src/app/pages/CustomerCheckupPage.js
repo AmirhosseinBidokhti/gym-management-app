@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { ProgressBar } from "react-bootstrap";
+import { ProgressBar, Dropdown } from "react-bootstrap";
 import { GetCustomerCheckup } from "../utils/api/customer/getCustomerCheckup";
 import { addCustomerCheckup } from "../utils/api/customer/addCustomerCheckup";
+import { deleteCustomerCheckup } from "../utils/api/customer/deleteCustomerCheckup";
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Form } from "react-bootstrap";
@@ -26,6 +27,12 @@ export const CustomerCheckupPage = ({ history, match }) => {
 
   const [loading, setLoading] = useState(true);
 
+  const [latestCheckup, setLatestCheckup] = useState({});
+
+  const getLatestCheckup = () => {
+    return customerCheckupList.pop();
+  };
+
   //TODO: make a callback ... for setStuffs
   // const onChangeHandler = (callback, value) => {
   //   callback()
@@ -36,7 +43,6 @@ export const CustomerCheckupPage = ({ history, match }) => {
   const customerID = match.params.id;
   //console.log("customer id=" + " " + customerID);
   const [customerCheckupList, setCustomerCheckupList] = useState([]);
-  console.log(customerCheckupList);
 
   const sumbitHandler = async (e) => {
     e.preventDefault();
@@ -67,6 +73,10 @@ export const CustomerCheckupPage = ({ history, match }) => {
       const result = await GetCustomerCheckup(customerID);
       console.log(result);
       setCustomerCheckupList(result);
+      if (result.length !== 0) {
+        setLatestCheckup(result[result.length - 1]);
+      }
+
       setLoading(false);
     };
     getData();
@@ -109,6 +119,7 @@ export const CustomerCheckupPage = ({ history, match }) => {
                   <tbody>
                     {customerCheckupList.map(
                       ({
+                        id,
                         createDate,
                         weight,
                         chest,
@@ -125,7 +136,31 @@ export const CustomerCheckupPage = ({ history, match }) => {
                       }) => {
                         return (
                           <tr>
-                            <td>{sessionNo}</td>
+                            <td>
+                              <Dropdown>
+                                <Dropdown.Toggle
+                                  variant="btn btn-outline-primary"
+                                  id="dropdownMenuOutlineButton5"
+                                >
+                                  {sessionNo}
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                  <Dropdown.Item
+                                    onClick={async (e) => {
+                                      const {
+                                        isSuccess,
+                                      } = await deleteCustomerCheckup(id);
+                                      if (isSuccess) {
+                                        window.location.reload();
+                                      }
+                                    }}
+                                  >
+                                    حذف
+                                  </Dropdown.Item>
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </td>
+
                             <td>{createDate}</td>
                             <td>{weight}</td>
                             <td>{chest}</td>
@@ -152,10 +187,11 @@ export const CustomerCheckupPage = ({ history, match }) => {
                 isOpen={modal}
                 toggle={toggle}
                 size="lg"
-                style={{ maxWidth: "70%", width: "100%" }}
+                style={{ maxWidth: "95%", width: "100%" }}
               >
                 <ModalBody>
                   <div className="row">
+                    {" "}
                     <div className="col-md-6 grid-margin stretch-card">
                       <div className="card">
                         <div className="card-body">
@@ -343,6 +379,153 @@ export const CustomerCheckupPage = ({ history, match }) => {
                           >
                             انصراف
                           </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-6 grid-margin stretch-card">
+                      <div className="card">
+                        <div className="card-body">
+                          <h4 className="card-title"> آخرین چک آپ انجام شده</h4>
+                          <div className="col-md-6 ">
+                            <ul>
+                              <li>شماره جلسه: {latestCheckup.sessionNo}</li>
+                              <li>وزن: {latestCheckup.weight}</li>
+                              <li>دوره سینه: {latestCheckup.chest}</li>
+                              <li>شکم: {latestCheckup.abs}</li>
+                              <li>کمر: {latestCheckup.waistSize}</li>
+                              <li>باسن: {latestCheckup.butt}</li>
+                              <li>بازو راست: {latestCheckup.rightArm}</li>
+                              <li>بازو چپ: {latestCheckup.leftArm}</li>
+                              <li>ران راست: {latestCheckup.rightThigh}</li>
+                              <li>ران چپ: {latestCheckup.leftThigh}</li>
+                              <li>ساق پا راست: {latestCheckup.rightCalves}</li>
+                              <li>ساق پای چپ: {latestCheckup.leftCalves}</li>
+                            </ul>
+                          </div>
+
+                          <div className="col-md-6 ">
+                            <h4 className="card-title">تغییرات</h4>
+                            <ul>
+                              <li
+                                className={
+                                  weight - latestCheckup.weight > 0
+                                    ? "green"
+                                    : "red"
+                                }
+                              >
+                                وزن:{" "}
+                                {weight ? weight - latestCheckup.weight : 0}
+                              </li>
+                              <li
+                                className={
+                                  chest - latestCheckup.chest > 0
+                                    ? "green"
+                                    : "red"
+                                }
+                              >
+                                دوره سینه:{" "}
+                                {chest ? chest - latestCheckup.chest : 0}
+                              </li>
+                              <li
+                                className={
+                                  abs - latestCheckup.abs > 0 ? "green" : "red"
+                                }
+                              >
+                                شکم: {abs ? abs - latestCheckup.abs : 0}
+                              </li>
+                              <li
+                                className={
+                                  waistSize - latestCheckup.waistSize > 0
+                                    ? "green"
+                                    : "red"
+                                }
+                              >
+                                کمر:{" "}
+                                {waistSize
+                                  ? waistSize - latestCheckup.waistSize
+                                  : 0}
+                              </li>
+                              <li
+                                className={
+                                  butt - latestCheckup.butt > 0
+                                    ? "green"
+                                    : "red"
+                                }
+                              >
+                                باسن: {butt ? butt - latestCheckup.butt : 0}
+                              </li>
+                              <li
+                                className={
+                                  rightArm - latestCheckup.rightArm > 0
+                                    ? "green"
+                                    : "red"
+                                }
+                              >
+                                بازو راست:{" "}
+                                {rightArm
+                                  ? rightArm - latestCheckup.rightArm
+                                  : 0}
+                              </li>
+                              <li
+                                className={
+                                  leftArm - latestCheckup.leftArm > 0
+                                    ? "green"
+                                    : "red"
+                                }
+                              >
+                                بازو چپ:{" "}
+                                {leftArm ? leftArm - latestCheckup.leftArm : 0}
+                              </li>
+                              <li
+                                className={
+                                  rightTigh - latestCheckup.rightThigh > 0
+                                    ? "green"
+                                    : "red"
+                                }
+                              >
+                                ران راست:{" "}
+                                {rightTigh
+                                  ? rightTigh - latestCheckup.rightThigh
+                                  : 0}
+                              </li>
+                              <li
+                                className={
+                                  leftTigh - latestCheckup.leftThigh > 0
+                                    ? "green"
+                                    : "red"
+                                }
+                              >
+                                ران چپ:{" "}
+                                {leftTigh
+                                  ? leftTigh - latestCheckup.leftThigh
+                                  : 0}
+                              </li>
+                              <li
+                                className={
+                                  rightCalves - latestCheckup.rightCalves > 0
+                                    ? "green"
+                                    : "red"
+                                }
+                              >
+                                ساق پا راست:{" "}
+                                {rightCalves
+                                  ? rightCalves - latestCheckup.rightCalves
+                                  : 0}
+                              </li>
+                              <li
+                                className={
+                                  leftCalves - latestCheckup.leftCalves > 0
+                                    ? "green"
+                                    : "red"
+                                }
+                              >
+                                ساق پای چپ:{" "}
+                                {leftCalves
+                                  ? leftCalves - latestCheckup.leftCalves
+                                  : 0}
+                              </li>
+                            </ul>
+                          </div>
                         </div>
                       </div>
                     </div>

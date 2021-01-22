@@ -1,8 +1,6 @@
-// temporary. later will be added to redux. now i dont have much time.
-
 import axios from "axios";
 
-export const updateCustomer = async (newCustomerObj) => {
+export const getSaleInvoices = async () => {
   try {
     const authToken = JSON.parse(localStorage.getItem("userInfo")).accessToken;
 
@@ -13,12 +11,10 @@ export const updateCustomer = async (newCustomerObj) => {
       },
     };
 
-    console.log(config);
-
-    const { data } = await axios.put(
-      "https://devking.ir/api/Customer/updateCustomer",
-      newCustomerObj,
-
+    const {
+      data: { data },
+    } = await axios.get(
+      "https://devking.ir/api/SaleInvoice/getSaleInvoices",
       config
     );
     console.log(data);

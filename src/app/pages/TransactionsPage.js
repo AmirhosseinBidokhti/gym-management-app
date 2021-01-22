@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ProgressBar } from "react-bootstrap";
 import { Dropdown, ButtonGroup } from "react-bootstrap";
 import { getTransactions } from "../utils/api/transaction/getTransactions";
+import { deleteTransaction } from "../utils/api/transaction/deleteTransaction";
 
 import Spinner from "../vendor/shared/Spinner";
 import { Link } from "react-router-dom";
@@ -34,7 +35,7 @@ export const TransactionsPage = () => {
         <div className="col-lg-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-body">
-              <h4 className="card-title">لیست مشتریان</h4>
+              <h4 className="card-title">لیست تراکنش ها</h4>
               <p className="card-description"></p>
               <div className="table-responsive ">
                 <table className="table">
@@ -64,17 +65,16 @@ export const TransactionsPage = () => {
                               </Dropdown.Toggle>
                               <Dropdown.Menu>
                                 <Dropdown.Item
-                                  as={Link}
-                                  // to={`/customer/customer-checkup/${customer.id}`}
+                                  onClick={async (e) => {
+                                    const {
+                                      isSuccess,
+                                    } = await deleteTransaction(transaction.id);
+                                    if (isSuccess) {
+                                      window.location.reload();
+                                    }
+                                  }}
                                 >
-                                  مشاهده چک آپ
-                                </Dropdown.Item>
-
-                                <Dropdown.Item
-                                  as={Link}
-                                  // to={`/customer/edit-customer/${.id}`}
-                                >
-                                  ویرایش
+                                  حذف
                                 </Dropdown.Item>
                               </Dropdown.Menu>
                             </Dropdown>
@@ -85,7 +85,7 @@ export const TransactionsPage = () => {
                           <td>{transaction.accountType.title}</td>
                           <td>{transaction.account.lastName}</td>
                           <td>{transaction.price}</td>
-                          <td>{transaction.createDate}</td>
+                          <td>{transaction.createDateFa}</td>
                           <td>{transaction.description}</td>
                         </tr>
                       );

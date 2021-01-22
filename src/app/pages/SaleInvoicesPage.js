@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { ProgressBar } from "react-bootstrap";
 import { Dropdown, ButtonGroup } from "react-bootstrap";
-import { getProducts } from "../utils/api/products/getProducts";
+
+import { getSaleInvoices } from "../utils/api/saleInvoice/getSaleInvoices";
 import Spinner from "../vendor/shared/Spinner";
 import { Link } from "react-router-dom";
+import { deleteSaleInvoice } from "../utils/api/saleInvoice/deleteSaleInvoice";
 export const SaleInvoicesPage = () => {
-  const [productList, setProductList] = useState([]);
+  const [saleInvoiceList, setSaleInvoiceList] = useState([]);
   const [loading, setLoading] = useState(true);
   //console.log(customerList);
 
   useEffect(() => {
     const getData = async () => {
-      const result = await getProducts();
+      const result = await getSaleInvoices();
       console.log(result);
-      setProductList(result);
+      setSaleInvoiceList(result);
       setLoading(false);
     };
     getData();
@@ -33,52 +35,77 @@ export const SaleInvoicesPage = () => {
         <div className="col-lg-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-body">
-              <h4 className="card-title">لیست مشتریان</h4>
+              <h4 className="card-title">لیست فاکتور های فروش</h4>
               <p className="card-description"></p>
               <div className="table-responsive ">
                 <table className="table">
                   <thead style={{ color: "white" }}>
                     <tr>
                       <th> شناسه </th>
-                      <th>نام محصول</th>
-                      <th> قیمت </th>
-                      <th> تعداد جلسات </th>
-                      <th> تاریخ شروع </th>
-                      <th> تاریخ پایان </th>
+                      <th>تاریخ ثبت</th>
+                      <th>مشتری</th>
+                      <th> کالا </th>
+                      <th> نحوه پرداخت </th>
+                      <th> تعداد </th>
+                      <th> مبلغ </th>
+                      <th> تخفیف </th>
+
+                      <th> توضیحات </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {productList.map((product) => {
-                      return (
-                        <tr key={product.id}>
-                          <td>
-                            <Dropdown>
-                              <Dropdown.Toggle
-                                variant="btn btn-outline-primary"
-                                id="dropdownMenuOutlineButton5"
-                              >
-                                {product.id}
-                              </Dropdown.Toggle>
-                              <Dropdown.Menu>
-                                <Dropdown.Item
-                                  as={Link}
-                                  to={`/customer/customer-checkup/${product.id}`}
+                    {saleInvoiceList.map(
+                      ({
+                        id,
+                        invDateFa,
+                        qty,
+                        firstName,
+                        lastName,
+                        paymentTypeTitle,
+                        productName,
+                        reduction,
+                        price,
+                        memo,
+                      }) => {
+                        return (
+                          <tr key={id}>
+                            <td>
+                              <Dropdown>
+                                <Dropdown.Toggle
+                                  variant="btn btn-outline-primary"
+                                  id="dropdownMenuOutlineButton5"
                                 >
-                                  مشاهده چک آپ
-                                </Dropdown.Item>
+                                  {id}
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                  <Dropdown.Item
+                                    onClick={async (e) => {
+                                      const {
+                                        isSuccess,
+                                      } = await deleteSaleInvoice(id);
+                                      if (isSuccess) {
+                                        window.location.reload();
+                                      }
+                                    }}
+                                  >
+                                    حذف
+                                  </Dropdown.Item>
+                                </Dropdown.Menu>
+                              </Dropdown>
+                            </td>
+                            <td>{invDateFa}</td>
+                            <td>{`${firstName} ${lastName}`}</td>
+                            <td>{productName}</td>
+                            <td>{paymentTypeTitle}</td>
+                            <td>{qty}</td>
+                            <td>{price}</td>
+                            <td>{reduction}</td>
 
-                                <Dropdown.Item>ویرایش</Dropdown.Item>
-                              </Dropdown.Menu>
-                            </Dropdown>
-                          </td>
-                          <td>{`${product.productName}`}</td>
-                          <td>{product.salePrice}</td>
-                          <td>{product.sessionCount}</td>
-                          <td>{product.startDate}</td>
-                          <td>{product.endDate}</td>
-                        </tr>
-                      );
-                    })}
+                            <td>{memo}</td>
+                          </tr>
+                        );
+                      }
+                    )}
                   </tbody>
                 </table>
               </div>

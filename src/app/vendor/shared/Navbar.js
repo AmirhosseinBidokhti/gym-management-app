@@ -12,7 +12,7 @@ class Navbar extends Component {
   }
 
   getUsername() {
-    return JSON.parse(localStorage.getItem("userInfo")).username;
+    return JSON.parse(localStorage.getItem("userInfo")).userName;
   }
 
   logOut() {

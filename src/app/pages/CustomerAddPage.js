@@ -145,7 +145,6 @@ export const CustomerAddPage = () => {
                             ? setGender(true)
                             : setGender(false);
                         }}
-                        value={gender}
                       >
                         <option selected disabled>
                           انتخاب کنید

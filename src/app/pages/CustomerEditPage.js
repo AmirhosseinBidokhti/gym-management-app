@@ -98,7 +98,7 @@ export const CustomerEditPage = ({ match }) => {
             <h4 className="card-title">فرم ویرایش مشتری</h4>
             {success && (
               <h2 style={{ color: "#4BB543" }}>
-                ورزشکار جدید با موفقیت اضافه شد
+                اطلاعات ورزشکار با موفقیت بروزرسانی شد!
               </h2>
             )}
 

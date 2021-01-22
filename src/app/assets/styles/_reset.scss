@@ -145,7 +145,17 @@ input:focus {
   outline: none;
 }
 
+///////////////////////////
 // added by me
+
+.red {
+  color: rgb(240, 89, 89);
+}
+
+.green {
+  color: rgb(39, 154, 56);
+}
+
 input[type="number"] {
   -moz-appearance: textfield;
 }
@@ -153,4 +163,12 @@ input[type="number"] {
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
+}
+
+select.form-control,
+.form-control:focus {
+  padding: 0.4375rem 0.75rem;
+  border: 0;
+  outline: 1px solid #322f2f;
+  color: #9ba4b3 !important;
 }

@@ -3,13 +3,26 @@ import { Form } from "react-bootstrap";
 import DatePicker from "react-modern-calendar-datepicker";
 
 import { addProduct } from "../utils/api/products/addProduct";
+import { getCustomers } from "../utils/api/customer/getCustomers";
+import { getProducts } from "../utils/api/products/getProducts";
+import { getProduct } from "../utils/api/products/getProduct";
+import { getSaleInvoiceTypes } from "../utils/api/saleInvoice/getSaleInvoiceTypes";
+import { addSaleInvoice } from "../utils/api/saleInvoice/addSaleInvoice";
 
 export const SaleInvoiceAddPage = () => {
+  const [customerList, setCustomerList] = useState([]);
+  const [productList, setProductList] = useState([]);
   const [productName, setProductName] = useState("");
-  const [sessionCount, setSessionCount] = useState(null);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [salePrice, setSalePrice] = useState(null);
+  const [productID, setProductID] = useState("");
+  const [accountID, setAccountID] = useState(null);
+
+  const [reduction_Price, setReduction_Price] = useState(null);
+  const [memo, setMemo] = useState(null);
+  const [qty, setQty] = useState(null);
+  const [productPrice, setProductPrice] = useState(null);
+  const [productQty, setProductQty] = useState(null);
+  const [saleInvoiceTypes, setSaleInvoiceTypes] = useState([]);
+  const [saleInvoiceTypeID, setSaleInvoiceTypeID] = useState(null);
 
   //  {day: 1, month: 10, year: 1399}
 
@@ -21,28 +34,56 @@ export const SaleInvoiceAddPage = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const newProduct = {
-      productName: productName,
-
-      sessionCount: sessionCount,
-      startDate: new Date(startDate.year, startDate.month, startDate.day),
-      endDate: new Date(endDate.year, endDate.month, endDate.day),
-      salePrice: salePrice,
+    const newSaleInvoice = {
+      accountID: accountID,
+      invType: 1,
+      memo: memo,
+      saleInvoiceDetails: [
+        {
+          productID: productID,
+          productName: productName,
+          qty: qty,
+          price: productPrice,
+          reduction_Price: reduction_Price,
+          sessionQty: productQty,
+        },
+      ],
+      saleInvoicePayments: [
+        {
+          saleInvoicePaymentTypeId: saleInvoiceTypeID,
+          price: (productPrice - reduction_Price) * qty,
+        },
+      ],
     };
-    const { data, isSuccess } = await addProduct(newProduct);
+    const { data, isSuccess } = await addSaleInvoice(newSaleInvoice);
 
-    console.log(newProduct);
     console.log(data);
+    console.log(newSaleInvoice);
     if (isSuccess) {
       setSuccess(isSuccess);
       setTimeout(() => {
         window.location.reload();
       }, 1500);
     } else {
-      console.log("try again something was wrong");
+      alert("try again something was wrong");
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    async function getData() {
+      const customers = await getCustomers();
+      setCustomerList(customers);
+      const result = await getProducts();
+      console.log(result);
+      setProductList(result);
+
+      const saleInvoiceType = await getSaleInvoiceTypes();
+
+      setSaleInvoiceTypes(saleInvoiceType);
+    }
+    getData();
+  }, []);
 
   return (
     <>
@@ -64,22 +105,98 @@ export const SaleInvoiceAddPage = () => {
               <div className="row">
                 <div className="col-md-6">
                   <Form.Group className="row">
+                    <label className="col-sm-3 col-form-label">نام مشتری</label>
+                    <div className="col-sm-9">
+                      <select
+                        className="form-control"
+                        onChange={(e) => setAccountID(e.target.value)}
+                      >
+                        <option selected disabled>
+                          انتخاب کنید
+                        </option>
+                        {customerList.map((el) => (
+                          <option key={el.id} value={el.id}>
+                            {`${el.firstName} ${el.lastName}`}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </Form.Group>
+                </div>
+                <div className="col-md-6">
+                  <Form.Group className="row">
                     <label className="col-sm-3 col-form-label">نام محصول</label>
                     <div className="col-sm-9">
+                      <select
+                        className="form-control"
+                        onChange={async (e) => {
+                          setProductID(e.target.value);
+                          const product = await getProduct(e.target.value);
+                          setProductQty(product.sessionCount);
+                          setProductName(product.productName);
+                          setProductPrice(product.salePrice);
+                        }}
+                      >
+                        <option selected disabled>
+                          انتخاب کنید
+                        </option>
+                        {productList.map((el) => (
+                          <option key={el.id} value={el.id}>
+                            {` ${el.productName}  (قیمت: ${el.salePrice}) (تعداد جلسه: ${el.sessionCount})`}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </Form.Group>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <Form.Group className="row">
+                    <label className="col-sm-3 col-form-label">تعداد</label>
+                    <div className="col-sm-9">
                       <Form.Control
-                        type="text"
-                        onChange={(e) => setProductName(e.target.value)}
+                        type="number"
+                        onChange={(e) => {
+                          setQty(e.target.value);
+                        }}
                       />
                     </div>
                   </Form.Group>
                 </div>
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">قیمت فروش</label>
+                    <label className="col-sm-3 col-form-label">
+                      نوع پرداخت
+                    </label>
+                    <div className="col-sm-9">
+                      <select
+                        className="form-control"
+                        onChange={(e) => setSaleInvoiceTypeID(e.target.value)}
+                      >
+                        <option selected disabled>
+                          انتخاب کنید
+                        </option>
+                        {saleInvoiceTypes.map((el) => (
+                          <option key={el.id} value={el.id}>
+                            {el.title}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </Form.Group>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <Form.Group className="row">
+                    <label className="col-sm-3 col-form-label">تخفیف</label>
                     <div className="col-sm-9">
                       <Form.Control
                         type="number"
-                        onChange={(e) => setSalePrice(e.target.value)}
+                        onChange={(e) => {
+                          setReduction_Price(e.target.value);
+                        }}
                       />
                     </div>
                   </Form.Group>
@@ -88,31 +205,19 @@ export const SaleInvoiceAddPage = () => {
               <div className="row">
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">
-                      تاریخ شروع
+                    <label
+                      className="col-sm-3 col-form-label"
+                      htmlFor="exampleTextarea1"
+                    >
+                      توضیحات
                     </label>
                     <div className="col-sm-9">
-                      <DatePicker
-                        value={startDate}
-                        onChange={setStartDate}
-                        shouldHighlightWeekends
-                        locale="fa"
-                      />
-                    </div>
-                  </Form.Group>
-                </div>
-                <div className="col-md-6">
-                  <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">
-                      تاریخ پایان
-                    </label>
-                    <div className="col-sm-9">
-                      <DatePicker
-                        value={endDate}
-                        onChange={setEndDate}
-                        shouldHighlightWeekends
-                        locale="fa"
-                      />
+                      <textarea
+                        className="form-control"
+                        id="exampleTextarea1"
+                        rows="4"
+                        onChange={(e) => setMemo(e.target.value)}
+                      ></textarea>
                     </div>
                   </Form.Group>
                 </div>
