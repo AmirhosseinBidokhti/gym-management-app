@@ -94,14 +94,33 @@ export const CustomerAddPage = () => {
       <div className="col-12 grid-margin">
         <div className="card">
           <div className="card-body">
-            <h4 className="card-title">فرم ثبت مشتری</h4>
-            {success && (
-              <h2 style={{ color: "#4BB543" }}>
-                ورزشکار جدید با موفقیت اضافه شد
-              </h2>
-            )}
+            <div style={{ display: "flex" }}>
+              <h4 className="card-title">فرم ثبت مشتری</h4>
+              {success && (
+                <h2 style={{ color: "#4BB543" }}>
+                  ورزشکار جدید با موفقیت اضافه شد
+                </h2>
+              )}
+              <button
+                type="button"
+                className=" btn-dark "
+                style={{
+                  width: "40px",
+                  height: "30px",
+                  marginRight: "auto",
+                }}
+                title="back"
+                onClick={(e) => window.history.back()}
+              >
+                <i className="mdi mdi-arrow-left"></i>
+              </button>
+            </div>
 
-            <form className="form-sample" onSubmit={submitHandler}>
+            <form
+              className="form-sample"
+              onSubmit={submitHandler}
+              id="customerForm"
+            >
               <p className="card-description">
                 {" "}
                 برای ایجاد مشتری اطلاعات وی را وارد کنید.{" "}
@@ -217,7 +236,6 @@ export const CustomerAddPage = () => {
                       <Form.Control
                         type="text"
                         onChange={(e) => setPhone(e.target.value)}
-                        required
                       />
                     </div>
                   </Form.Group>
@@ -329,7 +347,12 @@ export const CustomerAddPage = () => {
               >
                 ثبت
               </button>
-              <button className="btn btn-dark mr-2">انصراف</button>
+              <button
+                className="btn btn-dark mr-2"
+                onClick={(e) => document.getElementById("customerForm").reset()}
+              >
+                انصراف
+              </button>
             </form>
           </div>
         </div>

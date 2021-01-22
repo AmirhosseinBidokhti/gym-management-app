@@ -30,7 +30,7 @@ export const TransactionAddPage = () => {
       price: parseInt(price),
       description: description,
       accountID: accountID,
-      userid: JSON.parse(localStorage.getItem("userInfo")).userid,
+      userid: JSON.parse(localStorage.getItem("userInfo")).userID,
     };
 
     e.preventDefault();
@@ -65,11 +65,26 @@ export const TransactionAddPage = () => {
       <div className="col-12 grid-margin">
         <div className="card">
           <div className="card-body">
-            <h4 className="card-title">فرم ثبت تراکنش</h4>
+            <div style={{ display: "flex" }}>
+              <h4 className="card-title">فرم ثبت تراکنش</h4>
+
+              <button
+                type="button"
+                className=" btn-dark "
+                style={{
+                  width: "40px",
+                  height: "30px",
+                  marginRight: "auto",
+                }}
+                title="back"
+                onClick={(e) => window.history.back()}
+              >
+                <i className="mdi mdi-arrow-left"></i>
+              </button>
+            </div>
             {success && (
               <h2 style={{ color: "#4BB543" }}>تراکنش با موفقیت ثبت شد</h2>
             )}
-
             <form className="form-sample" onSubmit={submitHandler}>
               <p className="card-description">
                 {" "}

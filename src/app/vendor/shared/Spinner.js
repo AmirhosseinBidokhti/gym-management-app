@@ -4,11 +4,11 @@ export class Spinner extends Component {
   render() {
     return (
       <div
-        class="d-flex justify-content-center"
+        className="d-flex justify-content-center"
         style={{ alignItems: "center" }}
       >
-        <div class="spinner-grow" role="status">
-          <span class="sr-only">Loading...</span>
+        <div className="spinner-grow" role="status">
+          <span className="sr-only">Loading...</span>
         </div>
       </div>
     );

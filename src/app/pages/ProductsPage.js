@@ -33,7 +33,22 @@ export const ProductsPage = () => {
         <div className="col-lg-12 grid-margin stretch-card">
           <div className="card">
             <div className="card-body">
-              <h4 className="card-title">لیست مشتریان</h4>
+              <div style={{ display: "flex" }}>
+                <h4 className="card-title">لیست محصولات</h4>
+                <button
+                  type="button"
+                  className=" btn-dark "
+                  style={{
+                    width: "40px",
+                    height: "30px",
+                    marginRight: "auto",
+                  }}
+                  title="back"
+                  onClick={(e) => window.history.back()}
+                >
+                  <i className="mdi mdi-arrow-left"></i>
+                </button>
+              </div>
               <p className="card-description"></p>
               <div className="table-responsive ">
                 <table className="table">
@@ -60,14 +75,9 @@ export const ProductsPage = () => {
                                 {product.id}
                               </Dropdown.Toggle>
                               <Dropdown.Menu>
-                                <Dropdown.Item
-                                  as={Link}
-                                  to={`/customer/customer-checkup/${product.id}`}
-                                >
-                                  مشاهده چک آپ
-                                </Dropdown.Item>
-
                                 <Dropdown.Item>ویرایش</Dropdown.Item>
+
+                                <Dropdown.Item>حذف</Dropdown.Item>
                               </Dropdown.Menu>
                             </Dropdown>
                           </td>

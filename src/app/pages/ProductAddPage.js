@@ -49,12 +49,27 @@ export const ProductAddPage = () => {
       <div className="col-12 grid-margin">
         <div className="card">
           <div className="card-body">
-            <h4 className="card-title">فرم ایجاد محصول یا سرویس</h4>
-            {success && (
-              <h2 style={{ color: "#4BB543" }}>
-                محصول جدید با موفقیت اضافه شد
-              </h2>
-            )}
+            <div style={{ display: "flex" }}>
+              <h4 className="card-title">فرم ایجاد محصول یا سرویس</h4>
+              {success && (
+                <h2 style={{ color: "#4BB543" }}>
+                  محصول جدید با موفقیت اضافه شد
+                </h2>
+              )}
+              <button
+                type="button"
+                className=" btn-dark "
+                style={{
+                  width: "40px",
+                  height: "30px",
+                  marginRight: "auto",
+                }}
+                title="back"
+                onClick={(e) => window.history.back()}
+              >
+                <i className="mdi mdi-arrow-left"></i>
+              </button>
+            </div>
 
             <form className="form-sample" onSubmit={submitHandler}>
               <p className="card-description">

@@ -95,12 +95,28 @@ export const CustomerEditPage = ({ match }) => {
       <div className="col-12 grid-margin">
         <div className="card">
           <div className="card-body">
-            <h4 className="card-title">فرم ویرایش مشتری</h4>
-            {success && (
-              <h2 style={{ color: "#4BB543" }}>
-                اطلاعات ورزشکار با موفقیت بروزرسانی شد!
-              </h2>
-            )}
+            <div style={{ display: "flex" }}>
+              <h4 className="card-title">فرم ویرایش مشتری</h4>
+              {success && (
+                <h2 style={{ color: "#4BB543" }}>
+                  اطلاعات ورزشکار با موفقیت بروزرسانی شد!
+                </h2>
+              )}
+
+              <button
+                type="button"
+                className=" btn-dark "
+                style={{
+                  width: "40px",
+                  height: "30px",
+                  marginRight: "auto",
+                }}
+                title="back"
+                onClick={(e) => window.history.back()}
+              >
+                <i className="mdi mdi-arrow-left"></i>
+              </button>
+            </div>
 
             <form className="form-sample" onSubmit={submitHandler}>
               <p className="card-description">
@@ -116,6 +132,7 @@ export const CustomerEditPage = ({ match }) => {
                         type="text"
                         onChange={(e) => setFirstname(e.target.value)}
                         placeholder={customerBefore.firstName}
+                        defaultValue={customerBefore.firstName}
                       />
                     </div>
                   </Form.Group>
@@ -130,6 +147,7 @@ export const CustomerEditPage = ({ match }) => {
                         type="text"
                         onChange={(e) => setlastName(e.target.value)}
                         placeholder={customerBefore.lastName}
+                        defaultValue={customerBefore.lastName}
                       />
                     </div>
                   </Form.Group>
@@ -168,6 +186,7 @@ export const CustomerEditPage = ({ match }) => {
                         onChange={setSelectedDay}
                         shouldHighlightWeekends
                         locale="fa"
+                        defaultValue={customerBefore.birthDate}
                       />
                     </div>
                   </Form.Group>
@@ -183,6 +202,7 @@ export const CustomerEditPage = ({ match }) => {
                         type="text"
                         onChange={(e) => setAddress(e.target.value)}
                         placeholder={customerBefore.address}
+                        defaultValue={customerBefore.address}
                       />
                     </div>
                   </Form.Group>
@@ -195,6 +215,7 @@ export const CustomerEditPage = ({ match }) => {
                         type="email"
                         onChange={(e) => setemail(e.target.value)}
                         placeholder={customerBefore.email}
+                        defaultValue={customerBefore.email}
                       />
                     </div>
                   </Form.Group>
@@ -211,6 +232,7 @@ export const CustomerEditPage = ({ match }) => {
                         type="text"
                         onChange={(e) => setMobile(e.target.value)}
                         placeholder={customerBefore.mobile}
+                        defaultValue={customerBefore.mobile}
                         required
                       />
                     </div>
@@ -224,6 +246,7 @@ export const CustomerEditPage = ({ match }) => {
                         type="text"
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder={customerBefore.tel}
+                        defaultValue={customerBefore.tel}
                         required
                       />
                     </div>
@@ -285,6 +308,7 @@ export const CustomerEditPage = ({ match }) => {
                         type="text"
                         onChange={(e) => setInstagram(e.target.value)}
                         placeholder={customerBefore.instagram}
+                        defaultValue={customerBefore.instagram}
                       />
                     </div>
                   </Form.Group>
@@ -297,6 +321,7 @@ export const CustomerEditPage = ({ match }) => {
                         type="text"
                         onChange={(e) => setTelegram(e.target.value)}
                         placeholder={customerBefore.telegram}
+                        defaultValue={customerBefore.telegram}
                       />
                     </div>
                   </Form.Group>
