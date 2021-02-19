@@ -2,9 +2,10 @@ export const printTable = () => {
   var tab = document.getElementById("tab");
 
   var style = "<style>";
-  style = style + "table {width: 100%;font: 17px Calibri;}";
+  style = style + "table {width: 100%;font: 12px Calibri; color: #000}";
   style =
-    style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
+    style +
+    "table, th, td {border: solid 1px #DDD; border-collapse: collapse; color: #000 !important;";
   style = style + "padding: 2px 3px;text-align: center;}";
   style = style + "</style>";
 
