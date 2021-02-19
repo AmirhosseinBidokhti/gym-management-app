@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 
-import { getMembershipJoinTypes } from "../utils/api/customer/getMembershipJoinTypes";
-import { getJobInfos } from "../utils/api/customer/getJobInfos";
+import { getMembershipJoinTypes } from "../API/customer/getMembershipJoinTypes";
+import { getJobInfos } from "../API/customer/getJobInfos";
 
-import { customerAdd } from "../utils/api/customer/customerAdd";
-import { fileUpload } from "../utils/api/fileUpload/fileUpload";
+import { customerAdd } from "../API/customer/customerAdd";
+import { fileUpload } from "../API/fileUpload/fileUpload";
+
+import { customer } from "../API/types/customer";
+import cogoToast from "cogo-toast";
 
 import DatePicker from "react-modern-calendar-datepicker";
 
@@ -45,9 +48,9 @@ export const CustomerAddPage = () => {
     e.preventDefault();
     setLoading(true);
     const newCustomerInfo = {
-      firstName: firstName,
-      lastName: lastName,
-      birthdate: new Date(selectedDay.year, selectedDay.month, selectedDay.day),
+      first_name: firstName,
+      last_name: lastName,
+      birth_date: `${selectedDay.year}-${selectedDay.month}-${selectedDay.day}`,
       //birthdate: dateFormated,
       gender: gender,
       mobile: mobile,
@@ -58,20 +61,25 @@ export const CustomerAddPage = () => {
       instagram: instagram,
       address: address,
 
-      membershipJoinTypeId: membershipJoinType,
-      contractFilePath: fileName,
-      jobInfoId: job,
+      membership_join_type_id: membershipJoinType,
+      contract_file_path: fileName,
+      jobinfo_id: job,
     };
 
-    const { data, isSuccess } = await customerAdd(newCustomerInfo);
-    await fileUpload(file, fileName);
-    console.log(newCustomerInfo);
+    const { data, is_success } = await customerAdd(newCustomerInfo);
+
+    if (file) {
+      await fileUpload(file, fileName);
+    }
+
+    //console.log(newCustomerInfo);
     console.log(data);
-    if (isSuccess) {
-      setSuccess(isSuccess);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
+    if (is_success) {
+      setSuccess(is_success);
+      cogoToast.success("مشتری جدید با موفقیت اضافه شد");
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 1500);
     } else {
       console.log("try again something was wrong");
     }
@@ -96,11 +104,7 @@ export const CustomerAddPage = () => {
           <div className="card-body">
             <div style={{ display: "flex" }}>
               <h4 className="card-title">فرم ثبت مشتری</h4>
-              {success && (
-                <h2 style={{ color: "#4BB543" }}>
-                  ورزشکار جدید با موفقیت اضافه شد
-                </h2>
-              )}
+
               <button
                 type="button"
                 className=" btn-dark "
@@ -133,6 +137,7 @@ export const CustomerAddPage = () => {
                       <Form.Control
                         type="text"
                         onChange={(e) => setFirstname(e.target.value)}
+                        required
                       />
                     </div>
                   </Form.Group>
@@ -146,6 +151,7 @@ export const CustomerAddPage = () => {
                       <Form.Control
                         type="text"
                         onChange={(e) => setlastName(e.target.value)}
+                        required
                       />
                     </div>
                   </Form.Group>
@@ -225,6 +231,7 @@ export const CustomerAddPage = () => {
                       <Form.Control
                         type="text"
                         onChange={(e) => setMobile(e.target.value)}
+                        required
                       />
                     </div>
                   </Form.Group>
@@ -347,10 +354,7 @@ export const CustomerAddPage = () => {
               >
                 ثبت
               </button>
-              <button
-                className="btn btn-dark mr-2"
-                onClick={(e) => document.getElementById("customerForm").reset()}
-              >
+              <button type="reset" className="btn btn-dark mr-2">
                 انصراف
               </button>
             </form>

@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import DatePicker from "react-modern-calendar-datepicker";
+import cogoToast from "cogo-toast";
 
-import { addProduct } from "../utils/api/products/addProduct";
-import { getCustomers } from "../utils/api/customer/getCustomers";
-import { getProducts } from "../utils/api/products/getProducts";
-import { getProduct } from "../utils/api/products/getProduct";
-import { getSaleInvoiceTypes } from "../utils/api/saleInvoice/getSaleInvoiceTypes";
-import { addSaleInvoice } from "../utils/api/saleInvoice/addSaleInvoice";
+import { addProduct } from "../API/products/addProduct";
+import { getCustomers } from "../API/customer/getCustomers";
+import { getProducts } from "../API/products/getProducts";
+import { getProduct } from "../API/products/getProduct";
+import { getSaleInvoiceTypes } from "../API/saleInvoice/getSaleInvoiceTypes";
+import { addSaleInvoice } from "../API/saleInvoice/addSaleInvoice";
+
+import { saleInvoice } from "../API/types/saleInvoice";
 
 export const SaleInvoiceAddPage = () => {
   const [customerList, setCustomerList] = useState([]);
@@ -55,12 +58,28 @@ export const SaleInvoiceAddPage = () => {
         },
       ],
     };
-    const { data, isSuccess } = await addSaleInvoice(newSaleInvoice);
+    const { data, isSuccess } = await addSaleInvoice(
+      saleInvoice(
+        accountID,
+        memo,
+        productID,
+        productName,
+        qty,
+        productPrice,
+        reduction_Price,
+        productQty,
+        saleInvoiceTypeID
+      )
+    );
 
     console.log(data);
     console.log(newSaleInvoice);
     if (isSuccess) {
       setSuccess(isSuccess);
+      cogoToast.info("فاکتور فروش جدید با موفقیت ثبت شد", {
+        position: "top-center",
+        heading: "Information",
+      });
       setTimeout(() => {
         window.location.reload();
       }, 1500);
@@ -97,6 +116,7 @@ export const SaleInvoiceAddPage = () => {
                   فاکتور فروش جدید با موفقیت ثبت شد
                 </h2>
               )}
+
               <button
                 type="button"
                 className=" btn-dark "
@@ -245,7 +265,9 @@ export const SaleInvoiceAddPage = () => {
               >
                 ثبت
               </button>
-              <button className="btn btn-dark mr-2">انصراف</button>
+              <button type="reset" className="btn btn-dark mr-2">
+                انصراف
+              </button>
             </form>
           </div>
         </div>

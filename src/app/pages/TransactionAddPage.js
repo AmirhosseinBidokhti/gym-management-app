@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
-import { getAccountTypes } from "../utils/api/transaction/getAccountTypes";
+import { getAccountTypes } from "../API/transaction/getAccountTypes";
 
-import { getCustomers } from "../utils/api/customer/getCustomers";
-import { addTranscation } from "../utils/api/transaction/addTransaction";
-import { getAccountByType } from "../utils/api/transaction/getAccountByType";
+import { getCustomers } from "../API/customer/getCustomers";
+import { addTranscation } from "../API/transaction/addTransaction";
+import { getAccountByType } from "../API/transaction/getAccountByType";
+import cogoToast from "cogo-toast";
 
 export const TransactionAddPage = () => {
   const [variz, setVariz] = useState(null);
@@ -25,25 +26,23 @@ export const TransactionAddPage = () => {
 
   const submitHandler = async (e) => {
     const transactionObj = {
-      isVariz: variz,
-      accountTypeID: parseInt(accountTypeID),
+      is_variz: variz,
+      account_type_id: parseInt(accountTypeID),
       price: parseInt(price),
       description: description,
-      accountID: accountID,
-      userid: JSON.parse(localStorage.getItem("userInfo")).userID,
+      account_id: accountID,
+      user_id: JSON.parse(localStorage.getItem("userInfo")).user_id,
     };
 
     e.preventDefault();
     setLoading(true);
-    const { data, isSuccess } = await addTranscation(transactionObj);
+    const { data, is_success } = await addTranscation(transactionObj);
 
     console.log(transactionObj);
     console.log(data);
-    if (isSuccess) {
-      setSuccess(isSuccess);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1200);
+    if (is_success) {
+      setSuccess(is_success);
+      cogoToast.success("تراکنش با موفقیت ثبت شد");
     } else {
       console.log("try again something was wrong");
     }
@@ -82,9 +81,7 @@ export const TransactionAddPage = () => {
                 <i className="mdi mdi-arrow-left"></i>
               </button>
             </div>
-            {success && (
-              <h2 style={{ color: "#4BB543" }}>تراکنش با موفقیت ثبت شد</h2>
-            )}
+
             <form className="form-sample" onSubmit={submitHandler}>
               <p className="card-description">
                 {" "}
@@ -126,8 +123,9 @@ export const TransactionAddPage = () => {
                             ? setVariz(true)
                             : setVariz(false);
                         }}
+                        required
                       >
-                        <option selected disabled>
+                        <option selected disabled value="">
                           انتخاب کنید
                         </option>
                         <option value={true}>واریز</option>
@@ -143,6 +141,7 @@ export const TransactionAddPage = () => {
                       <Form.Control
                         type="number"
                         onChange={(e) => setPrice(e.target.value)}
+                        required
                       />
                     </div>
                   </Form.Group>
@@ -160,9 +159,10 @@ export const TransactionAddPage = () => {
                           const data = await getAccountByType(e.target.value);
                           setAccounts(data);
                         }}
+                        required
                         value={accountTypeID}
                       >
-                        <option selected disabled>
+                        <option selected disabled value="">
                           انتخاب کنید
                         </option>
                         {accountTypes.map((el) => (
@@ -182,13 +182,14 @@ export const TransactionAddPage = () => {
                         className="form-control"
                         onChange={(e) => setAccountID(e.target.value)}
                         value={accountID}
+                        required
                       >
-                        <option selected disabled>
+                        <option selected disabled value="">
                           ابتدا نوع حساب را انتخاب کنید
                         </option>
                         {accounts.map((el) => (
                           <option key={el.id} value={el.id}>
-                            {`${el.firstName} ${el.lastName}`}
+                            {`${el.first_name} ${el.last_name}`}
                           </option>
                         ))}
                       </select>
@@ -224,7 +225,9 @@ export const TransactionAddPage = () => {
               >
                 ثبت
               </button>
-              <button className="btn btn-dark mr-2">انصراف</button>
+              <button type="reset" className="btn btn-dark mr-2">
+                انصراف
+              </button>
             </form>
           </div>
         </div>

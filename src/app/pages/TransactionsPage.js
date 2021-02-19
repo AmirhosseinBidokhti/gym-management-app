@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { ProgressBar } from "react-bootstrap";
 import { Dropdown, ButtonGroup } from "react-bootstrap";
-import { getTransactions } from "../utils/api/transaction/getTransactions";
-import { deleteTransaction } from "../utils/api/transaction/deleteTransaction";
+import { getTransactions } from "../API/transaction/getTransactions";
+import { deleteTransaction } from "../API/transaction/deleteTransaction";
 
 import Spinner from "../vendor/shared/Spinner";
 import { Link } from "react-router-dom";
+import { formatMoney } from "../utils/formatMoney";
 export const TransactionsPage = () => {
   const [transactionList, setTransactionList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -96,12 +97,14 @@ export const TransactionsPage = () => {
                             </Dropdown>
                           </td>
                           {/* <td>{`${customer.firstName} ${customer.lastName}`}</td> */}
-                          <td>{transaction.userID}</td>
-                          <td>{transaction.isVariz ? "واریز" : "برداشت"}</td>
-                          <td>{transaction.accountType.title}</td>
-                          <td>{transaction.account.lastName}</td>
-                          <td>{transaction.price}</td>
-                          <td>{transaction.createDateFa}</td>
+                          <td>{transaction.user_id}</td>
+                          <td>{transaction.is_variz ? "واریز" : "برداشت"}</td>
+                          {/* <td>{transaction.account_type.title}</td>
+                          <td>{transaction.account.title}</td> */}
+                          <td>
+                            {formatMoney(transaction.price)} {`ریال`}
+                          </td>
+                          <td>{transaction.create_date_fa}</td>
                           <td>{transaction.description}</td>
                         </tr>
                       );

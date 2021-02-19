@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { ProgressBar } from "react-bootstrap";
+//import { ProgressBar } from "react-bootstrap";
 import { Dropdown, ButtonGroup } from "react-bootstrap";
-import { getProducts } from "../utils/api/products/getProducts";
+import { getProducts } from "../API/products/getProducts";
 import Spinner from "../vendor/shared/Spinner";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
+import { formatMoney } from "../utils/formatMoney";
+
 export const ProductsPage = () => {
   const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -81,11 +83,13 @@ export const ProductsPage = () => {
                               </Dropdown.Menu>
                             </Dropdown>
                           </td>
-                          <td>{`${product.productName}`}</td>
-                          <td>{product.salePrice}</td>
-                          <td>{product.sessionCount}</td>
-                          <td>{product.startDate}</td>
-                          <td>{product.endDate}</td>
+                          <td>{`${product.product_name}`}</td>
+                          <td>
+                            {formatMoney(product.sale_price)} {`ریال`}
+                          </td>
+                          <td>{product.session_count}</td>
+                          <td>{product.start_date}</td>
+                          <td>{product.end_date}</td>
                         </tr>
                       );
                     })}

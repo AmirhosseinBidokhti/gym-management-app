@@ -1,8 +1,10 @@
+import cogoToast from "cogo-toast";
 import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import DatePicker from "react-modern-calendar-datepicker";
 
-import { addProduct } from "../utils/api/products/addProduct";
+import { addProduct } from "../API/products/addProduct";
+import { datePickerFormater } from "../utils/datePickerFormater";
 
 export const ProductAddPage = () => {
   const [productName, setProductName] = useState("");
@@ -19,28 +21,33 @@ export const ProductAddPage = () => {
   // TODO: SEE WHAT PROPERTIES ARE REQUIRED FROM BACKEND!
 
   const submitHandler = async (e) => {
+    e = e || window.event;
     e.preventDefault();
+
     setLoading(true);
     const newProduct = {
-      productName: productName,
+      product_name: productName,
 
-      sessionCount: sessionCount,
-      startDate: new Date(startDate.year, startDate.month, startDate.day),
-      endDate: new Date(endDate.year, endDate.month, endDate.day),
-      salePrice: salePrice,
+      session_count: sessionCount,
+      start_date: datePickerFormater(startDate),
+      end_date: datePickerFormater(endDate),
+      sale_price: salePrice,
     };
-    const { data, isSuccess } = await addProduct(newProduct);
+    const { data, is_success } = await addProduct(newProduct);
 
     console.log(newProduct);
     console.log(data);
-    if (isSuccess) {
-      setSuccess(isSuccess);
+    if (is_success) {
+      setSuccess(is_success);
+      cogoToast.success("محصول جدید با موفقیت اضافه شد");
+
       setTimeout(() => {
         window.location.reload();
       }, 1500);
     } else {
       console.log("try again something was wrong");
     }
+
     setLoading(false);
   };
 
@@ -51,11 +58,7 @@ export const ProductAddPage = () => {
           <div className="card-body">
             <div style={{ display: "flex" }}>
               <h4 className="card-title">فرم ایجاد محصول یا سرویس</h4>
-              {success && (
-                <h2 style={{ color: "#4BB543" }}>
-                  محصول جدید با موفقیت اضافه شد
-                </h2>
-              )}
+
               <button
                 type="button"
                 className=" btn-dark "
@@ -71,7 +74,11 @@ export const ProductAddPage = () => {
               </button>
             </div>
 
-            <form className="form-sample" onSubmit={submitHandler}>
+            <form
+              className="form-sample"
+              onSubmit={submitHandler}
+              id="form-product"
+            >
               <p className="card-description">
                 {" "}
                 برای ایجاد محصول، اطلاعات مربوطه را وارد کنید.{" "}
@@ -155,7 +162,9 @@ export const ProductAddPage = () => {
               >
                 ثبت
               </button>
-              <button className="btn btn-dark mr-2">انصراف</button>
+              <button type="reset" className="btn btn-dark mr-2">
+                انصراف
+              </button>
             </form>
           </div>
         </div>

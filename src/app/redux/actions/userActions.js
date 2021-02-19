@@ -5,6 +5,8 @@ import {
   USER_LOGOUT,
 } from "../constants/userConstants";
 
+import { API_BASE_URL } from "../../API/config";
+
 import axios from "axios";
 
 export const login = (username, password) => async (dispatch) => {
@@ -20,8 +22,8 @@ export const login = (username, password) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      "https://devking.ir/api/Account/login",
-      { username, password },
+      `${API_BASE_URL}/Account/login`,
+      { user_name: username, password },
       config
     );
 

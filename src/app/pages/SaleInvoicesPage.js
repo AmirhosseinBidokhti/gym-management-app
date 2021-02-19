@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { ProgressBar } from "react-bootstrap";
 import { Dropdown, ButtonGroup } from "react-bootstrap";
 
-import { getSaleInvoices } from "../utils/api/saleInvoice/getSaleInvoices";
+import { getSaleInvoices } from "../API/saleInvoice/getSaleInvoices";
 import Spinner from "../vendor/shared/Spinner";
 import { Link } from "react-router-dom";
-import { deleteSaleInvoice } from "../utils/api/saleInvoice/deleteSaleInvoice";
+import { deleteSaleInvoice } from "../API/saleInvoice/deleteSaleInvoice";
+import { formatMoney } from "../utils/formatMoney";
 export const SaleInvoicesPage = () => {
   const [saleInvoiceList, setSaleInvoiceList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -73,12 +74,12 @@ export const SaleInvoicesPage = () => {
                     {saleInvoiceList.map(
                       ({
                         id,
-                        invDateFa,
+                        inv_date_Fa,
                         qty,
-                        firstName,
-                        lastName,
-                        paymentTypeTitle,
-                        productName,
+                        first_name,
+                        last_name,
+                        payment_type_title,
+                        product_name,
                         reduction,
                         price,
                         memo,
@@ -109,12 +110,14 @@ export const SaleInvoicesPage = () => {
                                 </Dropdown.Menu>
                               </Dropdown>
                             </td>
-                            <td>{invDateFa}</td>
-                            <td>{`${firstName} ${lastName}`}</td>
-                            <td>{productName}</td>
-                            <td>{paymentTypeTitle}</td>
+                            <td>{inv_date_Fa}</td>
+                            <td>{`${first_name} ${last_name}`}</td>
+                            <td>{product_name}</td>
+                            <td>{payment_type_title}</td>
                             <td>{qty}</td>
-                            <td>{price}</td>
+                            <td>
+                              {formatMoney(price)} {`ریال`}
+                            </td>
                             <td>{reduction}</td>
 
                             <td>{memo}</td>

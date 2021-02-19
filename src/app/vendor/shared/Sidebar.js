@@ -20,7 +20,7 @@ class Sidebar extends Component {
   }
 
   getUserInfo() {
-    const userName = JSON.parse(localStorage.getItem("userInfo")).userName;
+    const userName = JSON.parse(localStorage.getItem("userInfo")).user_name;
     const role = JSON.parse(localStorage.getItem("userInfo")).role;
     return {
       username: userName,
