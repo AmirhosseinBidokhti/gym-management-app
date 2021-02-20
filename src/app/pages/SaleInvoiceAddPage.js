@@ -67,7 +67,7 @@ export const SaleInvoiceAddPage = () => {
       cogoToast.success("فاکتور فروش جدید با موفقیت ثبت شد", {});
       setTimeout(() => {
         window.location.reload();
-      }, 1800);
+      }, 1200);
     } else {
       alert("try again something was wrong");
     }

@@ -1,4 +1,4 @@
-export const printTable = () => {
+export const printTable = (title) => {
   var tab = document.getElementById("tab");
 
   var style = "<style>";
@@ -12,6 +12,7 @@ export const printTable = () => {
   var win = window.open("", "", "height=700,width=700");
   win.document.write(style); //  add the style.
   win.document.write(tab.outerHTML);
+  win.document.title = `${title}`;
   win.document.close();
   win.print();
 };

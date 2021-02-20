@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { deleteSaleInvoice } from "../API/saleInvoice/deleteSaleInvoice";
 import { formatMoney } from "../utils/formatMoney";
 import Pagination from "../components/Pagination";
+import cogoToast from "cogo-toast";
 export const SaleInvoicesPage = () => {
   const [saleInvoiceList, setSaleInvoiceList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -167,10 +168,13 @@ export const SaleInvoicesPage = () => {
                                   <Dropdown.Item
                                     onClick={async (e) => {
                                       const {
-                                        isSuccess,
+                                        is_success,
                                       } = await deleteSaleInvoice(id);
-                                      if (isSuccess) {
-                                        window.location.reload();
+                                      if (is_success) {
+                                        cogoToast.success("با موفقیت حذف شد");
+                                        setTimeout(() => {
+                                          window.location.reload();
+                                        }, 1200);
                                       }
                                     }}
                                   >

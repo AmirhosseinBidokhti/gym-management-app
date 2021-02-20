@@ -232,7 +232,7 @@ export const CustomerCheckupPage = ({ history, match }) => {
                 </button>
                 <button
                   onClick={(e) => {
-                    printTable();
+                    printTable(customerName);
                   }}
                   type="button"
                   className="btn btn-info btn-icon-text"
