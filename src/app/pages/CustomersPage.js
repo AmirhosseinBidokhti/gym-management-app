@@ -7,6 +7,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import {
   getCustomers,
   getCustomers2,
+  getCustomersbyFirstName,
   getCustomers3,
 } from "../API/customer/getCustomers";
 import { fileDownload, fileDownload_v2 } from "../API/fileUpload/fileDownload";
@@ -14,6 +15,7 @@ import Spinner from "../vendor/shared/Spinner";
 import { Link } from "react-router-dom";
 import cogoToast from "cogo-toast";
 import Pagination from "../components/Pagination";
+import { formatMoney } from "../utils/formatMoney";
 const CustomersPage = () => {
   let [customerList, setCustomerList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -56,6 +58,23 @@ const CustomersPage = () => {
             <div className="card-body">
               <div style={{ display: "flex" }}>
                 <h4 className="card-title">لیست مشتریان</h4>
+                <div
+                  style={{
+                    width: "250px",
+                    marginRight: "20px",
+                  }}
+                >
+                  <Form.Control
+                    type="text"
+                    placeholder="جستجو بر اساس نام"
+                    onChange={async (e) => {
+                      let x = await getCustomersbyFirstName({
+                        first_name: e.target.value,
+                      });
+                      setCustomerList(x);
+                    }}
+                  />
+                </div>
 
                 <div
                   style={{
@@ -115,6 +134,7 @@ const CustomersPage = () => {
                       <th> جنسیت </th>
                       <th> تلفن همراه </th>
                       <th> آدرس </th>
+                      <th> مانده حساب </th>
                       <th> فایل آپلودشده</th>
                     </tr>
                   </thead>
@@ -152,6 +172,9 @@ const CustomersPage = () => {
                           <td>{customer.gender ? "مرد" : "زن"}</td>
                           <td>{customer.mobile}</td>
                           <td>{customer.address}</td>
+                          <td>
+                            {formatMoney(customer.balance)} {`ریال`}
+                          </td>
 
                           <td>
                             {" "}

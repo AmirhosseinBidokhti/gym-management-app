@@ -11,6 +11,7 @@ import { fileUpload } from "../API/fileUpload/fileUpload";
 import { Spinner } from "../vendor/shared/Spinner";
 
 import DatePicker from "react-modern-calendar-datepicker";
+import cogoToast from "cogo-toast";
 
 export const CustomerEditPage = ({ match }) => {
   const [firstName, setFirstname] = useState("");
@@ -80,9 +81,10 @@ export const CustomerEditPage = ({ match }) => {
     console.log(data);
     if (is_success) {
       setSuccess(is_success);
+      cogoToast.success("با موفقیت بروزرسانی شد");
       setTimeout(() => {
         window.location.reload();
-      }, 1500);
+      }, 1800);
     } else {
       console.log("try again something was wrong");
     }
@@ -111,11 +113,6 @@ export const CustomerEditPage = ({ match }) => {
           <div className="card-body">
             <div style={{ display: "flex" }}>
               <h4 className="card-title">فرم ویرایش مشتری</h4>
-              {success && (
-                <h2 style={{ color: "#4BB543" }}>
-                  اطلاعات ورزشکار با موفقیت بروزرسانی شد!
-                </h2>
-              )}
 
               <button
                 type="button"
@@ -287,7 +284,7 @@ export const CustomerEditPage = ({ match }) => {
                           }
                           value={membershipJoinType}
                         >
-                          <option selected disabled>
+                          <option selected disabled value="">
                             انتخاب کنید
                           </option>
                           {membershipJoinTypes.map((el) => (

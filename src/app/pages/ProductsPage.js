@@ -5,6 +5,7 @@ import { getProducts } from "../API/products/getProducts";
 import Spinner from "../vendor/shared/Spinner";
 //import { Link } from "react-router-dom";
 import { formatMoney } from "../utils/formatMoney";
+import { Link } from "react-router-dom";
 
 export const ProductsPage = () => {
   const [productList, setProductList] = useState([]);
@@ -77,7 +78,12 @@ export const ProductsPage = () => {
                                 {product.id}
                               </Dropdown.Toggle>
                               <Dropdown.Menu>
-                                <Dropdown.Item>ویرایش</Dropdown.Item>
+                                <Dropdown.Item
+                                  as={Link}
+                                  to={`/product/edit-product/${product.id}`}
+                                >
+                                  ویرایش
+                                </Dropdown.Item>
 
                                 <Dropdown.Item>حذف</Dropdown.Item>
                               </Dropdown.Menu>

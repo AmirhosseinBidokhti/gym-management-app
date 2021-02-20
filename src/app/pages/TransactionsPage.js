@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { ProgressBar } from "react-bootstrap";
+import { Form, ProgressBar } from "react-bootstrap";
 import { Dropdown, ButtonGroup } from "react-bootstrap";
-import { getTransactions } from "../API/transaction/getTransactions";
+import {
+  getTransactions,
+  getTransactionsByTitle,
+  getTransactionsByMobile,
+  getTransactionsByUserName,
+} from "../API/transaction/getTransactions";
 import { deleteTransaction } from "../API/transaction/deleteTransaction";
+import Pagination from "../components/Pagination";
 
 import Spinner from "../vendor/shared/Spinner";
 import { Link } from "react-router-dom";
@@ -10,6 +16,8 @@ import { formatMoney } from "../utils/formatMoney";
 export const TransactionsPage = () => {
   const [transactionList, setTransactionList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
   //console.log(customerList);
 
   useEffect(() => {
@@ -21,6 +29,17 @@ export const TransactionsPage = () => {
     };
     getData();
   }, [null]);
+
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentTransactions = transactionList.slice(
+    indexOfFirstPost,
+    indexOfLastPost
+  );
+
+  // change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
@@ -38,6 +57,59 @@ export const TransactionsPage = () => {
             <div className="card-body">
               <div style={{ display: "flex" }}>
                 <h4 className="card-title">لیست تراکنش ها</h4>
+
+                <div
+                  style={{
+                    width: "250px",
+                    marginRight: "20px",
+                  }}
+                >
+                  <Form.Control
+                    type="text"
+                    placeholder="جستجو با نام خانوادگی/عنوان"
+                    onChange={async (e) => {
+                      let x = await getTransactionsByTitle({
+                        title: e.target.value,
+                      });
+                      setTransactionList(x);
+                    }}
+                  />
+                </div>
+
+                <div
+                  style={{
+                    width: "250px",
+                    marginRight: "20px",
+                  }}
+                >
+                  <Form.Control
+                    type="text"
+                    placeholder="جستجو با نام کاربری ثبت کننده"
+                    onChange={async (e) => {
+                      let x = await getTransactionsByUserName({
+                        user_name: e.target.value,
+                      });
+                      setTransactionList(x);
+                    }}
+                  />
+                </div>
+                <div
+                  style={{
+                    width: "250px",
+                    marginRight: "20px",
+                  }}
+                >
+                  <Form.Control
+                    type="text"
+                    placeholder="جستجو با شماره موبایل"
+                    onChange={async (e) => {
+                      let x = await getTransactionsByMobile({
+                        mobile: e.target.value,
+                      });
+                      setTransactionList(x);
+                    }}
+                  />
+                </div>
 
                 <button
                   type="button"
@@ -60,16 +132,17 @@ export const TransactionsPage = () => {
                     <tr>
                       <th> شناسه تراکنش</th>
                       <th> شناسه ثبت کننده</th>
+                      <th> شناسه فاکتور</th>
                       <th> نوع تراکنش </th>
-                      <th> نوع حساب</th>
-                      <th> حساب </th>
+                      {/* <th> نوع حساب</th>
+                      <th> حساب </th> */}
                       <th> مبلغ </th>
                       <th> تاریخ </th>
                       <th> توضیحات </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {transactionList.map((transaction) => {
+                    {currentTransactions.map((transaction) => {
                       return (
                         <tr key={transaction.id}>
                           <td>
@@ -98,6 +171,7 @@ export const TransactionsPage = () => {
                           </td>
                           {/* <td>{`${customer.firstName} ${customer.lastName}`}</td> */}
                           <td>{transaction.user_id}</td>
+                          <td>{transaction.invoice_id || "-"}</td>
                           <td>{transaction.is_variz ? "واریز" : "برداشت"}</td>
                           {/* <td>{transaction.account_type.title}</td>
                           <td>{transaction.account.title}</td> */}
@@ -113,6 +187,11 @@ export const TransactionsPage = () => {
                 </table>
               </div>
             </div>
+            <Pagination
+              postsPerPage={postsPerPage}
+              totalPosts={transactionList.length}
+              paginate={paginate}
+            />
           </div>
         </div>
       )}

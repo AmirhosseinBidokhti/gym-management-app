@@ -45,6 +45,7 @@ class Sidebar extends Component {
       { path: "/product", state: "productMenuOpen" },
       { path: "/saleInvoice", state: "saleInvoiceMenuOpen" },
       { path: "/transaction", state: "transactionMenuOpen" },
+      { path: "/account", state: "accountMenuOpen" },
     ];
 
     dropdownPaths.forEach((obj) => {
@@ -249,6 +250,73 @@ class Sidebar extends Component {
                         style={{ marginLeft: "5px", marginTop: "3px" }}
                       ></i>{" "}
                       لیست مشتریان
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </Collapse>
+          </li>
+          <li
+            className={
+              this.isPathActive("/account")
+                ? "nav-item menu-items active"
+                : "nav-item menu-items"
+            }
+          >
+            <div
+              className={
+                this.state.accountMenuOpen
+                  ? "nav-link menu-expanded"
+                  : "nav-link"
+              }
+              onClick={() => this.toggleMenuState("accountMenuOpen")}
+              data-toggle="collapse"
+            >
+              <span className="menu-icon">
+                <i className="mdi mdi-account-box-outline"></i>
+              </span>
+              <span className="menu-title">حساب</span>
+              <i
+                className="mdi mdi-chevron-down"
+                style={{ marginRight: "auto" }}
+              ></i>
+            </div>
+            <Collapse in={this.state.accountMenuOpen}>
+              <div>
+                <ul className="nav flex-column sub-menu">
+                  <li className="nav-item">
+                    {" "}
+                    <Link
+                      className={
+                        this.isPathActive("/customer/add-new-customer")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/account/add-new-account"
+                    >
+                      <i
+                        className="mdi mdi-account-card-details"
+                        style={{ marginLeft: "5px", marginTop: "3px" }}
+                      ></i>{" "}
+                      ایجاد حساب
+                    </Link>
+                  </li>
+
+                  <li className="nav-item">
+                    {" "}
+                    <Link
+                      className={
+                        this.isPathActive("/account/accounts-list")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/account/accounts-list"
+                    >
+                      <i
+                        className="mdi mdi-account-search"
+                        style={{ marginLeft: "5px", marginTop: "3px" }}
+                      ></i>{" "}
+                      لیست حساب ها
                     </Link>
                   </li>
                 </ul>

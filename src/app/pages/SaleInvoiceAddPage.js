@@ -21,7 +21,7 @@ export const SaleInvoiceAddPage = () => {
 
   const [reduction_Price, setReduction_Price] = useState(null);
   const [memo, setMemo] = useState(null);
-  const [qty, setQty] = useState(null);
+  //const [qty, setQty] = useState(null);
   const [productPrice, setProductPrice] = useState(null);
   const [productQty, setProductQty] = useState(null);
   const [saleInvoiceTypes, setSaleInvoiceTypes] = useState([]);
@@ -38,51 +38,36 @@ export const SaleInvoiceAddPage = () => {
     e.preventDefault();
     setLoading(true);
     const newSaleInvoice = {
-      accountID: accountID,
-      invType: 1,
+      account_id: accountID,
+      inv_type: 1,
       memo: memo,
-      saleInvoiceDetails: [
+      sale_invoice_details: [
         {
-          productID: productID,
-          productName: productName,
-          qty: qty,
+          product_id: productID,
+          product_name: productName,
+          qty: 1,
           price: productPrice,
-          reduction_Price: reduction_Price,
-          sessionQty: productQty,
+          reduction_price: reduction_Price,
+          session_qty: productQty,
         },
       ],
-      saleInvoicePayments: [
+      sale_invoice_payments: [
         {
-          saleInvoicePaymentTypeId: saleInvoiceTypeID,
-          price: (productPrice - reduction_Price) * qty,
+          sale_invoice_payment_type_id: saleInvoiceTypeID,
+          price: (productPrice - reduction_Price) * 1,
         },
       ],
     };
-    const { data, isSuccess } = await addSaleInvoice(
-      saleInvoice(
-        accountID,
-        memo,
-        productID,
-        productName,
-        qty,
-        productPrice,
-        reduction_Price,
-        productQty,
-        saleInvoiceTypeID
-      )
-    );
+    const { data, is_success } = await addSaleInvoice(newSaleInvoice);
 
     console.log(data);
     console.log(newSaleInvoice);
-    if (isSuccess) {
-      setSuccess(isSuccess);
-      cogoToast.info("فاکتور فروش جدید با موفقیت ثبت شد", {
-        position: "top-center",
-        heading: "Information",
-      });
+    if (is_success) {
+      setSuccess(is_success);
+      cogoToast.success("فاکتور فروش جدید با موفقیت ثبت شد", {});
       setTimeout(() => {
         window.location.reload();
-      }, 1500);
+      }, 2500);
     } else {
       alert("try again something was wrong");
     }
@@ -111,11 +96,6 @@ export const SaleInvoiceAddPage = () => {
           <div className="card-body">
             <div style={{ display: "flex" }}>
               <h4 className="card-title">فرم فاکتور فروش </h4>
-              {success && (
-                <h2 style={{ color: "#4BB543", display: "block" }}>
-                  فاکتور فروش جدید با موفقیت ثبت شد
-                </h2>
-              )}
 
               <button
                 type="button"
@@ -151,7 +131,7 @@ export const SaleInvoiceAddPage = () => {
                         </option>
                         {customerList.map((el) => (
                           <option key={el.id} value={el.id}>
-                            {`${el.firstName} ${el.lastName}`}
+                            {`${el.first_name} ${el.last_name}`}
                           </option>
                         ))}
                       </select>
@@ -167,9 +147,9 @@ export const SaleInvoiceAddPage = () => {
                         onChange={async (e) => {
                           setProductID(e.target.value);
                           const product = await getProduct(e.target.value);
-                          setProductQty(product.sessionCount);
-                          setProductName(product.productName);
-                          setProductPrice(product.salePrice);
+                          setProductQty(product.session_count);
+                          setProductName(product.product_name);
+                          setProductPrice(product.sale_price);
                         }}
                       >
                         <option selected disabled>
@@ -177,7 +157,7 @@ export const SaleInvoiceAddPage = () => {
                         </option>
                         {productList.map((el) => (
                           <option key={el.id} value={el.id}>
-                            {` ${el.productName}  (قیمت: ${el.salePrice}) (تعداد جلسه: ${el.sessionCount})`}
+                            {` ${el.product_name}  (قیمت: ${el.sale_price}) (تعداد جلسه: ${el.session_count})`}
                           </option>
                         ))}
                       </select>
@@ -186,7 +166,7 @@ export const SaleInvoiceAddPage = () => {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-6">
+                {/* <div className="col-md-6">
                   <Form.Group className="row">
                     <label className="col-sm-3 col-form-label">تعداد</label>
                     <div className="col-sm-9">
@@ -195,10 +175,11 @@ export const SaleInvoiceAddPage = () => {
                         onChange={(e) => {
                           setQty(e.target.value);
                         }}
+                        
                       />
                     </div>
                   </Form.Group>
-                </div>
+                </div> */}
                 <div className="col-md-6">
                   <Form.Group className="row">
                     <label className="col-sm-3 col-form-label">
@@ -221,8 +202,6 @@ export const SaleInvoiceAddPage = () => {
                     </div>
                   </Form.Group>
                 </div>
-              </div>
-              <div className="row">
                 <div className="col-md-6">
                   <Form.Group className="row">
                     <label className="col-sm-3 col-form-label">تخفیف</label>
@@ -237,6 +216,7 @@ export const SaleInvoiceAddPage = () => {
                   </Form.Group>
                 </div>
               </div>
+              <div className="row"></div>
               <div className="row">
                 <div className="col-md-6">
                   <Form.Group className="row">

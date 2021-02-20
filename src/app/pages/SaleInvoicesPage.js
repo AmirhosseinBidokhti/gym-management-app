@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { ProgressBar } from "react-bootstrap";
+import { Form, ProgressBar } from "react-bootstrap";
 import { Dropdown, ButtonGroup } from "react-bootstrap";
 
-import { getSaleInvoices } from "../API/saleInvoice/getSaleInvoices";
+import {
+  getSaleInvoices,
+  getSaleInvoicesByLastName,
+  getSaleInvoicesByMobile,
+  getSaleInvoicesByFirstName,
+} from "../API/saleInvoice/getSaleInvoices";
 import Spinner from "../vendor/shared/Spinner";
 import { Link } from "react-router-dom";
 import { deleteSaleInvoice } from "../API/saleInvoice/deleteSaleInvoice";
 import { formatMoney } from "../utils/formatMoney";
+import Pagination from "../components/Pagination";
 export const SaleInvoicesPage = () => {
   const [saleInvoiceList, setSaleInvoiceList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
   //console.log(customerList);
 
   useEffect(() => {
@@ -21,6 +29,17 @@ export const SaleInvoicesPage = () => {
     };
     getData();
   }, [null]);
+
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentSaleInvoices = saleInvoiceList.slice(
+    indexOfFirstPost,
+    indexOfLastPost
+  );
+
+  // change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
@@ -38,6 +57,57 @@ export const SaleInvoicesPage = () => {
             <div className="card-body">
               <div style={{ display: "flex" }}>
                 <h4 className="card-title">لیست فاکتور های فروش</h4>
+                <div
+                  style={{
+                    width: "250px",
+                    marginRight: "20px",
+                  }}
+                >
+                  <Form.Control
+                    type="text"
+                    placeholder="جستجو بر اساس نام "
+                    onChange={async (e) => {
+                      let x = await getSaleInvoicesByFirstName({
+                        first_name: e.target.value,
+                      });
+                      setSaleInvoiceList(x);
+                    }}
+                  />
+                </div>
+                <div
+                  style={{
+                    width: "250px",
+                    marginRight: "20px",
+                  }}
+                >
+                  <Form.Control
+                    type="text"
+                    placeholder="جستجو بر اساس نام خانوادگی"
+                    onChange={async (e) => {
+                      let x = await getSaleInvoicesByLastName({
+                        last_name: e.target.value,
+                      });
+                      setSaleInvoiceList(x);
+                    }}
+                  />
+                </div>
+                <div
+                  style={{
+                    width: "250px",
+                    marginRight: "20px",
+                  }}
+                >
+                  <Form.Control
+                    type="text"
+                    placeholder="جستجو بر اساس شماره موبایل "
+                    onChange={async (e) => {
+                      let x = await getSaleInvoicesByMobile({
+                        mobile: e.target.value,
+                      });
+                      setSaleInvoiceList(x);
+                    }}
+                  />
+                </div>
 
                 <button
                   type="button"
@@ -66,15 +136,14 @@ export const SaleInvoicesPage = () => {
                       <th> تعداد </th>
                       <th> مبلغ </th>
                       <th> تخفیف </th>
-
                       <th> توضیحات </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {saleInvoiceList.map(
+                    {currentSaleInvoices.map(
                       ({
                         id,
-                        inv_date_Fa,
+                        inv_date_fa,
                         qty,
                         first_name,
                         last_name,
@@ -110,7 +179,7 @@ export const SaleInvoicesPage = () => {
                                 </Dropdown.Menu>
                               </Dropdown>
                             </td>
-                            <td>{inv_date_Fa}</td>
+                            <td>{inv_date_fa}</td>
                             <td>{`${first_name} ${last_name}`}</td>
                             <td>{product_name}</td>
                             <td>{payment_type_title}</td>
@@ -118,7 +187,10 @@ export const SaleInvoicesPage = () => {
                             <td>
                               {formatMoney(price)} {`ریال`}
                             </td>
-                            <td>{reduction}</td>
+
+                            <td>
+                              {formatMoney(reduction)} {`ریال`}
+                            </td>
 
                             <td>{memo}</td>
                           </tr>
@@ -129,6 +201,11 @@ export const SaleInvoicesPage = () => {
                 </table>
               </div>
             </div>
+            <Pagination
+              postsPerPage={postsPerPage}
+              totalPosts={saleInvoiceList.length}
+              paginate={paginate}
+            />
           </div>
         </div>
       )}

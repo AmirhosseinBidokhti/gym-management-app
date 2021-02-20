@@ -14,6 +14,7 @@ import Spinner from "./vendor/shared/Spinner";
 import { CustomerEditPage } from "./pages/CustomerEditPage";
 import { TransactionAddPage } from "./pages/TransactionAddPage";
 import { TransactionsPage } from "./pages/TransactionsPage";
+import { ProductEditPage } from "./pages/ProductEditPage";
 
 const CustomersPage = lazy(() => import("./pages/CustomersPage"));
 
@@ -54,6 +55,11 @@ class AppRoutes extends Component {
             exact={true}
             path="/product/product-list"
             component={ProductsPage}
+          />
+          <PrivateRoute
+            exact={true}
+            path="/product/edit-product/:id"
+            component={ProductEditPage}
           />
 
           <PrivateRoute
