@@ -67,7 +67,7 @@ export const SaleInvoiceAddPage = () => {
       cogoToast.success("فاکتور فروش جدید با موفقیت ثبت شد", {});
       setTimeout(() => {
         window.location.reload();
-      }, 2500);
+      }, 1800);
     } else {
       alert("try again something was wrong");
     }
@@ -125,8 +125,9 @@ export const SaleInvoiceAddPage = () => {
                       <select
                         className="form-control"
                         onChange={(e) => setAccountID(e.target.value)}
+                        required
                       >
-                        <option selected disabled>
+                        <option selected disabled value="">
                           انتخاب کنید
                         </option>
                         {customerList.map((el) => (
@@ -151,8 +152,9 @@ export const SaleInvoiceAddPage = () => {
                           setProductName(product.product_name);
                           setProductPrice(product.sale_price);
                         }}
+                        required
                       >
-                        <option selected disabled>
+                        <option selected disabled value="">
                           انتخاب کنید
                         </option>
                         {productList.map((el) => (
@@ -189,8 +191,9 @@ export const SaleInvoiceAddPage = () => {
                       <select
                         className="form-control"
                         onChange={(e) => setSaleInvoiceTypeID(e.target.value)}
+                        required
                       >
-                        <option selected disabled>
+                        <option selected disabled value="">
                           انتخاب کنید
                         </option>
                         {saleInvoiceTypes.map((el) => (
