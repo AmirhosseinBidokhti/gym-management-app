@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { Collapse, Dropdown } from "react-bootstrap";
-import { Trans } from "react-i18next";
+import { Collapse } from "react-bootstrap";
+//import { Trans } from "react-i18next";
 
 class Sidebar extends Component {
   state = {};
@@ -98,8 +98,6 @@ class Sidebar extends Component {
                 <div className="count-indicator">
                   <img
                     className="img-xs rounded-circle "
-                    src={require("../../assets/added-ones/fitclub-logo.png")}
-                    className="img-xs rounded-circle"
                     src={require("../../assets/added-ones/fitclub-logo.png")}
                     alt="profile"
                     style={{ width: "50px", height: "auto" }}
@@ -250,6 +248,24 @@ class Sidebar extends Component {
                         style={{ marginLeft: "5px", marginTop: "3px" }}
                       ></i>{" "}
                       لیست مشتریان
+                    </Link>
+                  </li>
+
+                  <li className="nav-item">
+                    {" "}
+                    <Link
+                      className={
+                        this.isPathActive("/customer/session-usage")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/customer/session-usage"
+                    >
+                      <i
+                        className="mdi mdi-calendar-check "
+                        style={{ marginLeft: "5px", marginTop: "3px" }}
+                      ></i>{" "}
+                      ثبت ورود مشتری
                     </Link>
                   </li>
                 </ul>

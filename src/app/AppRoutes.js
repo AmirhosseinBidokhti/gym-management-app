@@ -1,5 +1,5 @@
 import React, { Component, Suspense, lazy } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import PrivateRoute from "./utils/privateRoute";
 import LoginPage from "./pages/LoginPage";
 import { CustomerAddPage } from "./pages/CustomerAddPage";
@@ -15,6 +15,9 @@ import { CustomerEditPage } from "./pages/CustomerEditPage";
 import { TransactionAddPage } from "./pages/TransactionAddPage";
 import { TransactionsPage } from "./pages/TransactionsPage";
 import { ProductEditPage } from "./pages/ProductEditPage";
+import { AccountAddPage } from "./pages/AccountAddPage";
+import AccountsPage from "./pages/AccountsPage";
+import { SessionUsagePage } from "./pages/SessionUsagePage";
 
 const CustomersPage = lazy(() => import("./pages/CustomersPage"));
 
@@ -46,6 +49,24 @@ class AppRoutes extends Component {
             path="/customer/edit-customer/:id"
             component={CustomerEditPage}
           />
+
+          <PrivateRoute
+            exact={true}
+            path="/customer/session-usage"
+            component={SessionUsagePage}
+          />
+
+          <PrivateRoute
+            exact={true}
+            path="/account/add-new-account"
+            component={AccountAddPage}
+          />
+          <PrivateRoute
+            exact={true}
+            path="/account/accounts-list"
+            component={AccountsPage}
+          />
+
           <PrivateRoute
             exact={true}
             path="/product/add-new-product"
@@ -61,7 +82,6 @@ class AppRoutes extends Component {
             path="/product/edit-product/:id"
             component={ProductEditPage}
           />
-
           <PrivateRoute
             exact={true}
             path="/saleInvoice/add-new-saleInvoice"

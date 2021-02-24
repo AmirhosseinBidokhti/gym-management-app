@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { getAccountTypes } from "../API/transaction/getAccountTypes";
 
-import { getCustomers } from "../API/customer/getCustomers";
+//import { getCustomers } from "../API/customer/getCustomers";
 import { addTranscation } from "../API/transaction/addTransaction";
 import { getAccountByType } from "../API/transaction/getAccountByType";
 import cogoToast from "cogo-toast";
@@ -13,16 +13,14 @@ export const TransactionAddPage = () => {
   const [accountTypeID, setAccountTypeID] = useState(null);
   const [price, setPrice] = useState(null);
   const [description, setdescription] = useState("");
-  const [userID, setUserID] = useState(null);
 
   const [accountID, setAccountID] = useState(null);
 
   const [accounts, setAccounts] = useState([]);
 
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
 
-  const [customerList, setCustomerList] = useState([]);
+  //const [customerList, setCustomerList] = useState([]);
 
   const submitHandler = async (e) => {
     const transactionObj = {
@@ -41,7 +39,6 @@ export const TransactionAddPage = () => {
     console.log(transactionObj);
     console.log(data);
     if (is_success) {
-      setSuccess(is_success);
       cogoToast.success("تراکنش با موفقیت ثبت شد");
     } else {
       console.log("try again something was wrong");
@@ -53,8 +50,8 @@ export const TransactionAddPage = () => {
     async function getAccountTypeData() {
       const data = await getAccountTypes();
       setAccountTypes(data);
-      const customers = await getCustomers();
-      setCustomerList(customers);
+      // const customers = await getCustomers();
+      // setCustomerList(customers);
     }
     getAccountTypeData();
   }, []);

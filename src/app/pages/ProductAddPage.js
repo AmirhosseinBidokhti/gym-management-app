@@ -1,22 +1,21 @@
 import cogoToast from "cogo-toast";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Form } from "react-bootstrap";
-import DatePicker from "react-modern-calendar-datepicker";
+//import DatePicker from "react-modern-calendar-datepicker";
 
 import { addProduct } from "../API/products/addProduct";
-import { datePickerFormater } from "../utils/datePickerFormater";
+//import { datePickerFormater } from "../utils/datePickerFormater";
 
 export const ProductAddPage = () => {
   const [productName, setProductName] = useState("");
   const [sessionCount, setSessionCount] = useState(null);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  // const [startDate, setStartDate] = useState(null);
+  // const [endDate, setEndDate] = useState(null);
   const [salePrice, setSalePrice] = useState(null);
 
   //  {day: 1, month: 10, year: 1399}
 
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
 
   // TODO: SEE WHAT PROPERTIES ARE REQUIRED FROM BACKEND!
 
@@ -29,8 +28,8 @@ export const ProductAddPage = () => {
       product_name: productName,
 
       session_count: sessionCount,
-      start_date: datePickerFormater(startDate),
-      end_date: datePickerFormater(endDate),
+      // start_date: datePickerFormater(startDate),
+      // end_date: datePickerFormater(endDate),
       sale_price: salePrice,
     };
     const { data, is_success } = await addProduct(newProduct);
@@ -38,12 +37,11 @@ export const ProductAddPage = () => {
     console.log(newProduct);
     console.log(data);
     if (is_success) {
-      setSuccess(is_success);
       cogoToast.success("محصول جدید با موفقیت اضافه شد");
 
       setTimeout(() => {
         window.location.reload();
-      }, 1500);
+      }, 1320);
     } else {
       console.log("try again something was wrong");
     }
@@ -107,7 +105,7 @@ export const ProductAddPage = () => {
                   </Form.Group>
                 </div>
               </div>
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-md-6">
                   <Form.Group className="row">
                     <label className="col-sm-3 col-form-label">
@@ -138,7 +136,7 @@ export const ProductAddPage = () => {
                     </div>
                   </Form.Group>
                 </div>
-              </div>
+              </div> */}
               <div className="row">
                 <div className="col-md-6">
                   <Form.Group className="row">

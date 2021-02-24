@@ -14,7 +14,7 @@ export const customerAdd = async (customerObj) => {
       },
     };
 
-    const { data, isSuccess } = await axios.post(
+    const { data } = await axios.post(
       `${API_BASE_URL}/Customer/addCustomer`,
       customerObj,
 

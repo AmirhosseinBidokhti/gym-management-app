@@ -16,7 +16,7 @@ export const fileUpload = async (file, fileName) => {
       },
     };
 
-    const { data, isSuccess } = await axios.post(
+    const { data } = await axios.post(
       `${API_BASE_URL}/File/upload`,
       formData,
 

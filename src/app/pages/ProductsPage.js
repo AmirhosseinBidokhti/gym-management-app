@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-//import { ProgressBar } from "react-bootstrap";
-import { Dropdown, ButtonGroup } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import { getProducts } from "../API/products/getProducts";
 import Spinner from "../vendor/shared/Spinner";
 //import { Link } from "react-router-dom";
 import { formatMoney } from "../utils/formatMoney";
 import { Link } from "react-router-dom";
+import { deleteProduct } from "../API/products/deleteProduct";
+import cogoToast from "cogo-toast";
 
 export const ProductsPage = () => {
   const [productList, setProductList] = useState([]);
@@ -20,7 +21,7 @@ export const ProductsPage = () => {
       setLoading(false);
     };
     getData();
-  }, [null]);
+  }, []);
 
   return (
     <div>
@@ -61,8 +62,8 @@ export const ProductsPage = () => {
                       <th>نام محصول</th>
                       <th> قیمت </th>
                       <th> تعداد جلسات </th>
-                      <th> تاریخ شروع </th>
-                      <th> تاریخ پایان </th>
+                      {/* <th> تاریخ شروع </th>
+                      <th> تاریخ پایان </th> */}
                     </tr>
                   </thead>
                   <tbody>
@@ -85,7 +86,26 @@ export const ProductsPage = () => {
                                   ویرایش
                                 </Dropdown.Item>
 
-                                <Dropdown.Item>حذف</Dropdown.Item>
+                                <Dropdown.Item
+                                  onClick={async (e) => {
+                                    const {
+                                      is_success,
+                                      //dev_message,
+                                    } = await deleteProduct(product.id);
+                                    if (is_success) {
+                                      cogoToast.success("با موفقیت حذف شد");
+                                      setTimeout(() => {
+                                        window.location.reload();
+                                      }, 1100);
+                                    } else {
+                                      cogoToast.info(
+                                        "امکان حذف کالایی که فاکتور شده است وجود ندارد"
+                                      );
+                                    }
+                                  }}
+                                >
+                                  حذف
+                                </Dropdown.Item>
                               </Dropdown.Menu>
                             </Dropdown>
                           </td>
@@ -94,8 +114,8 @@ export const ProductsPage = () => {
                             {formatMoney(product.sale_price)} {`ریال`}
                           </td>
                           <td>{product.session_count}</td>
-                          <td>{product.start_date}</td>
-                          <td>{product.end_date}</td>
+                          {/* <td>{product.start_date}</td>
+                          <td>{product.end_date}</td> */}
                         </tr>
                       );
                     })}

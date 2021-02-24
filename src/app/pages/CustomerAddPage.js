@@ -7,7 +7,7 @@ import { getJobInfos } from "../API/customer/getJobInfos";
 import { customerAdd } from "../API/customer/customerAdd";
 import { fileUpload } from "../API/fileUpload/fileUpload";
 
-import { customer } from "../API/types/customer";
+//import { customer } from "../API/types/customer";
 import cogoToast from "cogo-toast";
 
 import DatePicker from "react-modern-calendar-datepicker";
@@ -28,7 +28,6 @@ export const CustomerAddPage = () => {
   //  {day: 1, month: 10, year: 1399}
 
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
 
   let [membershipJoinTypes, setMembershipJoinTypes] = useState([]);
   let [jobInfo, setJobInfo] = useState([]);
@@ -75,11 +74,10 @@ export const CustomerAddPage = () => {
     //console.log(newCustomerInfo);
     console.log(data);
     if (is_success) {
-      setSuccess(is_success);
       cogoToast.success("مشتری جدید با موفقیت اضافه شد");
-      // setTimeout(() => {
-      //   window.location.reload();
-      // }, 1500);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1320);
     } else {
       console.log("try again something was wrong");
     }

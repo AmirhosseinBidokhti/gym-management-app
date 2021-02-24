@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Form, ProgressBar } from "react-bootstrap";
-import { Dropdown, ButtonGroup } from "react-bootstrap";
+import { Form } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 
 import {
   getSaleInvoices,
@@ -9,7 +9,7 @@ import {
   getSaleInvoicesByFirstName,
 } from "../API/saleInvoice/getSaleInvoices";
 import Spinner from "../vendor/shared/Spinner";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { deleteSaleInvoice } from "../API/saleInvoice/deleteSaleInvoice";
 import { formatMoney } from "../utils/formatMoney";
 import Pagination from "../components/Pagination";
@@ -29,7 +29,7 @@ export const SaleInvoicesPage = () => {
       setLoading(false);
     };
     getData();
-  }, [null]);
+  }, []);
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;

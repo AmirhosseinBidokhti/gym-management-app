@@ -29,7 +29,7 @@ export const CustomerEditPage = ({ match }) => {
   //  {day: 1, month: 10, year: 1399}
 
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
 
   let [membershipJoinTypes, setMembershipJoinTypes] = useState([]);
   let [jobInfo, setJobInfo] = useState([]);
@@ -80,11 +80,10 @@ export const CustomerEditPage = ({ match }) => {
     console.log(newCustomerInfo);
     console.log(data);
     if (is_success) {
-      setSuccess(is_success);
       cogoToast.success("با موفقیت بروزرسانی شد");
       setTimeout(() => {
         window.location.reload();
-      }, 1800);
+      }, 1300);
     } else {
       console.log("try again something was wrong");
     }
@@ -104,7 +103,7 @@ export const CustomerEditPage = ({ match }) => {
       console.log(loading);
     }
     getAddCustomerPreData();
-  }, [customerID]);
+  }, [customerID, loading]);
 
   return (
     <>

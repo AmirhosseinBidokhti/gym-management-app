@@ -1,19 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
-import { ProgressBar, Dropdown } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Dropdown } from "react-bootstrap";
 import { GetCustomerCheckup } from "../API/customer/getCustomerCheckup";
 import { addCustomerCheckup } from "../API/customer/addCustomerCheckup";
 import { deleteCustomerCheckup } from "../API/customer/deleteCustomerCheckup";
 import { getCustomer } from "../API/customer/getCustomer";
 
-import ReactToPrint from "react-to-print";
-
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Modal, ModalBody } from "reactstrap";
 import { Form } from "react-bootstrap";
 import Spinner from "../vendor/shared/Spinner";
 import { printTable } from "../utils/printTable";
 import cogoToast from "cogo-toast";
 
-export const CustomerCheckupPage = ({ history, match }) => {
+export const CustomerCheckupPage = ({ match }) => {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
@@ -36,9 +34,9 @@ export const CustomerCheckupPage = ({ history, match }) => {
 
   const [customerName, setCustomerName] = useState("");
 
-  const getLatestCheckup = () => {
-    return customerCheckupList.pop();
-  };
+  // const getLatestCheckup = () => {
+  //   return customerCheckupList.pop();
+  // };
 
   //TODO: make a callback ... for setStuffs
   // const onChangeHandler = (callback, value) => {
@@ -155,7 +153,7 @@ export const CustomerCheckupPage = ({ history, match }) => {
                       {customerCheckupList.map(
                         ({
                           id,
-                          create_date,
+                          create_date_fa,
                           weight,
                           chest,
                           abs,
@@ -199,7 +197,7 @@ export const CustomerCheckupPage = ({ history, match }) => {
                                 </Dropdown>
                               </td>
 
-                              <td>{create_date}</td>
+                              <td>{create_date_fa.split(" ").shift()}</td>
                               <td>{weight}</td>
                               <td>{chest}</td>
                               <td>{abs}</td>

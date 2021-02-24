@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Form, ProgressBar } from "react-bootstrap";
-import { Dropdown, ButtonGroup } from "react-bootstrap";
+import { Form } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 
-//import { customerAdd } from "../API/customer/customerAdd";
-import InfiniteScroll from "react-infinite-scroll-component";
 import {
   getCustomers,
   getCustomers2,
   getCustomersbyFirstName,
   getCustomers3,
 } from "../API/customer/getCustomers";
-import { fileDownload, fileDownload_v2 } from "../API/fileUpload/fileDownload";
+import { fileDownload_v2 } from "../API/fileUpload/fileDownload";
 import Spinner from "../vendor/shared/Spinner";
-import { Link } from "react-router-dom";
-import cogoToast from "cogo-toast";
+
 import Pagination from "../components/Pagination";
 import { formatMoney } from "../utils/formatMoney";
+import { Link } from "react-router-dom";
 const CustomersPage = () => {
   let [customerList, setCustomerList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,7 +23,7 @@ const CustomersPage = () => {
 
   useEffect(() => {
     getData();
-  }, [null]);
+  }, []);
 
   const getData = async () => {
     const result = await getCustomers();
@@ -182,7 +180,7 @@ const CustomersPage = () => {
                               type="button"
                               className="btn btn-outline-secondary"
                               onClick={async (e) => {
-                                const file = await fileDownload_v2(
+                                await fileDownload_v2(
                                   customer.contract_file_path
                                 );
                                 //window.location.href = `${file}`;

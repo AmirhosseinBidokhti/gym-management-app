@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
-import DatePicker from "react-modern-calendar-datepicker";
+
 import cogoToast from "cogo-toast";
 
-import { addProduct } from "../API/products/addProduct";
 import { getCustomers } from "../API/customer/getCustomers";
 import { getProducts } from "../API/products/getProducts";
 import { getProduct } from "../API/products/getProduct";
 import { getSaleInvoiceTypes } from "../API/saleInvoice/getSaleInvoiceTypes";
 import { addSaleInvoice } from "../API/saleInvoice/addSaleInvoice";
 
-import { saleInvoice } from "../API/types/saleInvoice";
+// import { saleInvoice } from "../API/types/saleInvoice";
 
 export const SaleInvoiceAddPage = () => {
   const [customerList, setCustomerList] = useState([]);
@@ -30,7 +29,6 @@ export const SaleInvoiceAddPage = () => {
   //  {day: 1, month: 10, year: 1399}
 
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
 
   // TODO: SEE WHAT PROPERTIES ARE REQUIRED FROM BACKEND!
 
@@ -63,8 +61,7 @@ export const SaleInvoiceAddPage = () => {
     console.log(data);
     console.log(newSaleInvoice);
     if (is_success) {
-      setSuccess(is_success);
-      cogoToast.success("فاکتور فروش جدید با موفقیت ثبت شد", {});
+      cogoToast.success("فاکتور فروش جدید با موفقیت ثبت شد");
       setTimeout(() => {
         window.location.reload();
       }, 1200);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Form, ProgressBar } from "react-bootstrap";
-import { Dropdown, ButtonGroup } from "react-bootstrap";
+import { Form } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import {
   getTransactions,
   getTransactionsByTitle,
@@ -11,7 +11,7 @@ import { deleteTransaction } from "../API/transaction/deleteTransaction";
 import Pagination from "../components/Pagination";
 
 import Spinner from "../vendor/shared/Spinner";
-import { Link } from "react-router-dom";
+
 import { formatMoney } from "../utils/formatMoney";
 export const TransactionsPage = () => {
   const [transactionList, setTransactionList] = useState([]);
@@ -28,7 +28,7 @@ export const TransactionsPage = () => {
       setLoading(false);
     };
     getData();
-  }, [null]);
+  }, []);
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
@@ -66,7 +66,7 @@ export const TransactionsPage = () => {
                 >
                   <Form.Control
                     type="text"
-                    placeholder="جستجو با نام خانوادگی/عنوان"
+                    placeholder="جستجو با عنوان حساب"
                     onChange={async (e) => {
                       let x = await getTransactionsByTitle({
                         title: e.target.value,
@@ -131,11 +131,11 @@ export const TransactionsPage = () => {
                   <thead style={{ color: "white" }}>
                     <tr>
                       <th> شناسه تراکنش</th>
-                      <th> شناسه ثبت کننده</th>
+                      <th> کاربر ثبت کننده</th>
                       <th> شناسه فاکتور</th>
                       <th> نوع تراکنش </th>
-                      {/* <th> نوع حساب</th>
-                      <th> حساب </th> */}
+                      <th> نوع حساب</th>
+                      <th> حساب </th>
                       <th> مبلغ </th>
                       <th> تاریخ </th>
                       <th> توضیحات </th>
@@ -170,11 +170,11 @@ export const TransactionsPage = () => {
                             </Dropdown>
                           </td>
                           {/* <td>{`${customer.firstName} ${customer.lastName}`}</td> */}
-                          <td>{transaction.user_id}</td>
+                          <td>{transaction.user_name}</td>
                           <td>{transaction.invoice_id || "-"}</td>
                           <td>{transaction.is_variz ? "واریز" : "برداشت"}</td>
-                          {/* <td>{transaction.account_type.title}</td>
-                          <td>{transaction.account.title}</td> */}
+                          <td>{transaction.account_type_title}</td>
+                          <td>{`${transaction.first_name} ${transaction.last_name}`}</td>
                           <td>
                             {formatMoney(transaction.price)} {`ریال`}
                           </td>

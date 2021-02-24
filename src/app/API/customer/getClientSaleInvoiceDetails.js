@@ -1,8 +1,7 @@
-// temporary. later will be added to redux. now i dont have much time.
 import axios from "axios";
 import { API_BASE_URL } from "../config";
 
-export const addProduct = async (porductObj) => {
+export const get_client_sale_invoice_details = async (customerID) => {
   try {
     const authToken = JSON.parse(localStorage.getItem("userInfo")).access_token;
 
@@ -13,10 +12,10 @@ export const addProduct = async (porductObj) => {
       },
     };
 
-    const { data } = await axios.post(
-      `${API_BASE_URL}/Product/addProduct`,
-      porductObj,
-
+    const {
+      data: { data },
+    } = await axios.get(
+      `${API_BASE_URL}/ClientSessionUsage/get_client_sale_invoice_details?customer_id=${customerID}`,
       config
     );
     console.log(data);

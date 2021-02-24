@@ -1,24 +1,22 @@
 import cogoToast from "cogo-toast";
 import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
-import DatePicker from "react-modern-calendar-datepicker";
-import { getProduct } from "../API/products/getProduct";
 
+import { getProduct } from "../API/products/getProduct";
 import { updateProduct } from "../API/products/updateProduct";
-import { datePickerFormater } from "../utils/datePickerFormater";
 
 export const ProductEditPage = ({ match }) => {
   const [productName, setProductName] = useState("");
   const [sessionCount, setSessionCount] = useState(null);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  // const [startDate, setStartDate] = useState(null);
+  // const [endDate, setEndDate] = useState(null);
   const [salePrice, setSalePrice] = useState(null);
   const [productBefore, setProductBefore] = useState({});
 
   //  {day: 1, month: 10, year: 1399}
 
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  //const [success, setSuccess] = useState(false);
 
   // TODO: SEE WHAT PROPERTIES ARE REQUIRED FROM BACKEND!
 
@@ -34,10 +32,10 @@ export const ProductEditPage = ({ match }) => {
       session_count: sessionCount
         ? parseInt(sessionCount)
         : productBefore.session_count,
-      start_date: startDate
-        ? datePickerFormater(startDate)
-        : productBefore.start_date,
-      end_date: endDate ? datePickerFormater(endDate) : productBefore.end_date,
+      // start_date: startDate
+      //   ? datePickerFormater(startDate)
+      //   : productBefore.start_date,
+      // end_date: endDate ? datePickerFormater(endDate) : productBefore.end_date,
       sale_price: salePrice ? parseInt(salePrice) : productBefore.sale_price,
     };
     const { data, is_success } = await updateProduct(newProduct);
@@ -45,12 +43,11 @@ export const ProductEditPage = ({ match }) => {
     console.log(newProduct);
     console.log(data);
     if (is_success) {
-      setSuccess(is_success);
       cogoToast.success("با موفقیت ویرایش شد");
 
-      // setTimeout(() => {
-      //   window.location.reload();
-      // }, 1500);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1400);
     } else {
       console.log("try again something was wrong");
     }
@@ -130,7 +127,7 @@ export const ProductEditPage = ({ match }) => {
                   </Form.Group>
                 </div>
               </div>
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-md-6">
                   <Form.Group className="row">
                     <label className="col-sm-3 col-form-label">
@@ -165,7 +162,7 @@ export const ProductEditPage = ({ match }) => {
                     </div>
                   </Form.Group>
                 </div>
-              </div>
+              </div> */}
               <div className="row">
                 <div className="col-md-6">
                   <Form.Group className="row">

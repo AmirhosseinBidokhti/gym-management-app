@@ -14,7 +14,7 @@ export const getAccounts = async () => {
 
     const {
       data: { data },
-    } = await axios.get(`${API_BASE_URL}/Customer/getCustomers`, config);
+    } = await axios.get(`${API_BASE_URL}/AccAccount/get_accounts`, config);
     console.log(data);
     return data;
   } catch (error) {
