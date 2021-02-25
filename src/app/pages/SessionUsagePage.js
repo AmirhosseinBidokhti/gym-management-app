@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 
-import { getCustomersCombo } from "../API/customer/getCustomers";
+import { getCustomers, getCustomersCombo } from "../API/customer/getCustomers";
 
 import cogoToast from "cogo-toast";
-//import { Button, Dropdown, Modal } from "bootstrap";
-//import { Link } from "react-router-dom";
+import { Button, Dropdown, Modal } from "bootstrap";
+import { Link } from "react-router-dom";
 import { get_client_sale_invoice_details } from "../API/customer/getClientSaleInvoiceDetails";
 
 import { Spinner } from "../vendor/shared/Spinner";
-import { add_client_session_usage } from "../API/customer/addSessionUsage";
+import {
+  addSessionFetchVersion,
+  add_client_session_usage,
+} from "../API/customer/addSessionUsage";
 
 export const SessionUsagePage = () => {
   const [saleInvoiceDetails, setSaleInvoiceDetails] = useState([]);
@@ -18,36 +21,36 @@ export const SessionUsagePage = () => {
   const [saleInvoiceDetailID, setSaleInvoiceDetailID] = useState(null);
 
   const [loading, setLoading] = useState(false);
-  //const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [show, setShow] = useState(false);
 
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const [customerList, setCustomerList] = useState([]);
 
-  const submitHandler = async (e) => {
-    //   const transactionObj = {
-    //     is_variz: variz,
-    //     account_type_id: parseInt(accountTypeID),
-    //     price: parseInt(price),
-    //     description: description,
-    //     account_id: accountID,
-    //     user_id: JSON.parse(localStorage.getItem("userInfo")).user_id,
-    //   };
-    //   e.preventDefault();
-    //   setLoading(true);
-    //   const { data, is_success } = await addTranscation(transactionObj);
-    //   console.log(transactionObj);
-    //   console.log(data);
-    //   if (is_success) {
-    //     setSuccess(is_success);
-    //     cogoToast.success("تراکنش با موفقیت ثبت شد");
-    //   } else {
-    //     console.log("try again something was wrong");
-    //   }
-    //   setLoading(false);
-  };
+  // const submitHandler = async (e) => {
+  //   //   const transactionObj = {
+  //   //     is_variz: variz,
+  //   //     account_type_id: parseInt(accountTypeID),
+  //   //     price: parseInt(price),
+  //   //     description: description,
+  //   //     account_id: accountID,
+  //   //     user_id: JSON.parse(localStorage.getItem("userInfo")).user_id,
+  //   //   };
+  //   //   e.preventDefault();
+  //   //   setLoading(true);
+  //   //   const { data, is_success } = await addTranscation(transactionObj);
+  //   //   console.log(transactionObj);
+  //   //   console.log(data);
+  //   //   if (is_success) {
+  //   //     setSuccess(is_success);
+  //   //     cogoToast.success("تراکنش با موفقیت ثبت شد");
+  //   //   } else {
+  //   //     console.log("try again something was wrong");
+  //   //   }
+  //   //   setLoading(false);
+  // };
 
   useEffect(() => {
     async function getCustomerData() {

@@ -60,7 +60,7 @@ const AccountsPage = () => {
                 >
                   <Form.Control
                     type="text"
-                    placeholder="جستجو بر اساس نام/عنوان"
+                    placeholder="جستجو بر اساس /عنوان"
                     onChange={async (e) => {
                       let x = await getAccountsByTitle(e.target.value);
                       setAccountList(x);
@@ -106,14 +106,6 @@ const AccountsPage = () => {
                               >
                                 {account.id}
                               </Dropdown.Toggle>
-                              {/* <Dropdown.Menu>
-                                <Dropdown.Item
-                                // as={Link}
-                                // to={`/customer/edit-customer/${customer.id}`}
-                                >
-                                  ویرایش
-                                </Dropdown.Item>
-                              </Dropdown.Menu> */}
                             </Dropdown>
                           </td>
 

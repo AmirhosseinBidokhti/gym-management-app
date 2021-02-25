@@ -29,7 +29,7 @@ export const AccountAddPage = () => {
       cogoToast.success("حساب جدید با موفقیت اضافه شد");
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
+      }, 1200);
     } else {
       console.log("try again something was wrong");
     }
