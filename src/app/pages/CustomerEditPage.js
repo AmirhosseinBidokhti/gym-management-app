@@ -98,12 +98,12 @@ export const CustomerEditPage = ({ match }) => {
       const jobData = await getJobInfos();
       setJobInfo(jobData);
       const customerBefore = await getCustomer(customerID);
-      setCustomerBefore(customerBefore);
+      setCustomerBefore(customerBefore[0]);
       setLoading(false);
       console.log(loading);
     }
     getAddCustomerPreData();
-  }, [customerID, loading]);
+  }, [customerID]);
 
   return (
     <>

@@ -79,7 +79,9 @@ export const CustomerCheckupPage = ({ match }) => {
 
   useEffect(() => {
     const getData = async () => {
-      const customerInfo = await getCustomer(customerID);
+      const data = await getCustomer(customerID);
+      const customerInfo = data[0];
+      // console.log(customerInfo);
       setCustomerName(
         customerInfo.gender
           ? `جناب آقای ${customerInfo.first_name} ${customerInfo.last_name}`
@@ -87,7 +89,7 @@ export const CustomerCheckupPage = ({ match }) => {
       );
 
       const result = await GetCustomerCheckup(customerID);
-      console.log(result);
+      //console.log(result);
       setCustomerCheckupList(result);
       if (result.length !== 0) {
         setLatestCheckup(result[result.length - 1]);
