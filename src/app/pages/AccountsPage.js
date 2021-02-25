@@ -5,7 +5,7 @@ import { Dropdown } from "react-bootstrap";
 import Spinner from "../vendor/shared/Spinner";
 import Pagination from "../components/Pagination";
 import { formatMoney } from "../utils/formatMoney";
-import { getAccounts } from "../API/account/getAccounts";
+import { getAccounts, getAccountsByTitle } from "../API/account/getAccounts";
 const AccountsPage = () => {
   let [accountList, setAccountList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -51,6 +51,7 @@ const AccountsPage = () => {
             <div className="card-body">
               <div style={{ display: "flex" }}>
                 <h4 className="card-title">لیست حساب ها</h4>
+
                 <div
                   style={{
                     width: "250px",
@@ -59,30 +60,11 @@ const AccountsPage = () => {
                 >
                   <Form.Control
                     type="text"
-                    placeholder="جستجو بر اساس نام"
-                    // onChange={async (e) => {
-                    //   let x = await getCustomersbyFirstName({
-                    //     first_name: e.target.value,
-                    //   });
-                    //   setCustomerList(x);
-                    // }}
-                  />
-                </div>
-                <div
-                  style={{
-                    width: "250px",
-                    marginRight: "20px",
-                  }}
-                >
-                  <Form.Control
-                    type="text"
-                    placeholder="جستجو بر اساس عنوان"
-                    // onChange={async (e) => {
-                    //   let x = await getCustomersbyFirstName({
-                    //     first_name: e.target.value,
-                    //   });
-                    //   setCustomerList(x);
-                    // }}
+                    placeholder="جستجو بر اساس نام/عنوان"
+                    onChange={async (e) => {
+                      let x = await getAccountsByTitle(e.target.value);
+                      setAccountList(x);
+                    }}
                   />
                 </div>
 
@@ -124,14 +106,14 @@ const AccountsPage = () => {
                               >
                                 {account.id}
                               </Dropdown.Toggle>
-                              <Dropdown.Menu>
+                              {/* <Dropdown.Menu>
                                 <Dropdown.Item
                                 // as={Link}
                                 // to={`/customer/edit-customer/${customer.id}`}
                                 >
                                   ویرایش
                                 </Dropdown.Item>
-                              </Dropdown.Menu>
+                              </Dropdown.Menu> */}
                             </Dropdown>
                           </td>
 

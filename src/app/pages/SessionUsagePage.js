@@ -54,8 +54,8 @@ export const SessionUsagePage = () => {
 
   useEffect(() => {
     async function getCustomerData() {
-      //const customers = await getCustomersCombo();
-      const customers = await getCustomers();
+      const customers = await getCustomersCombo();
+      //const customers = await getCustomers();
       setCustomerList(customers);
     }
     getCustomerData();
@@ -130,6 +130,8 @@ export const SessionUsagePage = () => {
                       <thead style={{ color: "white" }}>
                         <tr>
                           <th> نام محصول </th>
+                          <th> تاریخ ثبت فاکتور </th>
+                          <th> شناسه فاکتور</th>
                           <th> تعداد جلسات </th>
                           <th> تعداد جلسات استفاده شده </th>
                           <th> ثبت یک جلسه تمرین</th>
@@ -160,115 +162,41 @@ export const SessionUsagePage = () => {
                                 </Dropdown>
                               </td> */}
                               <td>{el.product_name}</td>
+                              <td>{el.invoice_date_fa}</td>
+                              <td>{el.sale_invoice_details_id}</td>
                               <td>{el.session_qty}</td>
                               <td>{el.session_used}</td>
 
-                              {/*                           
-                              <td>{customer.mobile}</td>
-                              <td>{customer.address}</td> */}
                               <td>
                                 <button
                                   type="button"
                                   className="btn btn-primary"
                                   data-toggle="modal"
                                   data-target="#exampleModal"
+                                  onClick={(e) =>
+                                    setSaleInvoiceDetailID(
+                                      el.sale_invoice_details_id
+                                    )
+                                  }
                                 >
                                   ثبت ورود مشتری
                                 </button>
-                                <div
-                                  className="modal fade"
-                                  id="exampleModal"
-                                  role="dialog"
-                                  aria-labelledby="exampleModalLabel"
-                                  aria-hidden="true"
-                                >
-                                  <div className="modal-dialog" role="document">
-                                    <div className="modal-content">
-                                      <div className="modal-body">
-                                        آیا از انجام عملیات مطمئن می باشید؟
-                                      </div>
-                                      <div className="modal-footer">
-                                        <button
-                                          type="button"
-                                          className="btn btn-primary"
-                                          onClick={async (e) => {
-                                            // console.log(accountID);
-                                            // console.log(
-                                            //   el.sale_invoice_details_id
-                                            // );
-
-                                            const {
-                                              is_success,
-                                            } = await add_client_session_usage({
-                                              sale_invoice_details_id:
-                                                el.sale_invoice_details_id,
-                                              customer_id: accountID,
-                                              is_use: true,
-                                            });
-
-                                            if (is_success) {
-                                              cogoToast.success(
-                                                "used the session"
-                                              );
-                                            }
-                                          }}
-                                        >
-                                          ثبت
-                                        </button>
-                                        <button
-                                          type="button"
-                                          className="btn btn-secondary"
-                                          data-dismiss="modal"
-                                        >
-                                          انصراف
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                {/* <button
-                                  type="button"
-                                  classNameName="btn btn-dark btn-fw"
-                                  // onClick={async (e) => {
-                                  //   console.log(accountID);
-                                  //   console.log(el.sale_invoice_details_id);
-
-                                  //   const {
-                                  //     is_success,
-                                  //   } = await add_client_session_usage();
-
-                                  //   if (is_success) {
-                                  //     cogoToast.success("used the session");
-                                  //   }
-                                  // }}
-                                  onClick={handleShow}
-                                >
-                                  ثبت جلسه
-                                </button>
-                                <Modal show={show} onHide={handleClose}>
-                                  <Modal.Header closeButton>
-                                    <Modal.Title>Modal heading</Modal.Title>
-                                  </Modal.Header>
-                                  <Modal.Body>
-                                    Woohoo, you're reading this text in a modal!
-                                  </Modal.Body>
-                                  <Modal.Footer>
-                                    <Button
-                                      variant="secondary"
-                                      onClick={handleClose}
-                                    >
-                                      Close
-                                    </Button>
-                                    <Button
-                                      variant="primary"
-                                      onClick={handleClose}
-                                    >
-                                      Save Changes
-                                    </Button>
-                                  </Modal.Footer>
-                                </Modal> */}
                               </td>
-                              <td>action button 2</td>
+                              <td>
+                                <button
+                                  type="button"
+                                  className="btn btn-danger"
+                                  data-toggle="modal"
+                                  data-target="#exampleModal2"
+                                  onClick={(e) =>
+                                    setSaleInvoiceDetailID(
+                                      el.sale_invoice_details_id
+                                    )
+                                  }
+                                >
+                                  کنسل کردن ثبت ورود
+                                </button>
+                              </td>
 
                               {/* <td>
                                 {" "}
@@ -287,17 +215,117 @@ export const SessionUsagePage = () => {
                   </div>
                 )}
               </>
-
-              {/* <button
-                type="submit"
-                classNameName="btn btn-primary mr--3"
-                disabled={loading}
+              <div
+                className="modal fade"
+                id="exampleModal"
+                role="dialog"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
               >
-                ثبت
-              </button>
-              <button type="reset" classNameName="btn btn-dark mr-2">
-                انصراف
-              </button> */}
+                <div className="modal-dialog" role="document">
+                  <div className="modal-content">
+                    <div className="modal-body">
+                      آیا از انجام عملیات مطمئن می باشید؟
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        // disabled={el.session_qty === el.session_used}
+                        onClick={async (e) => {
+                          console.log(accountID);
+
+                          const {
+                            is_success,
+                            dev_message,
+                          } = await add_client_session_usage({
+                            sale_invoice_details_id: saleInvoiceDetailID,
+                            customer_id: accountID,
+                            is_use: true,
+                          });
+
+                          if (is_success) {
+                            cogoToast.success("عملیات با موفقیت انجام شد");
+                            // window.location.reload();
+                          } else {
+                            cogoToast.error(`${dev_message}`);
+                          }
+
+                          const data = await get_client_sale_invoice_details(
+                            accountID
+                          );
+                          setSaleInvoiceDetails(data);
+                        }}
+                        data-dismiss="modal"
+                      >
+                        ثبت
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        انصراف
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="modal fade"
+                id="exampleModal2"
+                role="dialog"
+                aria-labelledby="exampleModalLabel2"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog" role="document">
+                  <div className="modal-content">
+                    <div className="modal-body">
+                      آیا از انجام عملیات مطمئن می باشید؟
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={async (e) => {
+                          console.log(accountID);
+
+                          const {
+                            is_success,
+                            dev_message,
+                          } = await add_client_session_usage({
+                            sale_invoice_details_id: saleInvoiceDetailID,
+                            customer_id: accountID,
+                            is_use: false,
+                          });
+
+                          if (is_success) {
+                            cogoToast.success("عملیات با موفقیت انجام شد");
+                            // window.location.reload();
+                          } else {
+                            cogoToast.error(`${dev_message}`);
+                          }
+
+                          const data = await get_client_sale_invoice_details(
+                            accountID
+                          );
+                          setSaleInvoiceDetails(data);
+                        }}
+                        data-dismiss="modal"
+                      >
+                        ثبت
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        انصراف
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

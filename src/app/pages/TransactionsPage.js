@@ -13,6 +13,7 @@ import Pagination from "../components/Pagination";
 import Spinner from "../vendor/shared/Spinner";
 
 import { formatMoney } from "../utils/formatMoney";
+import cogoToast from "cogo-toast";
 export const TransactionsPage = () => {
   const [transactionList, setTransactionList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -133,9 +134,9 @@ export const TransactionsPage = () => {
                       <th> شناسه تراکنش</th>
                       <th> کاربر ثبت کننده</th>
                       <th> شناسه فاکتور</th>
-                      <th> نوع تراکنش </th>
-                      <th> نوع حساب</th>
                       <th> حساب </th>
+                      <th> نوع حساب</th>
+                      <th> نوع تراکنش </th>
                       <th> مبلغ </th>
                       <th> تاریخ </th>
                       <th> توضیحات </th>
@@ -157,10 +158,15 @@ export const TransactionsPage = () => {
                                 <Dropdown.Item
                                   onClick={async (e) => {
                                     const {
-                                      isSuccess,
+                                      is_success,
                                     } = await deleteTransaction(transaction.id);
-                                    if (isSuccess) {
+                                    if (is_success) {
+                                      cogoToast.success("deleted successfully");
                                       window.location.reload();
+                                    } else {
+                                      cogoToast.info(
+                                        "something wrong happended. retry"
+                                      );
                                     }
                                   }}
                                 >
@@ -172,9 +178,11 @@ export const TransactionsPage = () => {
                           {/* <td>{`${customer.firstName} ${customer.lastName}`}</td> */}
                           <td>{transaction.user_name}</td>
                           <td>{transaction.invoice_id || "-"}</td>
-                          <td>{transaction.is_variz ? "واریز" : "برداشت"}</td>
-                          <td>{transaction.account_type_title}</td>
+
                           <td>{`${transaction.first_name} ${transaction.last_name}`}</td>
+                          <td>{transaction.account_type_title}</td>
+                          <td>{transaction.is_variz ? "واریز" : "برداشت"}</td>
+
                           <td>
                             {formatMoney(transaction.price)} {`ریال`}
                           </td>

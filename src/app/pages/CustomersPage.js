@@ -129,6 +129,7 @@ const CustomersPage = () => {
                     <tr>
                       <th> شناسه </th>
                       <th> نام و نام خانوادگی </th>
+                      <th>تاریخ عضویت </th>
                       <th> جنسیت </th>
                       <th> تلفن همراه </th>
                       <th> آدرس </th>
@@ -167,6 +168,7 @@ const CustomersPage = () => {
                             </Dropdown>
                           </td>
                           <td>{`${customer.first_name} ${customer.last_name}`}</td>
+                          <td>{customer.create_date_fa.split(" ").shift()}</td>
                           <td>{customer.gender ? "مرد" : "زن"}</td>
                           <td>{customer.mobile}</td>
                           <td>{customer.address}</td>
