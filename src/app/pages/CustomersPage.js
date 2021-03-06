@@ -27,16 +27,22 @@ const CustomersPage = () => {
   //console.log(customerList);
 
   useEffect(() => {
-    getData();
+    let isMounted = true;
+    getData(isMounted);
   }, []);
 
   useScript("https://www.w3schools.com/lib/w3.js");
 
-  const getData = async () => {
+  const getData = async (isMounted) => {
     const result = await getCustomers();
-    console.log(result);
-    setCustomerList(result);
+    if (isMounted) {
+      setCustomerList(result);
+    }
+    //console.log(result);
     setLoading(false);
+    return () => {
+      isMounted = false;
+    };
   };
 
   // Get current posts

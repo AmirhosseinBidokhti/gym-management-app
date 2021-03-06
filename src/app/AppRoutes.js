@@ -18,6 +18,7 @@ import { ProductEditPage } from "./pages/ProductEditPage";
 import { AccountAddPage } from "./pages/AccountAddPage";
 import AccountsPage from "./pages/AccountsPage";
 import { SessionUsagePage } from "./pages/SessionUsagePage";
+import ChartJs from "./vendor/charts/ChartJs";
 
 const CustomersPage = lazy(() => import("./pages/CustomersPage"));
 
@@ -103,6 +104,7 @@ class AppRoutes extends Component {
             component={TransactionsPage}
           />
           <Route exact={true} path="/" component={LoginPage} />
+          <Route exact={true} path="/chart" component={ChartJs} />
           <Route path="*" component={Error404} />
         </Switch>
       </Suspense>

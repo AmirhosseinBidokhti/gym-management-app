@@ -10,8 +10,17 @@ import { Form } from "react-bootstrap";
 import Spinner from "../vendor/shared/Spinner";
 import { printTable } from "../utils/printTable";
 import cogoToast from "cogo-toast";
+import { Bar, Line } from "react-chartjs-2";
+import CheckupCharts from "../components/CheckupCharts";
 
 export const CustomerCheckupPage = ({ match }) => {
+  const [beforeItem, setBeforeItem] = useState({});
+  const [afterItem, setAfterItem] = useState({});
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [dates, setDates] = useState([]);
+
+  const [checkUpId, setCheckupId] = useState(null);
+
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
@@ -170,7 +179,7 @@ export const CustomerCheckupPage = ({ match }) => {
                           session_no,
                         }) => {
                           return (
-                            <tr>
+                            <tr key={id}>
                               <td>
                                 <Dropdown>
                                   <Dropdown.Toggle
@@ -179,19 +188,39 @@ export const CustomerCheckupPage = ({ match }) => {
                                   >
                                     {session_no}
                                   </Dropdown.Toggle>
+
                                   <Dropdown.Menu>
                                     <Dropdown.Item
-                                      onClick={async (e) => {
-                                        const {
-                                          is_success,
-                                        } = await deleteCustomerCheckup(id);
-                                        if (is_success) {
-                                          cogoToast.success(
-                                            "با موفقیت حذف گردید"
-                                          );
-                                          window.location.reload();
-                                        }
+                                      onClick={() => {
+                                        setSelectedItems((oldArray) => [
+                                          ...oldArray,
+                                          [
+                                            weight,
+                                            chest,
+                                            abs,
+                                            waist_size,
+                                            butt,
+                                            right_arm,
+                                            left_arm,
+                                            right_thigh,
+                                            left_thigh,
+                                            right_calves,
+                                            left_calves,
+                                          ],
+                                        ]);
+                                        setDates((oldArr) => [
+                                          ...oldArr,
+                                          [create_date_fa.split(" ").shift()],
+                                        ]);
                                       }}
+                                    >
+                                      انتخاب
+                                    </Dropdown.Item>
+
+                                    <Dropdown.Item
+                                      data-toggle="modal"
+                                      data-target="#checkupdel"
+                                      onClick={() => setCheckupId(id)}
                                     >
                                       حذف
                                     </Dropdown.Item>
@@ -224,7 +253,8 @@ export const CustomerCheckupPage = ({ match }) => {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  marginTop: "10px",
+                  marginTop: "15px",
+                  marginBottom: "-10px",
                 }}
               >
                 <button onClick={toggle} className="btn btn-primary mr--3">
@@ -590,7 +620,77 @@ export const CustomerCheckupPage = ({ match }) => {
                   </div>
                 </ModalBody>
               </Modal>
+              <div
+                className="modal fade"
+                id="checkupdel"
+                role="dialog"
+                aria-labelledby="checkupdel"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog" role="document">
+                  <div className="modal-content">
+                    <div className="modal-body">
+                      آیا از انجام عملیات مطمئن می باشید؟
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        data-dismiss="modal"
+                        onClick={async (e) => {
+                          const { is_success } = await deleteCustomerCheckup(
+                            checkUpId
+                          );
+                          if (is_success) {
+                            cogoToast.success("با موفقیت حذف گردید");
+                            setTimeout(() => {
+                              window.location.reload();
+                            }, 1150);
+                          }
+                        }}
+                      >
+                        ثبت
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        انصراف
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* <div className="row">
+                <div className="col-md-6 grid-margin stretch-card">
+                  <div className="card">
+                    <div className="card-body">
+                      <h4 className="card-title">Line Chart</h4>
+                      <Line data={data} options={options} />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-6 grid-margin stretch-card">
+                  <div className="card">
+                    <div className="card-body">
+                      <h4 className="card-title">Bar Chart</h4>
+                      <Bar data={data} options={options} />
+                    </div>
+                  </div>
+                </div>
+              </div> */}
             </div>
+            <CheckupCharts
+              info={{
+                // first: [10, 19, 3, 5, 2, 3, 11, 20, 32, 26, 70],
+                //second: [12, 212, 42, 26, 23, 24, 214, 215, 215, 215, 129],
+                fromDate: dates[0],
+                toDate: dates[dates.length - 1],
+                first: selectedItems[0],
+                second: selectedItems[selectedItems.length - 1],
+              }}
+            />
           </div>
         </div>
       )}
