@@ -11,6 +11,7 @@ import { fileUpload } from "../API/fileUpload/fileUpload";
 import cogoToast from "cogo-toast";
 
 import DatePicker from "react-modern-calendar-datepicker";
+import { Link } from "react-router-dom";
 
 export const CustomerAddPage = () => {
   const [firstName, setFirstname] = useState("");
@@ -130,7 +131,9 @@ export const CustomerAddPage = () => {
               <div className="row">
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">نام</label>
+                    <label className="col-sm-3 col-form-label required-input">
+                      نام
+                    </label>
                     <div className="col-sm-9">
                       <Form.Control
                         type="text"
@@ -142,7 +145,7 @@ export const CustomerAddPage = () => {
                 </div>
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">
+                    <label className="col-sm-3 col-form-label required-input">
                       نام خانوادگی
                     </label>
                     <div className="col-sm-9">
@@ -158,7 +161,9 @@ export const CustomerAddPage = () => {
               <div className="row">
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">جنسیت</label>
+                    <label className="col-sm-3 col-form-label required-input">
+                      جنسیت
+                    </label>
 
                     <div className="col-sm-9">
                       <select
@@ -222,7 +227,7 @@ export const CustomerAddPage = () => {
               <div className="row">
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">
+                    <label className="col-sm-3 col-form-label required-input">
                       تلفن همراه
                     </label>
                     <div className="col-sm-9">
@@ -236,7 +241,9 @@ export const CustomerAddPage = () => {
                 </div>
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">تلفن ثابت</label>
+                    <label className="col-sm-3 col-form-label required-input">
+                      تلفن ثابت
+                    </label>
                     <div className="col-sm-9">
                       <Form.Control
                         type="text"
@@ -352,9 +359,9 @@ export const CustomerAddPage = () => {
               >
                 ثبت
               </button>
-              <button type="reset" className="btn btn-dark mr-2">
+              <Link to="/dashboard" className="btn btn-dark mr-2">
                 انصراف
-              </button>
+              </Link>
             </form>
           </div>
         </div>

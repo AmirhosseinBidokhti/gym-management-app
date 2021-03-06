@@ -6,6 +6,7 @@ import { getAccountTypes } from "../API/transaction/getAccountTypes";
 import { addTranscation } from "../API/transaction/addTransaction";
 import { getAccountByType } from "../API/transaction/getAccountByType";
 import cogoToast from "cogo-toast";
+import { Link } from "react-router-dom";
 
 export const TransactionAddPage = () => {
   const [variz, setVariz] = useState(null);
@@ -108,7 +109,7 @@ export const TransactionAddPage = () => {
                 </div> */}
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">
+                    <label className="col-sm-3 col-form-label required-input">
                       نوع تراکنش
                     </label>
 
@@ -133,7 +134,9 @@ export const TransactionAddPage = () => {
                 </div>
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">مبلغ</label>
+                    <label className="col-sm-3 col-form-label required-input">
+                      مبلغ
+                    </label>
                     <div className="col-sm-9">
                       <Form.Control
                         type="number"
@@ -147,7 +150,9 @@ export const TransactionAddPage = () => {
               <div className="row">
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">نوع حساب</label>
+                    <label className="col-sm-3 col-form-label required-input">
+                      نوع حساب
+                    </label>
                     <div className="col-sm-9">
                       <select
                         className="form-control"
@@ -173,7 +178,9 @@ export const TransactionAddPage = () => {
                 </div>
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">حساب</label>
+                    <label className="col-sm-3 col-form-label required-input">
+                      حساب
+                    </label>
                     <div className="col-sm-9">
                       <select
                         className="form-control"
@@ -222,9 +229,9 @@ export const TransactionAddPage = () => {
               >
                 ثبت
               </button>
-              <button type="reset" className="btn btn-dark mr-2">
+              <Link to="/dashboard" className="btn btn-dark mr-2">
                 انصراف
-              </button>
+              </Link>
             </form>
           </div>
         </div>

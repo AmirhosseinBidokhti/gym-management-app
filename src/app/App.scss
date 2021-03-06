@@ -64,3 +64,17 @@
 @import "./assets/styles/sidebar";
 @import "./assets/styles/footer";
 @import "./assets/styles/layout";
+
+// added by me. later will create new file
+th {
+  cursor: pointer;
+}
+
+.required-input:after {
+  content: "*";
+  color: rgb(221, 33, 112);
+  margin-right: 0.36rem;
+  //background-color: red;
+  position: absolute;
+  top: 0.82rem;
+}

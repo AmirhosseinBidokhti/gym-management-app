@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { Dropdown } from "react-bootstrap";
+import useScript from "../utils/hooks/useScript";
 
 import {
   getCustomers,
   getCustomers2,
   getCustomersbyFirstName,
   getCustomers3,
+  getCustomersFulltext,
 } from "../API/customer/getCustomers";
 import { fileDownload_v2 } from "../API/fileUpload/fileDownload";
 import Spinner from "../vendor/shared/Spinner";
@@ -14,16 +16,21 @@ import Spinner from "../vendor/shared/Spinner";
 import Pagination from "../components/Pagination";
 import { formatMoney } from "../utils/formatMoney";
 import { Link } from "react-router-dom";
+import { sortTableByColumn } from "../utils/sortTableByColumn";
+
 const CustomersPage = () => {
   let [customerList, setCustomerList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
+  const [toggleSort, setToggleSort] = useState(null);
   //console.log(customerList);
 
   useEffect(() => {
     getData();
   }, []);
+
+  useScript("https://www.w3schools.com/lib/w3.js");
 
   const getData = async () => {
     const result = await getCustomers();
@@ -58,56 +65,20 @@ const CustomersPage = () => {
                 <h4 className="card-title">لیست مشتریان</h4>
                 <div
                   style={{
-                    width: "250px",
-                    marginRight: "20px",
+                    width: "21rem",
+                    marginRight: "16px",
                   }}
                 >
                   <Form.Control
                     type="text"
-                    placeholder="جستجو بر اساس نام"
+                    placeholder="جستجو براساس نام/ نام خانوادگی/ موبایل"
                     onChange={async (e) => {
-                      let x = await getCustomersbyFirstName({
-                        first_name: e.target.value,
-                      });
+                      let x = await getCustomersFulltext(e.target.value);
                       setCustomerList(x);
                     }}
                   />
                 </div>
 
-                <div
-                  style={{
-                    width: "250px",
-                    marginRight: "20px",
-                  }}
-                >
-                  <Form.Control
-                    type="text"
-                    placeholder="جستجو بر اساس نام خانوادگی"
-                    onChange={async (e) => {
-                      let x = await getCustomers2({
-                        last_name: e.target.value,
-                      });
-                      setCustomerList(x);
-                    }}
-                  />
-                </div>
-                <div
-                  style={{
-                    width: "250px",
-                    marginRight: "10px",
-                  }}
-                >
-                  <Form.Control
-                    type="text"
-                    placeholder="جستجو بر اساس شماره موبایل "
-                    onChange={async (e) => {
-                      let x = await getCustomers3({
-                        mobile: e.target.value,
-                      });
-                      setCustomerList(x);
-                    }}
-                  />
-                </div>
                 <button
                   type="button"
                   className=" btn-dark "
@@ -124,16 +95,71 @@ const CustomersPage = () => {
               </div>
               <p className="card-description"></p>
               <div className="table-responsive ">
-                <table className="table">
+                <table className="table" id="example">
                   <thead style={{ color: "white" }}>
                     <tr>
-                      <th> شناسه </th>
-                      <th> نام و نام خانوادگی </th>
-                      <th>تاریخ عضویت </th>
-                      <th> جنسیت </th>
-                      <th> تلفن همراه </th>
-                      <th> آدرس </th>
-                      <th> مانده حساب </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#example", ".item", 1);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        شناسه
+                      </th>
+                      <th
+                        onClick={() =>
+                          sortTableByColumn("#example", ".item", 2)
+                        }
+                      >
+                        {" "}
+                        <i className={`mdi mdi-sort`}></i>
+                        نام و نام خانوادگی
+                      </th>
+                      <th
+                        onClick={() =>
+                          sortTableByColumn("#example", ".item", 3)
+                        }
+                      >
+                        {" "}
+                        <i className={`mdi mdi-sort`}></i>
+                        تاریخ عضویت
+                      </th>
+                      <th
+                        onClick={() =>
+                          sortTableByColumn("#example", ".item", 4)
+                        }
+                      >
+                        {" "}
+                        <i className={`mdi mdi-sort`}></i>
+                        جنسیت
+                      </th>
+                      <th
+                        onClick={() =>
+                          sortTableByColumn("#example", ".item", 5)
+                        }
+                      >
+                        {" "}
+                        <i className={`mdi mdi-sort`}></i>
+                        تلفن همراه
+                      </th>
+                      <th
+                        onClick={() =>
+                          sortTableByColumn("#example", ".item", 6)
+                        }
+                      >
+                        {" "}
+                        <i className={`mdi mdi-sort`}></i>
+                        آدرس
+                      </th>
+                      <th
+                        onClick={() =>
+                          sortTableByColumn("#example", ".item", 7)
+                        }
+                      >
+                        {" "}
+                        <i className={`mdi mdi-sort`}></i>
+                        مانده حساب
+                      </th>
                       <th> فایل آپلودشده</th>
                     </tr>
                   </thead>
@@ -141,7 +167,7 @@ const CustomersPage = () => {
                     {" "}
                     {currentPosts.map((customer) => {
                       return (
-                        <tr key={customer.id}>
+                        <tr key={customer.id} className="item">
                           <td>
                             <Dropdown drop="up">
                               <Dropdown.Toggle

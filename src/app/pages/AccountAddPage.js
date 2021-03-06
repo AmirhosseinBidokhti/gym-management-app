@@ -4,6 +4,7 @@ import { Form } from "react-bootstrap";
 import cogoToast from "cogo-toast";
 import { addAccount } from "../API/account/addAccount";
 import { getAccountTypes } from "../API/account/getAccountTypes";
+import { Link } from "react-router-dom";
 
 export const AccountAddPage = () => {
   const [title, setTitle] = useState("");
@@ -82,7 +83,9 @@ export const AccountAddPage = () => {
               <div className="row">
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">عنوان</label>
+                    <label className="col-sm-3 col-form-label required-input">
+                      عنوان
+                    </label>
                     <div className="col-sm-9">
                       <Form.Control
                         type="text"
@@ -95,11 +98,14 @@ export const AccountAddPage = () => {
 
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">نوع حساب</label>
+                    <label className="col-sm-3 col-form-label required-input">
+                      نوع حساب
+                    </label>
                     <div className="col-sm-9">
                       <select
                         className="form-control"
                         onChange={(e) => setAccountTypeID(e.target.value)}
+                        required
                       >
                         <option selected disabled>
                           انتخاب کنید
@@ -122,9 +128,9 @@ export const AccountAddPage = () => {
               >
                 ثبت
               </button>
-              <button type="reset" className="btn btn-dark mr-2">
+              <Link to="/dashboard" className="btn btn-dark mr-2">
                 انصراف
-              </button>
+              </Link>
             </form>
           </div>
         </div>

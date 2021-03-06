@@ -1,6 +1,7 @@
 import cogoToast from "cogo-toast";
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 //import DatePicker from "react-modern-calendar-datepicker";
 
 import { addProduct } from "../API/products/addProduct";
@@ -84,22 +85,28 @@ export const ProductAddPage = () => {
               <div className="row">
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">نام محصول</label>
+                    <label className="col-sm-3 col-form-label required-input">
+                      نام محصول
+                    </label>
                     <div className="col-sm-9">
                       <Form.Control
                         type="text"
                         onChange={(e) => setProductName(e.target.value)}
+                        required
                       />
                     </div>
                   </Form.Group>
                 </div>
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">قیمت فروش</label>
+                    <label className="col-sm-3 col-form-label required-input">
+                      قیمت فروش
+                    </label>
                     <div className="col-sm-9">
                       <Form.Control
                         type="number"
                         onChange={(e) => setSalePrice(e.target.value)}
+                        required
                       />
                     </div>
                   </Form.Group>
@@ -140,13 +147,14 @@ export const ProductAddPage = () => {
               <div className="row">
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">
+                    <label className="col-sm-3 col-form-label required-input">
                       تعداد جلسات
                     </label>
                     <div className="col-sm-9">
                       <Form.Control
                         type="number"
                         onChange={(e) => setSessionCount(e.target.value)}
+                        required
                       />
                     </div>
                   </Form.Group>
@@ -160,9 +168,9 @@ export const ProductAddPage = () => {
               >
                 ثبت
               </button>
-              <button type="reset" className="btn btn-dark mr-2">
+              <Link to="/dashboard" className="btn btn-dark mr-2">
                 انصراف
-              </button>
+              </Link>
             </form>
           </div>
         </div>

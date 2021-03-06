@@ -12,6 +12,7 @@ import { Spinner } from "../vendor/shared/Spinner";
 
 import DatePicker from "react-modern-calendar-datepicker";
 import cogoToast from "cogo-toast";
+import { Link } from "react-router-dom";
 
 export const CustomerEditPage = ({ match }) => {
   const [firstName, setFirstname] = useState("");
@@ -383,7 +384,9 @@ export const CustomerEditPage = ({ match }) => {
                 >
                   ثبت
                 </button>
-                <button className="btn btn-dark mr-2">انصراف</button>
+                <Link to="/dashboard" className="btn btn-dark mr-2">
+                  انصراف
+                </Link>
               </form>
             )}
           </div>

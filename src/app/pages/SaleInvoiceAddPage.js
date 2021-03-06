@@ -8,6 +8,7 @@ import { getProducts } from "../API/products/getProducts";
 import { getProduct } from "../API/products/getProduct";
 import { getSaleInvoiceTypes } from "../API/saleInvoice/getSaleInvoiceTypes";
 import { addSaleInvoice } from "../API/saleInvoice/addSaleInvoice";
+import { Link } from "react-router-dom";
 
 // import { saleInvoice } from "../API/types/saleInvoice";
 
@@ -245,9 +246,9 @@ export const SaleInvoiceAddPage = () => {
               >
                 ثبت
               </button>
-              <button type="reset" className="btn btn-dark mr-2">
+              <Link to="/dashboard" className="btn btn-dark mr-2">
                 انصراف
-              </button>
+              </Link>
             </form>
           </div>
         </div>
