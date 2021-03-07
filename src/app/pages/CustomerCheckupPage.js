@@ -121,7 +121,7 @@ export const CustomerCheckupPage = ({ match }) => {
         </div>
       ) : (
         <div className="col-lg-12 grid-margin stretch-card">
-          <div className="card">
+          <div className="card" id="checkups">
             <div className="card-body">
               <div style={{ display: "flex" }}>
                 <button
@@ -692,6 +692,10 @@ export const CustomerCheckupPage = ({ match }) => {
               }}
             />
           </div>
+          {/* <iframe
+            id="checkup-layout"
+            style={{ width: "0px", height: "0px", position: "absolute" }}
+          ></iframe> */}
         </div>
       )}
     </div>

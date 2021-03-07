@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 
-import { getCustomers, getCustomersCombo } from "../API/customer/getCustomers";
+import {
+  getCustomers,
+  getCustomersCombo,
+  getCustomersFulltext,
+} from "../API/customer/getCustomers";
 
 import cogoToast from "cogo-toast";
 import { Button, Dropdown, Modal } from "bootstrap";
@@ -13,6 +17,7 @@ import {
   addSessionFetchVersion,
   add_client_session_usage,
 } from "../API/customer/addSessionUsage";
+import Pagination from "../components/Pagination";
 
 export const SessionUsagePage = () => {
   const [saleInvoiceDetails, setSaleInvoiceDetails] = useState([]);
@@ -21,36 +26,11 @@ export const SessionUsagePage = () => {
   const [saleInvoiceDetailID, setSaleInvoiceDetailID] = useState(null);
 
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
 
   const [customerList, setCustomerList] = useState([]);
-
-  // const submitHandler = async (e) => {
-  //   //   const transactionObj = {
-  //   //     is_variz: variz,
-  //   //     account_type_id: parseInt(accountTypeID),
-  //   //     price: parseInt(price),
-  //   //     description: description,
-  //   //     account_id: accountID,
-  //   //     user_id: JSON.parse(localStorage.getItem("userInfo")).user_id,
-  //   //   };
-  //   //   e.preventDefault();
-  //   //   setLoading(true);
-  //   //   const { data, is_success } = await addTranscation(transactionObj);
-  //   //   console.log(transactionObj);
-  //   //   console.log(data);
-  //   //   if (is_success) {
-  //   //     setSuccess(is_success);
-  //   //     cogoToast.success("تراکنش با موفقیت ثبت شد");
-  //   //   } else {
-  //   //     console.log("try again something was wrong");
-  //   //   }
-  //   //   setLoading(false);
-  // };
 
   useEffect(() => {
     async function getCustomerData() {
@@ -60,6 +40,13 @@ export const SessionUsagePage = () => {
     }
     getCustomerData();
   }, []);
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = customerList.slice(indexOfFirstPost, indexOfLastPost);
+
+  // change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
@@ -92,7 +79,16 @@ export const SessionUsagePage = () => {
                   <Form.Group className="row">
                     <label className="col-sm-3 col-form-label">مشتری</label>
                     <div className="col-sm-9">
-                      <select
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        data-dismiss="modal"
+                        data-toggle="modal"
+                        data-target="#customerList"
+                      >
+                        انتخاب مشتری
+                      </button>
+                      {/* <select
                         className="form-control"
                         onChange={async (e) => {
                           setAccountID(e.target.value);
@@ -115,7 +111,7 @@ export const SessionUsagePage = () => {
                             {`${el.first_name} ${el.last_name}`}
                           </option>
                         ))}
-                      </select>
+                      </select> */}
                     </div>
                   </Form.Group>
                 </div>
@@ -143,24 +139,6 @@ export const SessionUsagePage = () => {
                         {saleInvoiceDetails.map((el) => {
                           return (
                             <tr key={el.invoice_id}>
-                              {/* <td>
-                                <Dropdown drop="up">
-                                  <Dropdown.Toggle
-                                    variant="btn btn-outline-primary"
-                                    id="dropdownMenuOutlineButton5"
-                                  >
-                                    {customer.id}
-                                  </Dropdown.Toggle>
-                                  <Dropdown.Menu>
-                                    <Dropdown.Item
-                                    // as={Link}
-                                    // to={`/customer/customer-checkup/${customer.id}`}
-                                    >
-                                      مشاهده چک آپ
-                                    </Dropdown.Item>
-                                  </Dropdown.Menu>
-                                </Dropdown>
-                              </td> */}
                               <td>{el.product_name}</td>
                               <td>{el.invoice_date_fa}</td>
                               <td>{el.sale_invoice_details_id}</td>
@@ -271,6 +249,90 @@ export const SessionUsagePage = () => {
                   </div>
                 </div>
               </div>
+              <div
+                className="modal fade"
+                id="customerList"
+                role="dialog"
+                aria-labelledby="customerList"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog" role="document">
+                  <div className="modal-content">
+                    <div className="modal-body">
+                      <div className="modal-header">
+                        مشتریان
+                        <div
+                          style={{
+                            width: "17rem",
+                            marginRight: "16px",
+                          }}
+                        >
+                          <Form.Control
+                            type="text"
+                            placeholder="جستجو براساس نام/ نام خانوادگی/ موبایل"
+                            onChange={async (e) => {
+                              let x = await getCustomersFulltext(
+                                e.target.value
+                              );
+                              setCustomerList(x);
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div className="table-responsive table-hover">
+                        <table className="table">
+                          <thead style={{ color: "grey" }}>
+                            <tr>
+                              <th>نام و نام خانوادگی</th>
+                              <th>شماره تلفن</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {currentPosts.map((customer) => {
+                              return (
+                                <tr
+                                  style={{ cursor: "pointer" }}
+                                  onClick={async (e) => {
+                                    setAccountID(customer.id);
+                                    console.log(e.target.value);
+                                    setLoading(true);
+                                    const data = await get_client_sale_invoice_details(
+                                      customer.id
+                                    );
+                                    setSaleInvoiceDetails(data);
+                                    setLoading(false);
+                                  }}
+                                  data-dismiss="modal"
+                                >
+                                  <td>
+                                    {customer.first_name} {customer.last_name}
+                                  </td>
+                                  <td>{customer.mobile}</td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        انصراف
+                      </button>
+                    </div>
+                    <Pagination
+                      postsPerPage={postsPerPage}
+                      totalPosts={customerList.length}
+                      paginate={paginate}
+                    />
+                  </div>
+                </div>
+              </div>
+
               <div
                 className="modal fade"
                 id="exampleModal2"

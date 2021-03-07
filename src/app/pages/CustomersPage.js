@@ -23,7 +23,7 @@ const CustomersPage = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
-  const [toggleSort, setToggleSort] = useState(null);
+  //const [toggleSort, setToggleSort] = useState(null);
   //console.log(customerList);
 
   useEffect(() => {

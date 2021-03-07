@@ -77,6 +77,29 @@ const CheckupCharts = ({ info, fromDate, toDate }) => {
 
   return (
     <>
+      {info.fromDate && info.toDate ? (
+        <div className="col-md-12">
+          <div
+            className="card-body"
+            style={{
+              display: "flex",
+              marginRight: "auto",
+              marginBottom: "-25px",
+              marginTop: "-28px",
+              marginLeft: "-10px",
+            }}
+          >
+            <p className="" style={{ display: "flex", marginRight: "auto" }}>
+              <span>
+                Changes From{" "}
+                <span style={{ color: "#e67e22" }}>{info.fromDate}</span>
+                <span> to </span>
+                <span style={{ color: "#10ac84" }}>{info.toDate}</span>
+              </span>
+            </p>
+          </div>
+        </div>
+      ) : null}
       <div className="row">
         <div className="col-md-6 grid-margin stretch-card">
           <div className="card">
@@ -95,23 +118,6 @@ const CheckupCharts = ({ info, fromDate, toDate }) => {
           </div>
         </div>
       </div>
-      {info.fromDate && info.toDate ? (
-        <div className="col-md-12 grid-margin">
-          <div
-            className="card-body"
-            style={{ display: "flex", marginRight: "auto" }}
-          >
-            <p className="" style={{ display: "flex", marginRight: "auto" }}>
-              <span>
-                Changes From{" "}
-                <span style={{ color: "#e67e22" }}>{info.fromDate}</span>
-                <span> to </span>
-                <span style={{ color: "#10ac84" }}>{info.toDate}</span>
-              </span>
-            </p>
-          </div>
-        </div>
-      ) : null}
     </>
   );
 };
