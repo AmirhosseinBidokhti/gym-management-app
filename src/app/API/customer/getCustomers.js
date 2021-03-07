@@ -15,7 +15,7 @@ export const getCustomers = async () => {
     const {
       data: { data },
     } = await axios.get(`${API_BASE_URL}/Customer/getCustomers`, config);
-    console.log(data);
+    //console.log(data);
     return data;
   } catch (error) {
     console.log(error.response);

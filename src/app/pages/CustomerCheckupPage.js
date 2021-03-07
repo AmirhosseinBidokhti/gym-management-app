@@ -260,7 +260,8 @@ export const CustomerCheckupPage = ({ match }) => {
                 </button>
                 <button
                   onClick={(e) => {
-                    printTable(customerName);
+                    //printTable(customerName);
+                    setSelectedItems([]);
                   }}
                   type="button"
                   className="btn btn-info btn-icon-text"

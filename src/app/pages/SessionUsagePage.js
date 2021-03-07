@@ -32,6 +32,9 @@ export const SessionUsagePage = () => {
 
   const [customerList, setCustomerList] = useState([]);
 
+  const [customerName, setCustomerName] = useState("");
+  const [customerMobile, setCustomerMobile] = useState("");
+
   useEffect(() => {
     async function getCustomerData() {
       const customers = await getCustomersCombo();
@@ -86,7 +89,9 @@ export const SessionUsagePage = () => {
                         data-toggle="modal"
                         data-target="#customerList"
                       >
-                        انتخاب مشتری
+                        {customerName && customerMobile
+                          ? `${customerName} - ${customerMobile}`
+                          : `انتخاب مشتری`}
                       </button>
                       {/* <select
                         className="form-control"
@@ -299,6 +304,8 @@ export const SessionUsagePage = () => {
                                     const data = await get_client_sale_invoice_details(
                                       customer.id
                                     );
+                                    setCustomerName(customer.last_name);
+                                    setCustomerMobile(customer.mobile);
                                     setSaleInvoiceDetails(data);
                                     setLoading(false);
                                   }}

@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Bar, Line } from "react-chartjs-2";
 
 const CheckupCharts = ({ info, fromDate, toDate }) => {
+  let [chartData, setChartData] = useState(info);
+
+  // setting the prop data to state of current component.
+  useEffect(() => {
+    setChartData(info);
+  }, [info]);
+
   const data = {
     labels: [
       "وزن",
@@ -19,7 +26,7 @@ const CheckupCharts = ({ info, fromDate, toDate }) => {
     datasets: [
       {
         label: "# of Votes",
-        data: info.first,
+        data: chartData.first,
 
         backgroundColor: "#e67e22",
         borderColor: "#e67e22",
@@ -28,7 +35,7 @@ const CheckupCharts = ({ info, fromDate, toDate }) => {
       },
       {
         label: "# of Vote",
-        data: info.second,
+        data: chartData.second,
         backgroundColor: "#10ac84",
         borderColor: "#10ac84",
 
@@ -71,13 +78,9 @@ const CheckupCharts = ({ info, fromDate, toDate }) => {
     },
   };
 
-  console.log(data);
-  console.log(info.fromDate);
-  console.log(info.toDate);
-
   return (
     <>
-      {info.fromDate && info.toDate ? (
+      {chartData.fromDate && chartData.toDate ? (
         <div className="col-md-12">
           <div
             className="card-body"
@@ -91,10 +94,19 @@ const CheckupCharts = ({ info, fromDate, toDate }) => {
           >
             <p className="" style={{ display: "flex", marginRight: "auto" }}>
               <span>
+                <button
+                  className="btn btn-dark"
+                  style={{ marginLeft: "8px", verticalAlign: "center" }}
+                  onClick={() => {
+                    setChartData([]);
+                  }}
+                >
+                  reset
+                </button>
                 Changes From{" "}
-                <span style={{ color: "#e67e22" }}>{info.fromDate}</span>
+                <span style={{ color: "#e67e22" }}>{chartData.fromDate}</span>
                 <span> to </span>
-                <span style={{ color: "#10ac84" }}>{info.toDate}</span>
+                <span style={{ color: "#10ac84" }}>{chartData.toDate}</span>
               </span>
             </p>
           </div>
