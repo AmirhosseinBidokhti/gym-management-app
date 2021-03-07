@@ -5,9 +5,6 @@ import useScript from "../utils/hooks/useScript";
 
 import {
   getCustomers,
-  getCustomers2,
-  getCustomersbyFirstName,
-  getCustomers3,
   getCustomersFulltext,
 } from "../API/customer/getCustomers";
 import { fileDownload_v2 } from "../API/fileUpload/fileDownload";

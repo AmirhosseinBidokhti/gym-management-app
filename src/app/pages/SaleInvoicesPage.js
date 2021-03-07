@@ -14,6 +14,8 @@ import { deleteSaleInvoice } from "../API/saleInvoice/deleteSaleInvoice";
 import { formatMoney } from "../utils/formatMoney";
 import Pagination from "../components/Pagination";
 import cogoToast from "cogo-toast";
+import { sortTableByColumn } from "../utils/sortTableByColumn";
+import useScript from "../utils/hooks/useScript";
 export const SaleInvoicesPage = () => {
   const [saleInvoiceList, setSaleInvoiceList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,7 +32,7 @@ export const SaleInvoicesPage = () => {
     };
     getData();
   }, []);
-
+  useScript("https://www.w3schools.com/lib/w3.js");
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -126,18 +128,80 @@ export const SaleInvoicesPage = () => {
               </div>
               <p className="card-description"></p>
               <div className="table-responsive ">
-                <table className="table">
+                <table className="table" id="invoice-table">
                   <thead style={{ color: "white" }}>
                     <tr>
-                      <th> شناسه </th>
-                      <th>تاریخ ثبت</th>
-                      <th>مشتری</th>
-                      <th> کالا </th>
-                      <th> نحوه پرداخت </th>
-                      <th> تعداد </th>
-                      <th> مبلغ </th>
-                      <th> تخفیف </th>
-                      <th> توضیحات </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#invoice-table", ".item", 1);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        شناسه{" "}
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#invoice-table", ".item", 2);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        تاریخ ثبت
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#invoice-table", ".item", 3);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        مشتری
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#invoice-table", ".item", 4);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        کالا{" "}
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#invoice-table", ".item", 5);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        نحوه پرداخت{" "}
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#invoice-table", ".item", 6);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        تعداد{" "}
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#invoice-table", ".item", 7);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        مبلغ{" "}
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#invoice-table", ".item", 8);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        تخفیف{" "}
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#invoice-table", ".item", 9);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i> توضیحات{" "}
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -155,7 +219,7 @@ export const SaleInvoicesPage = () => {
                         memo,
                       }) => {
                         return (
-                          <tr key={id}>
+                          <tr key={id} className="item">
                             <td>
                               <Dropdown>
                                 <Dropdown.Toggle

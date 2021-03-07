@@ -10,12 +10,10 @@ import { Form } from "react-bootstrap";
 import Spinner from "../vendor/shared/Spinner";
 import { printTable } from "../utils/printTable";
 import cogoToast from "cogo-toast";
-import { Bar, Line } from "react-chartjs-2";
+
 import CheckupCharts from "../components/CheckupCharts";
 
 export const CustomerCheckupPage = ({ match }) => {
-  const [beforeItem, setBeforeItem] = useState({});
-  const [afterItem, setAfterItem] = useState({});
   const [selectedItems, setSelectedItems] = useState([]);
   const [dates, setDates] = useState([]);
 
