@@ -193,7 +193,9 @@ export const TransactionAddPage = () => {
                         </option>
                         {accounts.map((el) => (
                           <option key={el.id} value={el.id}>
-                            {`${el.first_name} ${el.last_name}`}
+                            {el.last_name
+                              ? `${el.first_name} ${el.last_name}`
+                              : `${el.title}`}
                           </option>
                         ))}
                       </select>

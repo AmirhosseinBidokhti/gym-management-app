@@ -6,6 +6,8 @@ import Spinner from "../vendor/shared/Spinner";
 import Pagination from "../components/Pagination";
 import { formatMoney } from "../utils/formatMoney";
 import { getAccounts, getAccountsByTitle } from "../API/account/getAccounts";
+import { sortTableByColumn } from "../utils/sortTableByColumn";
+import useScript from "../utils/hooks/useScript";
 const AccountsPage = () => {
   let [accountList, setAccountList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,6 +18,8 @@ const AccountsPage = () => {
   useEffect(() => {
     getData();
   }, []);
+
+  useScript("https://www.w3schools.com/lib/w3.js");
 
   const getData = async () => {
     const result = await getAccounts();
@@ -60,7 +64,7 @@ const AccountsPage = () => {
                 >
                   <Form.Control
                     type="text"
-                    placeholder="جستجو بر اساس /عنوان"
+                    placeholder="جستجو بر اساس نام/عنوان"
                     onChange={async (e) => {
                       let x = await getAccountsByTitle(e.target.value);
                       setAccountList(x);
@@ -83,21 +87,48 @@ const AccountsPage = () => {
                 </button>
               </div>
               <p className="card-description"></p>
-              <div className="table-responsive ">
+              <div className="table-responsive" id="account-tb">
                 <table className="table">
                   <thead style={{ color: "white" }}>
                     <tr>
-                      <th> شناسه حساب </th>
-                      <th> نوع حساب </th>
-                      <th> نام/عنوان </th>
-                      <th> مانده حساب </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#account-tb", ".item", 1);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        شناسه حساب
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#account-tb", ".item", 2);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        نوع حساب
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#account-tb", ".item", 3);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        نام/عنوان
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#account-tb", ".item", 4);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        مانده حساب
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {" "}
                     {currentAccountList.map((account) => {
                       return (
-                        <tr key={account.id}>
+                        <tr key={account.id} className="item">
                           <td>
                             <Dropdown drop="up">
                               <Dropdown.Toggle

@@ -25,7 +25,7 @@ const CheckupCharts = ({ info, fromDate, toDate }) => {
     ],
     datasets: [
       {
-        label: "# of Votes",
+        label: "#-",
         data: chartData.first,
 
         backgroundColor: "#e67e22",
@@ -34,7 +34,7 @@ const CheckupCharts = ({ info, fromDate, toDate }) => {
         fill: false,
       },
       {
-        label: "# of Vote",
+        label: "#",
         data: chartData.second,
         backgroundColor: "#10ac84",
         borderColor: "#10ac84",

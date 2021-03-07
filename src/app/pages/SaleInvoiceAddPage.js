@@ -118,7 +118,9 @@ export const SaleInvoiceAddPage = () => {
               <div className="row">
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">نام مشتری</label>
+                    <label className="col-sm-3 col-form-label required-input">
+                      نام مشتری
+                    </label>
                     <div className="col-sm-9">
                       <select
                         className="form-control"
@@ -139,7 +141,9 @@ export const SaleInvoiceAddPage = () => {
                 </div>
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">نام محصول</label>
+                    <label className="col-sm-3 col-form-label required-input">
+                      نام محصول
+                    </label>
                     <div className="col-sm-9">
                       <select
                         className="form-control"
@@ -182,7 +186,7 @@ export const SaleInvoiceAddPage = () => {
                 </div> */}
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">
+                    <label className="col-sm-3 col-form-label required-input">
                       نوع پرداخت
                     </label>
                     <div className="col-sm-9">

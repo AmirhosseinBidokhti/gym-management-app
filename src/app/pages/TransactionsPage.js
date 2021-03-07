@@ -14,6 +14,8 @@ import Spinner from "../vendor/shared/Spinner";
 
 import { formatMoney } from "../utils/formatMoney";
 import cogoToast from "cogo-toast";
+import useScript from "../utils/hooks/useScript";
+import { sortTableByColumn } from "../utils/sortTableByColumn";
 export const TransactionsPage = () => {
   const [transactionList, setTransactionList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,6 +32,8 @@ export const TransactionsPage = () => {
     };
     getData();
   }, []);
+
+  useScript("https://www.w3schools.com/lib/w3.js");
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
@@ -127,25 +131,88 @@ export const TransactionsPage = () => {
                 </button>
               </div>
               <p className="card-description"></p>
-              <div className="table-responsive ">
+              <div className="table-responsive" id="transaction-tb">
                 <table className="table">
                   <thead style={{ color: "white" }}>
                     <tr>
-                      <th> شناسه تراکنش</th>
-                      <th> کاربر ثبت کننده</th>
-                      <th> شناسه فاکتور</th>
-                      <th> حساب </th>
-                      <th> نوع حساب</th>
-                      <th> نوع تراکنش </th>
-                      <th> مبلغ </th>
-                      <th> تاریخ </th>
-                      <th> توضیحات </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#transaction-tb", ".item", 1);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        شناسه تراکنش
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#transaction-tb", ".item", 2);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        کاربر ثبت کننده
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#transaction-tb", ".item", 3);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        شناسه فاکتور
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#transaction-tb", ".item", 4);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        حساب
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#transaction-tb", ".item", 5);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        نوع حساب
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#transaction-tb", ".item", 6);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        نوع تراکنش{" "}
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#transaction-tb", ".item", 7);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        مبلغ{" "}
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#transaction-tb", ".item", 8);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        تاریخ{" "}
+                      </th>
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#transaction-tb", ".item", 9);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        توضیحات{" "}
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     {currentTransactions.map((transaction) => {
                       return (
-                        <tr key={transaction.id}>
+                        <tr key={transaction.id} className="item">
                           <td>
                             <Dropdown>
                               <Dropdown.Toggle
