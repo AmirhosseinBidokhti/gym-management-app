@@ -19,6 +19,7 @@ import { AccountAddPage } from "./pages/AccountAddPage";
 import AccountsPage from "./pages/AccountsPage";
 import { SessionUsagePage } from "./pages/SessionUsagePage";
 import ChartJs from "./vendor/charts/ChartJs";
+import { TransactionForSaleInvoicePage } from "./pages/TransactionForSaleInvoicePage";
 
 const CustomersPage = lazy(() => import("./pages/CustomersPage"));
 
@@ -50,13 +51,11 @@ class AppRoutes extends Component {
             path="/customer/edit-customer/:id"
             component={CustomerEditPage}
           />
-
           <PrivateRoute
             exact={true}
             path="/customer/session-usage"
             component={SessionUsagePage}
           />
-
           <PrivateRoute
             exact={true}
             path="/account/add-new-account"
@@ -67,7 +66,6 @@ class AppRoutes extends Component {
             path="/account/accounts-list"
             component={AccountsPage}
           />
-
           <PrivateRoute
             exact={true}
             path="/product/add-new-product"
@@ -93,6 +91,12 @@ class AppRoutes extends Component {
             path="/saleInvoice/saleInvoice-list"
             component={SaleInvoicesPage}
           />
+          TransactionForSaleInvoicePage
+          <PrivateRoute
+            exact={true}
+            path="/saleInvoice/add-transaction-for-saleInvoice/:id/:account_id/:price"
+            component={TransactionForSaleInvoicePage}
+          />
           <PrivateRoute
             exact={true}
             path="/transaction/add-new-transaction"
@@ -104,7 +108,6 @@ class AppRoutes extends Component {
             component={TransactionsPage}
           />
           <Route exact={true} path="/" component={LoginPage} />
-          <Route exact={true} path="/chart" component={ChartJs} />
           <Route path="*" component={Error404} />
         </Switch>
       </Suspense>

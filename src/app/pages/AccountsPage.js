@@ -5,14 +5,21 @@ import { Dropdown } from "react-bootstrap";
 import Spinner from "../vendor/shared/Spinner";
 import Pagination from "../components/Pagination";
 import { formatMoney } from "../utils/formatMoney";
-import { getAccounts, getAccountsByTitle } from "../API/account/getAccounts";
+import {
+  getAccounts,
+  getAccountsByTitle,
+  getAccountsByType,
+} from "../API/account/getAccounts";
 import { sortTableByColumn } from "../utils/sortTableByColumn";
 import useScript from "../utils/hooks/useScript";
+import { getAccountTypes } from "../API/account/getAccountTypes";
 const AccountsPage = () => {
   let [accountList, setAccountList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
+  const [accountTypes, setAccountTypes] = useState([]);
+
   //console.log(customerList);
 
   useEffect(() => {
@@ -23,8 +30,10 @@ const AccountsPage = () => {
 
   const getData = async () => {
     const result = await getAccounts();
-    console.log(result);
+    //console.log(result);
     setAccountList(result);
+    const fetchedAccTypes = await getAccountTypes();
+    setAccountTypes(fetchedAccTypes);
     setLoading(false);
   };
 
@@ -70,6 +79,35 @@ const AccountsPage = () => {
                       setAccountList(x);
                     }}
                   />
+                </div>
+                <div
+                  style={{
+                    width: "250px",
+                    marginRight: "20px",
+                  }}
+                >
+                  <select
+                    className="form-control"
+                    onChange={async (e) => {
+                      let res = await getAccountsByType({
+                        account_type_id: e.target.value,
+                      });
+                      //  console.log(res);
+                      setLoading(true);
+                      setAccountList(res);
+                      setLoading(false);
+                    }}
+                    required
+                  >
+                    <option selected disabled value="">
+                      جستجو با نوع حساب
+                    </option>
+                    {accountTypes.map((el) => (
+                      <option key={el.id} value={el.id}>
+                        {el.title}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <button

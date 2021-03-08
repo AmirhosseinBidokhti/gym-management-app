@@ -1,6 +1,7 @@
 import cogoToast from "cogo-toast";
 import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import { getProduct } from "../API/products/getProduct";
 import { updateProduct } from "../API/products/updateProduct";
@@ -188,9 +189,9 @@ export const ProductEditPage = ({ match }) => {
               >
                 ثبت
               </button>
-              <button type="reset" className="btn btn-dark mr-2">
+              <Link to="/dashboard" className="btn btn-dark mr-2">
                 انصراف
-              </button>
+              </Link>
             </form>
           </div>
         </div>

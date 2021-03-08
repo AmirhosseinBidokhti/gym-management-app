@@ -11,6 +11,7 @@ import cogoToast from "cogo-toast";
 export const ProductsPage = () => {
   const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [productID, setProductID] = useState(null);
   //console.log(customerList);
 
   useEffect(() => {
@@ -87,22 +88,9 @@ export const ProductsPage = () => {
                                 </Dropdown.Item>
 
                                 <Dropdown.Item
-                                  onClick={async (e) => {
-                                    const {
-                                      is_success,
-                                      //dev_message,
-                                    } = await deleteProduct(product.id);
-                                    if (is_success) {
-                                      cogoToast.success("با موفقیت حذف شد");
-                                      setTimeout(() => {
-                                        window.location.reload();
-                                      }, 1100);
-                                    } else {
-                                      cogoToast.info(
-                                        "امکان حذف کالایی که فاکتور شده است وجود ندارد"
-                                      );
-                                    }
-                                  }}
+                                  data-toggle="modal"
+                                  data-target="#product-del"
+                                  onClick={() => setProductID(product.id)}
                                 >
                                   حذف
                                 </Dropdown.Item>
@@ -126,6 +114,53 @@ export const ProductsPage = () => {
           </div>
         </div>
       )}
+      <div
+        className="modal fade"
+        id="product-del"
+        role="dialog"
+        aria-labelledby="product-del"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-body">
+              آیا از انجام عملیات مطمئن می باشید؟
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-primary"
+                data-dismiss="modal"
+                onClick={async (e) => {
+                  const {
+                    is_success,
+                    //dev_message,
+                  } = await deleteProduct(productID);
+                  if (is_success) {
+                    cogoToast.success("با موفقیت حذف شد");
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, 300);
+                  } else {
+                    cogoToast.info(
+                      "امکان حذف کالایی که فاکتور شده است وجود ندارد"
+                    );
+                  }
+                }}
+              >
+                ثبت
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                انصراف
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

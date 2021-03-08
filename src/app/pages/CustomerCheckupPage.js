@@ -12,6 +12,7 @@ import { printTable } from "../utils/printTable";
 import cogoToast from "cogo-toast";
 
 import CheckupCharts from "../components/CheckupCharts";
+import { Example } from "../components/PrintComponent";
 
 export const CustomerCheckupPage = ({ match }) => {
   const [selectedItems, setSelectedItems] = useState([]);
@@ -77,10 +78,7 @@ export const CustomerCheckupPage = ({ match }) => {
     if (is_success) {
       console.log(is_success); //works
       cogoToast.success("چک آپ جدید با موفقیت ثبت شد");
-      //
-      setTimeout(() => {
-        window.location.reload();
-      }, 1600);
+      window.location.reload();
     }
   };
 
@@ -137,7 +135,7 @@ export const CustomerCheckupPage = ({ match }) => {
                 </button>
               </div>
               <div id="tab">
-                <p className="card-description"></p>{" "}
+                <p className="card-description"></p>
                 <h4 className="card-title">پروفایل چکاپ {`${customerName}`}</h4>
                 <div className="table-responsive table-bordered">
                   <table className="table table-bordered">
@@ -246,6 +244,7 @@ export const CustomerCheckupPage = ({ match }) => {
                   </table>
                 </div>
               </div>
+
               <div
                 style={{
                   display: "flex",
@@ -260,8 +259,8 @@ export const CustomerCheckupPage = ({ match }) => {
                 </button>
                 <button
                   onClick={(e) => {
-                    //printTable(customerName);
-                    setSelectedItems([]);
+                    printTable(customerName);
+                    //setSelectedItems([]);
                   }}
                   type="button"
                   className="btn btn-info btn-icon-text"
@@ -644,7 +643,7 @@ export const CustomerCheckupPage = ({ match }) => {
                             cogoToast.success("با موفقیت حذف گردید");
                             setTimeout(() => {
                               window.location.reload();
-                            }, 1150);
+                            }, 650);
                           }
                         }}
                       >

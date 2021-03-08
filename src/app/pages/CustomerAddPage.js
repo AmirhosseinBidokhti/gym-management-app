@@ -66,7 +66,9 @@ export const CustomerAddPage = () => {
       jobinfo_id: job,
     };
 
-    const { data, is_success } = await customerAdd(newCustomerInfo);
+    const { data, is_success, dev_message } = await customerAdd(
+      newCustomerInfo
+    );
 
     if (file) {
       await fileUpload(file, fileName);
@@ -78,9 +80,10 @@ export const CustomerAddPage = () => {
       cogoToast.success("مشتری جدید با موفقیت اضافه شد");
       setTimeout(() => {
         window.location.reload();
-      }, 1320);
+      }, 400);
     } else {
       console.log("try again something was wrong");
+      cogoToast.info(dev_message);
     }
 
     setLoading(false);
@@ -185,7 +188,7 @@ export const CustomerAddPage = () => {
                 </div>
                 <div className="col-md-6">
                   <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">
+                    <label className="col-sm-3 col-form-label required-input">
                       تاریخ تولد
                     </label>
                     <div className="col-sm-9">
@@ -194,6 +197,7 @@ export const CustomerAddPage = () => {
                         onChange={setSelectedDay}
                         shouldHighlightWeekends
                         locale="fa"
+                        required
                       />
                     </div>
                   </Form.Group>

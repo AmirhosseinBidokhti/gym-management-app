@@ -16,11 +16,14 @@ import Pagination from "../components/Pagination";
 import cogoToast from "cogo-toast";
 import { sortTableByColumn } from "../utils/sortTableByColumn";
 import useScript from "../utils/hooks/useScript";
+import { Link } from "react-router-dom";
 export const SaleInvoicesPage = () => {
   const [saleInvoiceList, setSaleInvoiceList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
+
+  const [saleInvoiceID, setSaleInvoiceID] = useState(null);
   //console.log(customerList);
 
   useEffect(() => {
@@ -217,6 +220,7 @@ export const SaleInvoicesPage = () => {
                         reduction,
                         price,
                         memo,
+                        account_id,
                       }) => {
                         return (
                           <tr key={id} className="item">
@@ -230,17 +234,15 @@ export const SaleInvoicesPage = () => {
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
                                   <Dropdown.Item
-                                    onClick={async (e) => {
-                                      const {
-                                        is_success,
-                                      } = await deleteSaleInvoice(id);
-                                      if (is_success) {
-                                        cogoToast.success("با موفقیت حذف شد");
-                                        setTimeout(() => {
-                                          window.location.reload();
-                                        }, 1200);
-                                      }
-                                    }}
+                                    as={Link}
+                                    to={`/saleInvoice/add-transaction-for-saleInvoice/${id}/${account_id}/${price}`}
+                                  >
+                                    ثبت تسویه
+                                  </Dropdown.Item>
+                                  <Dropdown.Item
+                                    data-toggle="modal"
+                                    data-target="#invoice-del"
+                                    onClick={() => setSaleInvoiceID(id)}
                                   >
                                     حذف
                                   </Dropdown.Item>
@@ -277,6 +279,46 @@ export const SaleInvoicesPage = () => {
           </div>
         </div>
       )}
+      <div
+        className="modal fade"
+        id="invoice-del"
+        role="dialog"
+        aria-labelledby="invoice-del"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-body">
+              آیا از انجام عملیات مطمئن می باشید؟
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-primary"
+                data-dismiss="modal"
+                onClick={async (e) => {
+                  const { is_success } = await deleteSaleInvoice(saleInvoiceID);
+                  if (is_success) {
+                    cogoToast.success("با موفقیت حذف شد");
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, 350);
+                  }
+                }}
+              >
+                ثبت
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                انصراف
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
