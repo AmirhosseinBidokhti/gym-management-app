@@ -18,7 +18,7 @@ import { ProductEditPage } from "./pages/ProductEditPage";
 import { AccountAddPage } from "./pages/AccountAddPage";
 import AccountsPage from "./pages/AccountsPage";
 import { SessionUsagePage } from "./pages/SessionUsagePage";
-import ChartJs from "./vendor/charts/ChartJs";
+
 import { TransactionForSaleInvoicePage } from "./pages/TransactionForSaleInvoicePage";
 
 const CustomersPage = lazy(() => import("./pages/CustomersPage"));

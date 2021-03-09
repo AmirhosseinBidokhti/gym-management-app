@@ -18,7 +18,7 @@ export const getTransactions = async () => {
       `${API_BASE_URL}/AccTransaction/getAccTransactions`,
       config
     );
-    console.log(data);
+    //console.log(data);
     return data;
   } catch (error) {
     console.log(error.response);
@@ -90,7 +90,7 @@ export const getTransactionsByTitle = async (obj) => {
       `${API_BASE_URL}/AccTransaction/getAccTransactions?title=${obj.title}`,
       config
     );
-    console.log(data);
+    //console.log(data);
     return data;
   } catch (error) {
     console.log(error.response);

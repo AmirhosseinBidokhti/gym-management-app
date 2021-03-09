@@ -42,7 +42,7 @@ export const ProductAddPage = () => {
 
       setTimeout(() => {
         window.location.reload();
-      }, 1320);
+      }, 330);
     } else {
       console.log("try again something was wrong");
     }

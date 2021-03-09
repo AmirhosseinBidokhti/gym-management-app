@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
-import { getAccountTypes } from "../API/transaction/getAccountTypes";
+// import { getAccountTypes } from "../API/transaction/getAccountTypes";
 
 //import { getCustomers } from "../API/customer/getCustomers";
 import { addTranscation } from "../API/transaction/addTransaction";
-import { getAccountByType } from "../API/transaction/getAccountByType";
+// import { getAccountByType } from "../API/transaction/getAccountByType";
 import cogoToast from "cogo-toast";
 import { Link } from "react-router-dom";
 import { getSaleInvoiceTypes } from "../API/saleInvoice/getSaleInvoiceTypes";
@@ -42,6 +42,9 @@ export const TransactionForSaleInvoicePage = ({ match }) => {
     console.log(data);
     if (is_success) {
       cogoToast.success("تراکنش با موفقیت ثبت شد");
+      setTimeout(() => {
+        window.location.reload();
+      }, 330);
     } else {
       console.log("try again something was wrong");
     }

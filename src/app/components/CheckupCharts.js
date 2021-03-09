@@ -29,16 +29,17 @@ const CheckupCharts = ({ info, fromDate, toDate }) => {
         data: chartData.first,
 
         backgroundColor: "#e67e22",
-        borderColor: "#e67e22",
+        borderColor: "#e67e23",
         borderWidth: 1,
         fill: false,
+        radius: 3,
       },
       {
         label: "#",
         data: chartData.second,
         backgroundColor: "#10ac84",
         borderColor: "#10ac84",
-
+        radius: 3,
         borderWidth: 1,
         fill: false,
       },

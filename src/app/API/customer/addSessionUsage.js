@@ -5,9 +5,6 @@ export const add_client_session_usage = async (session_obj) => {
   try {
     const authToken = JSON.parse(localStorage.getItem("userInfo")).access_token;
 
-    console.log("this is authToken");
-    console.log(authToken);
-
     const config = {
       headers: {
         "content-type": "application/json; charset=utf-8",
@@ -15,15 +12,13 @@ export const add_client_session_usage = async (session_obj) => {
       },
     };
 
-    console.log("this config object");
-    console.log(config);
     const { data } = await axios.post(
       `https://api.imotionfitclub.com/api/ClientSessionUsage/add_client_session_usage`,
       session_obj,
       config
     );
-    console.log("this is the data");
-    console.log(data);
+    // console.log("this is the data");
+    // console.log(data);
     return data;
   } catch (error) {
     console.log(error.response);

@@ -59,9 +59,9 @@ const LoginPage = ({ history, location }) => {
                   <div>
                     {" "}
                     <h3 className="font-weight-light">IMOTION FITCLUB</h3>
-                    <h7 className="font-weight-light">
+                    <h6 className="font-weight-light">
                       Sign In and let's get to work!
-                    </h7>
+                    </h6>
                   </div>
                   {error && <p style={{ color: "red" }}>{error}</p>}
                   <Form className="pt-3" onSubmit={sumbitHandler}>

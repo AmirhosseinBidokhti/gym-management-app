@@ -15,9 +15,10 @@ export const getAccountTypes = async () => {
     const {
       data: { data },
     } = await axios.get(`${API_BASE_URL}/AccAccount/get_account_types`, config);
-    console.log(data);
+    //console.log(data);
     return data;
   } catch (error) {
     console.log(error.response);
+    console.log(error);
   }
 };

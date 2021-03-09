@@ -41,6 +41,9 @@ export const TransactionAddPage = () => {
     console.log(data);
     if (is_success) {
       cogoToast.success("تراکنش با موفقیت ثبت شد");
+      setTimeout(() => {
+        window.location.reload();
+      }, 170);
     } else {
       console.log("try again something was wrong");
     }

@@ -26,7 +26,7 @@ export const TransactionsPage = () => {
   useEffect(() => {
     const getData = async () => {
       const result = await getTransactions();
-      console.log(result);
+      //console.log(result);
       setTransactionList(result);
       setLoading(false);
     };
@@ -246,7 +246,11 @@ export const TransactionsPage = () => {
                           <td>{transaction.user_name}</td>
                           <td>{transaction.invoice_id || "-"}</td>
 
-                          <td>{`${transaction.first_name} ${transaction.last_name}`}</td>
+                          <td>
+                            {transaction.last_name
+                              ? `${transaction.first_name} ${transaction.last_name}`
+                              : `${transaction.title}`}
+                          </td>
                           <td>{transaction.account_type_title}</td>
                           <td>{transaction.is_variz ? "واریز" : "برداشت"}</td>
 

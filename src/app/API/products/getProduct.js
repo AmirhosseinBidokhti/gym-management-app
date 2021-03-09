@@ -15,7 +15,7 @@ export const getProduct = async (id) => {
     const {
       data: { data },
     } = await axios.get(`${API_BASE_URL}/Product/getProduct?ID=${id}`, config);
-    console.log(data);
+    // console.log(data);
 
     return data;
   } catch (error) {

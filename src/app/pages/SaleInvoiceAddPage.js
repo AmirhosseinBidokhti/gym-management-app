@@ -76,8 +76,8 @@ export const SaleInvoiceAddPage = () => {
       newSaleInvoice
     );
 
-    console.log(data);
-    console.log(newSaleInvoice);
+    //console.log(data);
+    //console.log(newSaleInvoice);
     if (is_success) {
       cogoToast.success("فاکتور فروش جدید با موفقیت ثبت شد");
       setTransRouteData({
@@ -99,7 +99,7 @@ export const SaleInvoiceAddPage = () => {
       const customers = await getCustomers();
       setCustomerList(customers);
       const result = await getProducts();
-      console.log(result);
+      //console.log(result);
       setProductList(result);
 
       const saleInvoiceType = await getSaleInvoiceTypes();
@@ -308,10 +308,11 @@ export const SaleInvoiceAddPage = () => {
                       {currentCustomerList.map((customer) => {
                         return (
                           <tr
+                            key={customer.id}
                             style={{ cursor: "pointer" }}
                             onClick={async (e) => {
                               setAccountID(customer.id);
-                              console.log(e.target.value);
+                              //console.log(e.target.value);
                               setLoading(true);
                               setCustomerName(customer.last_name);
                               setCustomerMobile(customer.mobile);

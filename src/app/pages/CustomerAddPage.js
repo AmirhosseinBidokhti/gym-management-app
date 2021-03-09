@@ -70,8 +70,15 @@ export const CustomerAddPage = () => {
       newCustomerInfo
     );
 
+    setLoading(true);
+
     if (file) {
-      await fileUpload(file, fileName);
+      cogoToast.info("uploading the file");
+      setLoading(true);
+      const { is_success } = await fileUpload(file, fileName);
+      is_success
+        ? cogoToast.success("Upload was successful")
+        : cogoToast.error("Upload was not successful");
     }
 
     //console.log(newCustomerInfo);
@@ -80,7 +87,7 @@ export const CustomerAddPage = () => {
       cogoToast.success("مشتری جدید با موفقیت اضافه شد");
       setTimeout(() => {
         window.location.reload();
-      }, 400);
+      }, 350);
     } else {
       console.log("try again something was wrong");
       cogoToast.info(dev_message);

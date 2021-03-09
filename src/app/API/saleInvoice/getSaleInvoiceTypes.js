@@ -12,7 +12,7 @@ export const getSaleInvoiceTypes = async () => {
       },
     };
 
-    console.log(config);
+    //console.log(config);
 
     const {
       data: { data },
@@ -20,7 +20,7 @@ export const getSaleInvoiceTypes = async () => {
       `${API_BASE_URL}/SaleInvoice/getSaleInvoicePaymentTypes`,
       config
     );
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     console.log(error.response);

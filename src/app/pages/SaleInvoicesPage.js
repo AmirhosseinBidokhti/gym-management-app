@@ -29,7 +29,7 @@ export const SaleInvoicesPage = () => {
   useEffect(() => {
     const getData = async () => {
       const result = await getSaleInvoices();
-      console.log(result);
+      //console.log(result);
       setSaleInvoiceList(result);
       setLoading(false);
     };
@@ -164,15 +164,23 @@ export const SaleInvoicesPage = () => {
                         }}
                       >
                         <i className={`mdi mdi-sort`}></i>
-                        کالا{" "}
+                        کالا
                       </th>
-                      <th
+                      {/* <th
                         onClick={() => {
                           sortTableByColumn("#invoice-table", ".item", 5);
                         }}
                       >
                         <i className={`mdi mdi-sort`}></i>
                         نحوه پرداخت{" "}
+                      </th> */}
+                      <th
+                        onClick={() => {
+                          sortTableByColumn("#invoice-table", ".item", 5);
+                        }}
+                      >
+                        <i className={`mdi mdi-sort`}></i>
+                        مبلغ
                       </th>
                       <th
                         onClick={() => {
@@ -180,27 +188,11 @@ export const SaleInvoicesPage = () => {
                         }}
                       >
                         <i className={`mdi mdi-sort`}></i>
-                        تعداد{" "}
+                        تخفیف
                       </th>
                       <th
                         onClick={() => {
                           sortTableByColumn("#invoice-table", ".item", 7);
-                        }}
-                      >
-                        <i className={`mdi mdi-sort`}></i>
-                        مبلغ{" "}
-                      </th>
-                      <th
-                        onClick={() => {
-                          sortTableByColumn("#invoice-table", ".item", 8);
-                        }}
-                      >
-                        <i className={`mdi mdi-sort`}></i>
-                        تخفیف{" "}
-                      </th>
-                      <th
-                        onClick={() => {
-                          sortTableByColumn("#invoice-table", ".item", 9);
                         }}
                       >
                         <i className={`mdi mdi-sort`}></i> توضیحات{" "}
@@ -212,7 +204,7 @@ export const SaleInvoicesPage = () => {
                       ({
                         id,
                         inv_date_fa,
-                        qty,
+
                         first_name,
                         last_name,
                         payment_type_title,
@@ -252,8 +244,7 @@ export const SaleInvoicesPage = () => {
                             <td>{inv_date_fa}</td>
                             <td>{`${first_name} ${last_name}`}</td>
                             <td>{product_name}</td>
-                            <td>{payment_type_title}</td>
-                            <td>{qty}</td>
+                            {/* <td>{payment_type_title}</td> */}
                             <td>
                               {formatMoney(price)} {`ریال`}
                             </td>
@@ -302,7 +293,7 @@ export const SaleInvoicesPage = () => {
                     cogoToast.success("با موفقیت حذف شد");
                     setTimeout(() => {
                       window.location.reload();
-                    }, 350);
+                    }, 170);
                   }
                 }}
               >

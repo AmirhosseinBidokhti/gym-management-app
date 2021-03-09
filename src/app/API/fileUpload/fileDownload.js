@@ -37,7 +37,7 @@ import { API_BASE_URL } from "../config";
 
 export const fileDownload_v2 = (filePath) => {
   const authToken = JSON.parse(localStorage.getItem("userInfo")).access_token;
-  console.log(authToken);
+
   fetch(`${API_BASE_URL}/File/download?file=${filePath}`, {
     method: "Get",
     headers: new Headers({

@@ -140,7 +140,6 @@ export const SessionUsagePage = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {" "}
                         {saleInvoiceDetails.map((el) => {
                           return (
                             <tr key={el.invoice_id}>
@@ -216,7 +215,7 @@ export const SessionUsagePage = () => {
                         className="btn btn-primary"
                         // disabled={el.session_qty === el.session_used}
                         onClick={async (e) => {
-                          console.log(accountID);
+                          // console.log(accountID);
 
                           const {
                             is_success,
@@ -296,10 +295,11 @@ export const SessionUsagePage = () => {
                             {currentPosts.map((customer) => {
                               return (
                                 <tr
+                                  key={customer.id}
                                   style={{ cursor: "pointer" }}
                                   onClick={async (e) => {
                                     setAccountID(customer.id);
-                                    console.log(e.target.value);
+
                                     setLoading(true);
                                     const data = await get_client_sale_invoice_details(
                                       customer.id
@@ -356,9 +356,8 @@ export const SessionUsagePage = () => {
                       <button
                         type="button"
                         className="btn btn-primary"
-                        onClick={async (e) => {
-                          console.log(accountID);
-
+                        onClick={async () => {
+                          // console.log(accountID);
                           const {
                             is_success,
                             dev_message,

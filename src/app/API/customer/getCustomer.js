@@ -18,7 +18,7 @@ export const getCustomer = async (customerID) => {
       `${API_BASE_URL}/Customer/getCustomer?ID=${customerID}`,
       config
     );
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     console.log(error.response);

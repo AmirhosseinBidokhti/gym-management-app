@@ -22,17 +22,17 @@ export const AccountAddPage = () => {
       account_type_id,
     };
 
-    const { data, is_success } = await addAccount(newAccount);
+    const { is_success, dev_message } = await addAccount(newAccount);
 
     //console.log(newCustomerInfo);
-    console.log(data);
+    //console.log(data);
     if (is_success) {
       cogoToast.success("حساب جدید با موفقیت اضافه شد");
       setTimeout(() => {
         window.location.reload();
-      }, 1200);
+      }, 330);
     } else {
-      console.log("try again something was wrong");
+      cogoToast.error(dev_message);
     }
 
     setLoading(false);
@@ -42,7 +42,7 @@ export const AccountAddPage = () => {
     async function getPreData() {
       const accountTypes = await getAccountTypes();
 
-      console.log(accountTypes);
+      //console.log(accountTypes);
       setAccountTypes(accountTypes);
     }
     getPreData();

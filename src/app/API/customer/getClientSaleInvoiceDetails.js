@@ -18,7 +18,7 @@ export const get_client_sale_invoice_details = async (customerID) => {
       `${API_BASE_URL}/ClientSessionUsage/get_client_sale_invoice_details?customer_id=${customerID}`,
       config
     );
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     console.log(error.response);

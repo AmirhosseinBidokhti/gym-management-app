@@ -108,7 +108,7 @@ export const getCustomersCombo = async () => {
     const {
       data: { data },
     } = await axios.get(`${API_BASE_URL}/Customer/getCustomersCombo`, config);
-    console.log(data);
+    //console.log(data);
     return data;
   } catch (error) {
     console.log(error.response);
@@ -133,7 +133,7 @@ export const getCustomersFulltext = async (title) => {
 
       config
     );
-    console.log(data);
+    //console.log(data);
     return data;
   } catch (error) {
     console.log(error.response);
