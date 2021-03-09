@@ -2,21 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 
 import {
-  getCustomers,
   getCustomersCombo,
   getCustomersFulltext,
 } from "../API/customer/getCustomers";
 
 import cogoToast from "cogo-toast";
-import { Button, Dropdown, Modal } from "bootstrap";
-import { Link } from "react-router-dom";
+
 import { get_client_sale_invoice_details } from "../API/customer/getClientSaleInvoiceDetails";
 
 import { Spinner } from "../vendor/shared/Spinner";
-import {
-  addSessionFetchVersion,
-  add_client_session_usage,
-} from "../API/customer/addSessionUsage";
+import { add_client_session_usage } from "../API/customer/addSessionUsage";
 import Pagination from "../components/Pagination";
 
 export const SessionUsagePage = () => {

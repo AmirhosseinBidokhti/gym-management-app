@@ -12,7 +12,6 @@ import { printTable } from "../utils/printTable";
 import cogoToast from "cogo-toast";
 
 import CheckupCharts from "../components/CheckupCharts";
-import { Example } from "../components/PrintComponent";
 
 export const CustomerCheckupPage = ({ match }) => {
   const [selectedItems, setSelectedItems] = useState([]);

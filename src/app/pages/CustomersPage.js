@@ -114,7 +114,6 @@ const CustomersPage = () => {
                           sortTableByColumn("#example", ".item", 2)
                         }
                       >
-                        {" "}
                         <i className={`mdi mdi-sort`}></i>
                         نام و نام خانوادگی
                       </th>
@@ -123,7 +122,6 @@ const CustomersPage = () => {
                           sortTableByColumn("#example", ".item", 3)
                         }
                       >
-                        {" "}
                         <i className={`mdi mdi-sort`}></i>
                         تاریخ عضویت
                       </th>
@@ -132,7 +130,6 @@ const CustomersPage = () => {
                           sortTableByColumn("#example", ".item", 4)
                         }
                       >
-                        {" "}
                         <i className={`mdi mdi-sort`}></i>
                         جنسیت
                       </th>
@@ -141,7 +138,6 @@ const CustomersPage = () => {
                           sortTableByColumn("#example", ".item", 5)
                         }
                       >
-                        {" "}
                         <i className={`mdi mdi-sort`}></i>
                         تلفن همراه
                       </th>
@@ -150,7 +146,6 @@ const CustomersPage = () => {
                           sortTableByColumn("#example", ".item", 6)
                         }
                       >
-                        {" "}
                         <i className={`mdi mdi-sort`}></i>
                         آدرس
                       </th>
@@ -159,7 +154,6 @@ const CustomersPage = () => {
                           sortTableByColumn("#example", ".item", 7)
                         }
                       >
-                        {" "}
                         <i className={`mdi mdi-sort`}></i>
                         مانده حساب
                       </th>
@@ -167,7 +161,6 @@ const CustomersPage = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {" "}
                     {currentPosts.map((customer) => {
                       return (
                         <tr key={customer.id} className="item">
@@ -206,7 +199,6 @@ const CustomersPage = () => {
                           </td>
 
                           <td>
-                            {" "}
                             <button
                               type="button"
                               className="btn btn-outline-secondary"
