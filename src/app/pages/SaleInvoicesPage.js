@@ -227,7 +227,7 @@ export const SaleInvoicesPage = () => {
                                 <Dropdown.Menu>
                                   <Dropdown.Item
                                     as={Link}
-                                    to={`/saleInvoice/add-transaction-for-saleInvoice/${id}/${account_id}/${price}`}
+                                    to={`/saleInvoice/add-transaction-for-saleInvoice/${id}/${account_id}/${price}/${first_name}/${last_name}`}
                                   >
                                     ثبت تسویه
                                   </Dropdown.Item>

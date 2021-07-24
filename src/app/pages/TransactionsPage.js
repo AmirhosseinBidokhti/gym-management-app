@@ -175,17 +175,10 @@ export const TransactionsPage = () => {
                         <i className={`mdi mdi-sort`}></i>
                         نوع حساب
                       </th>
+
                       <th
                         onClick={() => {
                           sortTableByColumn("#transaction-tb", ".item", 6);
-                        }}
-                      >
-                        <i className={`mdi mdi-sort`}></i>
-                        نوع تراکنش{" "}
-                      </th>
-                      <th
-                        onClick={() => {
-                          sortTableByColumn("#transaction-tb", ".item", 7);
                         }}
                       >
                         <i className={`mdi mdi-sort`}></i>
@@ -193,7 +186,7 @@ export const TransactionsPage = () => {
                       </th>
                       <th
                         onClick={() => {
-                          sortTableByColumn("#transaction-tb", ".item", 8);
+                          sortTableByColumn("#transaction-tb", ".item", 7);
                         }}
                       >
                         <i className={`mdi mdi-sort`}></i>
@@ -201,7 +194,7 @@ export const TransactionsPage = () => {
                       </th>
                       <th
                         onClick={() => {
-                          sortTableByColumn("#transaction-tb", ".item", 9);
+                          sortTableByColumn("#transaction-tb", ".item", 8);
                         }}
                       >
                         <i className={`mdi mdi-sort`}></i>
@@ -229,7 +222,6 @@ export const TransactionsPage = () => {
                                     } = await deleteTransaction(transaction.id);
                                     if (is_success) {
                                       cogoToast.success("deleted successfully");
-                                      window.location.reload();
                                     } else {
                                       cogoToast.info(
                                         "something wrong happended. retry"
@@ -252,8 +244,6 @@ export const TransactionsPage = () => {
                               : `${transaction.title}`}
                           </td>
                           <td>{transaction.account_type_title}</td>
-                          <td>{transaction.is_variz ? "واریز" : "برداشت"}</td>
-
                           <td>
                             {formatMoney(transaction.price)} {`ریال`}
                           </td>

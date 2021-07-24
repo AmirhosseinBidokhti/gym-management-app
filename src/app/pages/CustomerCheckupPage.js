@@ -314,6 +314,7 @@ export const CustomerCheckupPage = ({ match }) => {
                                     className="form-control"
                                     id="exampleInputName1"
                                     placeholder="وزن"
+                                    step=".01"
                                     onChange={(e) => setWeight(e.target.value)}
                                   />
                                 </Form.Group>
@@ -327,6 +328,7 @@ export const CustomerCheckupPage = ({ match }) => {
                                     className="form-control"
                                     id="exampleInputName1"
                                     placeholder="دور سینه"
+                                    step=".01"
                                     onChange={(e) => setChest(e.target.value)}
                                   />
                                 </Form.Group>
@@ -337,6 +339,7 @@ export const CustomerCheckupPage = ({ match }) => {
                                     className="form-control"
                                     id="exampleInputName1"
                                     placeholder="شکم"
+                                    step=".01"
                                     onChange={(e) => setAbs(e.target.value)}
                                   />
                                 </Form.Group>
@@ -348,6 +351,7 @@ export const CustomerCheckupPage = ({ match }) => {
                                     className="form-control"
                                     id="exampleInputName1"
                                     placeholder="کمر"
+                                    step=".01"
                                     onChange={(e) =>
                                       setWaistSize(e.target.value)
                                     }
@@ -362,6 +366,7 @@ export const CustomerCheckupPage = ({ match }) => {
                                     className="form-control"
                                     id="exampleInputName1"
                                     placeholder="باسن"
+                                    step=".01"
                                     onChange={(e) => setButt(e.target.value)}
                                   />
                                 </Form.Group>
@@ -376,6 +381,7 @@ export const CustomerCheckupPage = ({ match }) => {
                                     className="form-control"
                                     id="exampleInputName1"
                                     placeholder="بازو راست"
+                                    step=".01"
                                     onChange={(e) =>
                                       setRightArm(e.target.value)
                                     }
@@ -390,6 +396,7 @@ export const CustomerCheckupPage = ({ match }) => {
                                     className="form-control"
                                     id="exampleInputName1"
                                     placeholder="بازو چپ"
+                                    step=".01"
                                     onChange={(e) => setLeftArm(e.target.value)}
                                   />
                                 </Form.Group>
@@ -402,6 +409,7 @@ export const CustomerCheckupPage = ({ match }) => {
                                     className="form-control"
                                     id="exampleInputName1"
                                     placeholder="ران راست"
+                                    step=".01"
                                     onChange={(e) =>
                                       setRightTigh(e.target.value)
                                     }
@@ -416,6 +424,7 @@ export const CustomerCheckupPage = ({ match }) => {
                                     className="form-control"
                                     id="exampleInputName1"
                                     placeholder="ران چپ"
+                                    step=".01"
                                     onChange={(e) =>
                                       setLeftTigh(e.target.value)
                                     }
@@ -430,6 +439,7 @@ export const CustomerCheckupPage = ({ match }) => {
                                     className="form-control"
                                     id="exampleInputName1"
                                     placeholder="ساق پا راست"
+                                    step=".01"
                                     onChange={(e) =>
                                       setRightCalves(e.target.value)
                                     }
@@ -444,6 +454,7 @@ export const CustomerCheckupPage = ({ match }) => {
                                     className="form-control"
                                     id="exampleInputName1"
                                     placeholder="ساق پا چپ"
+                                    step=".01"
                                     onChange={(e) =>
                                       setLeftCalves(e.target.value)
                                     }
@@ -499,7 +510,9 @@ export const CustomerCheckupPage = ({ match }) => {
                                 }
                               >
                                 وزن:{" "}
-                                {weight ? weight - latestCheckup.weight : 0}
+                                {weight
+                                  ? (weight - latestCheckup.weight).toFixed(2)
+                                  : 0}
                               </li>
                               <li
                                 className={
@@ -509,14 +522,17 @@ export const CustomerCheckupPage = ({ match }) => {
                                 }
                               >
                                 دوره سینه:{" "}
-                                {chest ? chest - latestCheckup.chest : 0}
+                                {chest
+                                  ? (chest - latestCheckup.chest).toFixed(2)
+                                  : 0}
                               </li>
                               <li
                                 className={
                                   abs - latestCheckup.abs > 0 ? "green" : "red"
                                 }
                               >
-                                شکم: {abs ? abs - latestCheckup.abs : 0}
+                                شکم:{" "}
+                                {abs ? (abs - latestCheckup.abs).toFixed(2) : 0}
                               </li>
                               <li
                                 className={
@@ -527,7 +543,9 @@ export const CustomerCheckupPage = ({ match }) => {
                               >
                                 کمر:{" "}
                                 {waistSize
-                                  ? waistSize - latestCheckup.waist_size
+                                  ? (
+                                      waistSize - latestCheckup.waist_size
+                                    ).toFixed(2)
                                   : 0}
                               </li>
                               <li
@@ -537,7 +555,10 @@ export const CustomerCheckupPage = ({ match }) => {
                                     : "red"
                                 }
                               >
-                                باسن: {butt ? butt - latestCheckup.butt : 0}
+                                باسن:{" "}
+                                {butt
+                                  ? (butt - latestCheckup.butt).toFixed(2)
+                                  : 0}
                               </li>
                               <li
                                 className={
@@ -548,7 +569,9 @@ export const CustomerCheckupPage = ({ match }) => {
                               >
                                 بازو راست:{" "}
                                 {rightArm
-                                  ? rightArm - latestCheckup.right_arm
+                                  ? (
+                                      rightArm - latestCheckup.right_arm
+                                    ).toFixed(2)
                                   : 0}
                               </li>
                               <li
@@ -559,7 +582,11 @@ export const CustomerCheckupPage = ({ match }) => {
                                 }
                               >
                                 بازو چپ:{" "}
-                                {leftArm ? leftArm - latestCheckup.left_arm : 0}
+                                {leftArm
+                                  ? (leftArm - latestCheckup.left_arm).toFixed(
+                                      2
+                                    )
+                                  : 0}
                               </li>
                               <li
                                 className={
@@ -570,7 +597,9 @@ export const CustomerCheckupPage = ({ match }) => {
                               >
                                 ران راست:{" "}
                                 {rightTigh
-                                  ? rightTigh - latestCheckup.right_thigh
+                                  ? (
+                                      rightTigh - latestCheckup.right_thigh
+                                    ).toFixed(2)
                                   : 0}
                               </li>
                               <li
@@ -582,7 +611,9 @@ export const CustomerCheckupPage = ({ match }) => {
                               >
                                 ران چپ:{" "}
                                 {leftTigh
-                                  ? leftTigh - latestCheckup.left_thigh
+                                  ? (
+                                      leftTigh - latestCheckup.left_thigh
+                                    ).toFixed(2)
                                   : 0}
                               </li>
                               <li
@@ -594,7 +625,9 @@ export const CustomerCheckupPage = ({ match }) => {
                               >
                                 ساق پا راست:{" "}
                                 {rightCalves
-                                  ? rightCalves - latestCheckup.right_calves
+                                  ? (
+                                      rightCalves - latestCheckup.right_calves
+                                    ).toFixed(2)
                                   : 0}
                               </li>
                               <li
@@ -606,7 +639,9 @@ export const CustomerCheckupPage = ({ match }) => {
                               >
                                 ساق پای چپ:{" "}
                                 {leftCalves
-                                  ? leftCalves - latestCheckup.left_calves
+                                  ? (
+                                      leftCalves - latestCheckup.left_calves
+                                    ).toFixed(2)
                                   : 0}
                               </li>
                             </ul>
@@ -678,16 +713,16 @@ export const CustomerCheckupPage = ({ match }) => {
                 </div>
               </div> */}
             </div>
-            <CheckupCharts
-              info={{
-                // first: [10, 19, 3, 5, 2, 3, 11, 20, 32, 26, 70],
-                //second: [12, 212, 42, 26, 23, 24, 214, 215, 215, 215, 129],
-                fromDate: dates[0],
-                toDate: dates[dates.length - 1],
-                first: selectedItems[0],
-                second: selectedItems[selectedItems.length - 1],
-              }}
-            />
+            {selectedItems.length && selectedItems[1] ? (
+              <CheckupCharts
+                info={{
+                  fromDate: dates[0],
+                  toDate: dates[dates.length - 1],
+                  first: selectedItems[0],
+                  second: selectedItems[selectedItems.length - 1],
+                }}
+              />
+            ) : null}
           </div>
           {/* <iframe
             id="checkup-layout"

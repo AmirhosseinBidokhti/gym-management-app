@@ -143,8 +143,7 @@ export const SaleInvoiceAddPage = () => {
 
             <form className="form-sample" onSubmit={submitHandler}>
               <p className="card-description">
-                {" "}
-                برای ایجاد فاکتور فروش، اطلاعات مربوطه را وارد کنید.{" "}
+                برای ایجاد فاکتور فروش، اطلاعات مربوطه را وارد کنید.
               </p>
               <div className="row">
                 <div className="col-md-6">
@@ -153,20 +152,6 @@ export const SaleInvoiceAddPage = () => {
                       نام مشتری
                     </label>
                     <div className="col-sm-9">
-                      {/* <select
-                        className="form-control"
-                        onChange={(e) => setAccountID(e.target.value)}
-                        required
-                      >
-                        <option selected disabled value="">
-                          انتخاب کنید
-                        </option>
-                        {customerList.map((el) => (
-                          <option key={el.id} value={el.id}>
-                            {`${el.first_name} ${el.last_name}`}
-                          </option>
-                        ))}
-                      </select> */}
                       <button
                         type="button"
                         className="btn btn-secondary"
@@ -235,10 +220,17 @@ export const SaleInvoiceAddPage = () => {
                     <label className="col-sm-3 col-form-label">تخفیف</label>
                     <div className="col-sm-9">
                       <Form.Control
-                        type="number"
+                        type="text"
                         onChange={(e) => {
                           setReduction_Price(e.target.value);
                         }}
+                        value={
+                          reduction_Price &&
+                          reduction_Price
+                            .toString()
+                            .replace(/,/g, "")
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        }
                       />
                     </div>
                   </Form.Group>
@@ -255,7 +247,7 @@ export const SaleInvoiceAddPage = () => {
               </button>
               {!transLoading ? (
                 <Link
-                  to={`/saleInvoice/add-transaction-for-saleInvoice/${transRouteData.id}/${transRouteData.account_id}/${transRouteData.price}`}
+                  to={`/saleInvoice/add-transaction-for-saleInvoice/${transRouteData.id}/${transRouteData.account_id}/${transRouteData.price}/${customerName}/${customerMobile}`}
                   className="btn btn-success mr--3"
                 >
                   ثبت تسویه

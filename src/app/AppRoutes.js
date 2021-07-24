@@ -94,7 +94,7 @@ class AppRoutes extends Component {
           TransactionForSaleInvoicePage
           <PrivateRoute
             exact={true}
-            path="/saleInvoice/add-transaction-for-saleInvoice/:id/:account_id/:price"
+            path="/saleInvoice/add-transaction-for-saleInvoice/:id/:account_id/:price/:fName/:lName"
             component={TransactionForSaleInvoicePage}
           />
           <PrivateRoute

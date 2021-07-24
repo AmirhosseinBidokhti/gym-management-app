@@ -8,30 +8,41 @@ import { addTranscation } from "../API/transaction/addTransaction";
 import cogoToast from "cogo-toast";
 import { Link } from "react-router-dom";
 import { getSaleInvoiceTypes } from "../API/saleInvoice/getSaleInvoiceTypes";
+import { getSaleInvoiceRemain } from "../API/saleInvoice/getSaleInvoiceRemain";
+import { getAccountByType } from "../API/transaction/getAccountByType";
+import { getAccountTypes } from "../API/transaction/getAccountTypes";
 
 export const TransactionForSaleInvoicePage = ({ match }) => {
-  const [variz, setVariz] = useState(null);
   const [price, setPrice] = useState(null);
   const [description, setdescription] = useState("");
 
-  const [accounts, setAccounts] = useState([]);
   const [saleInvoiceTypes, setSaleInvoiceTypes] = useState([]);
   const [saleInvoiceTypeID, setSaleInvoiceTypeID] = useState(null);
+
+  const [saleInvoiceRemain, setSaleInvoiceRemain] = useState(null);
+
+  const [accounts, setAccounts] = useState([]);
+  const [accountTypes, setAccountTypes] = useState([]);
+  const [accountTypeID, setAccountTypeID] = useState(null);
+  const [accountID, setAccountID] = useState(null);
 
   const [loading, setLoading] = useState(false);
 
   const saleInvoiceID = match.params.id;
   const saleInvoicePrice = match.params.price;
-  const accountID = match.params.account_id;
+  const acc_id = match.params.account_id;
+  const fName = match.params.fName;
+  const lName = match.params.lName;
 
   const submitHandler = async (e) => {
     const transactionObj = {
-      is_variz: variz,
-      price: price ? parseInt(price) : saleInvoicePrice,
+      is_daryaft: true,
+      price: price ? price : saleInvoiceRemain,
       description: description,
       account_id: accountID,
       user_id: JSON.parse(localStorage.getItem("userInfo")).user_id,
       invoice_id: saleInvoiceID,
+      account_id_fromto: acc_id,
     };
 
     e.preventDefault();
@@ -54,6 +65,11 @@ export const TransactionForSaleInvoicePage = ({ match }) => {
   useEffect(() => {
     async function getData() {
       const saleInvoiceType = await getSaleInvoiceTypes();
+
+      const { data } = await getSaleInvoiceRemain(saleInvoiceID);
+      setSaleInvoiceRemain(data);
+      const accountTypes = await getAccountTypes();
+      setAccountTypes(accountTypes);
 
       setSaleInvoiceTypes(saleInvoiceType);
     }
@@ -85,31 +101,9 @@ export const TransactionForSaleInvoicePage = ({ match }) => {
 
             <form className="form-sample" onSubmit={submitHandler}>
               <p className="card-description">
-                {" "}
-                برای ثبت تراکنش، اطلاعات مربوطه را وارد کنید.{" "}
+                برای ثبت تراکنش، اطلاعات مربوطه را وارد کنید.
               </p>
               <div className="row">
-                {/* <div className="col-md-6">
-                  <Form.Group className="row">
-                    <label className="col-sm-3 col-form-label">نام</label>
-                    <div className="col-sm-9">
-                      <select
-                        className="form-control"
-                        onChange={(e) => setUserID(e.target.value)}
-                        value={userID}
-                      >
-                        <option selected disabled>
-                          انتخاب کنید
-                        </option>
-                        {customerList.map((el) => (
-                          <option key={el.id} value={el.id}>
-                            {`${el.firstName} ${el.lastName}`}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </Form.Group>
-                </div> */}
                 <div className="col-md-6">
                   <Form.Group className="row">
                     <label className="col-sm-3 col-form-label required-input">
@@ -117,20 +111,10 @@ export const TransactionForSaleInvoicePage = ({ match }) => {
                     </label>
 
                     <div className="col-sm-9">
-                      <select
-                        className="form-control"
-                        onChange={(e) => {
-                          e.target.value === "true"
-                            ? setVariz(true)
-                            : setVariz(false);
-                        }}
-                        required
-                      >
-                        <option selected disabled value="">
-                          انتخاب کنید
+                      <select className="form-control">
+                        <option selected disabled>
+                          دریافت
                         </option>
-                        <option value={true}>واریز</option>
-                        <option value={false}>برداشت</option>
                       </select>
                     </div>
                   </Form.Group>
@@ -160,7 +144,83 @@ export const TransactionForSaleInvoicePage = ({ match }) => {
                 </div>
               </div>
               <div className="row">
-                {" "}
+                <div className="col-md-6">
+                  <Form.Group className="row">
+                    <label className="col-sm-3 col-form-label required-input">
+                      نوع حساب
+                    </label>
+                    <div className="col-sm-9">
+                      <select
+                        className="form-control"
+                        onChange={async (e) => {
+                          setAccountTypeID(e.target.value);
+                          const data = await getAccountByType(e.target.value);
+                          setAccounts(data);
+                        }}
+                        required
+                        value={accountTypeID}
+                      >
+                        <option selected disabled value="">
+                          انتخاب کنید
+                        </option>
+                        {accountTypes.map((el) => (
+                          <option key={el.id} value={el.id}>
+                            {el.title}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </Form.Group>
+                </div>
+                <div className="col-md-6">
+                  <Form.Group className="row">
+                    <label className="col-sm-3 col-form-label required-input">
+                      حساب
+                    </label>
+                    <div className="col-sm-9">
+                      <select
+                        className="form-control"
+                        onChange={(e) => setAccountID(e.target.value)}
+                        value={accountID}
+                        required
+                      >
+                        <option selected disabled value="">
+                          {accountTypeID
+                            ? "انتخاب کنید"
+                            : ` ابتدا نوع حساب را انتخاب کنید`}
+                        </option>
+                        {accounts.map((el) => (
+                          <option key={el.id} value={el.id}>
+                            {el.last_name
+                              ? `${el.first_name} ${el.last_name}`
+                              : `${el.title}`}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </Form.Group>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <Form.Group className="row">
+                    <label className="col-sm-3 col-form-label required-input">
+                      حساب مبدا
+                    </label>
+
+                    <div className="col-sm-9">
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        disabled={true}
+                      >
+                        {`${fName} ${lName}`}
+                      </button>
+                    </div>
+                  </Form.Group>
+                </div>
+              </div>
+              <div className="row">
                 <div className="col-md-6">
                   <Form.Group className="row">
                     <label className="col-sm-3 col-form-label required-input">
@@ -171,7 +231,7 @@ export const TransactionForSaleInvoicePage = ({ match }) => {
                         type="number"
                         onChange={(e) => setPrice(e.target.value)}
                         required
-                        defaultValue={saleInvoicePrice}
+                        defaultValue={saleInvoiceRemain}
                       />
                     </div>
                   </Form.Group>

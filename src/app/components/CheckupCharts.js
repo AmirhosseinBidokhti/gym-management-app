@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Bar, Line } from "react-chartjs-2";
+import { downloadPDF } from "../utils/canvasUtil.js";
 
 const CheckupCharts = ({ info, fromDate, toDate }) => {
   let [chartData, setChartData] = useState(info);
@@ -51,7 +52,7 @@ const CheckupCharts = ({ info, fromDate, toDate }) => {
         {
           ticks: {
             beginAtZero: true,
-            fontSize: 14,
+            fontSize: 16,
           },
           gridLines: {
             color: "rgba(204, 204, 204,0.1)",
@@ -61,7 +62,7 @@ const CheckupCharts = ({ info, fromDate, toDate }) => {
       xAxes: [
         {
           ticks: {
-            fontSize: 14,
+            fontSize: 16,
           },
           gridLines: {
             color: "rgba(205, 204, 204,0.1)",
@@ -104,7 +105,9 @@ const CheckupCharts = ({ info, fromDate, toDate }) => {
                 >
                   reset
                 </button>
-                Changes From{" "}
+                <button onClick={() => downloadPDF(0)}>print first</button>
+                <button onClick={() => downloadPDF(1)}>print second</button>
+                Changes From
                 <span style={{ color: "#e67e22" }}>{chartData.fromDate}</span>
                 <span> to </span>
                 <span style={{ color: "#10ac84" }}>{chartData.toDate}</span>
@@ -114,7 +117,10 @@ const CheckupCharts = ({ info, fromDate, toDate }) => {
         </div>
       ) : null}
       <div className="row">
-        <div className="col-md-6 grid-margin stretch-card">
+        <div
+          className="col-md-8 grid-margin stretch-card"
+          style={{ margin: "0 auto" }}
+        >
           <div className="card">
             <div className="card-body">
               <h4 className="card-title"> لاین چارت چک آپ</h4>
@@ -122,7 +128,12 @@ const CheckupCharts = ({ info, fromDate, toDate }) => {
             </div>
           </div>
         </div>
-        <div className="col-md-6 grid-margin stretch-card">
+      </div>
+      <div className="row">
+        <div
+          className="col-md-8 grid-margin stretch-card"
+          style={{ margin: "0 auto" }}
+        >
           <div className="card">
             <div className="card-body">
               <h4 className="card-title">بار چارت چک آپ</h4>
