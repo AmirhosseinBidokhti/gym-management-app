@@ -724,10 +724,6 @@ export const CustomerCheckupPage = ({ match }) => {
               />
             ) : null}
           </div>
-          {/* <iframe
-            id="checkup-layout"
-            style={{ width: "0px", height: "0px", position: "absolute" }}
-          ></iframe> */}
         </div>
       )}
     </div>
